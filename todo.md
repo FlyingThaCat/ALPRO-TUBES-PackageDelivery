@@ -38,7 +38,7 @@
 //admin
 - tambah paket [X]
 - lihat paket  [X]
-- update paket [?]
+- update paket [X]
 - hapus paket  []
 
 - tambah kurir []

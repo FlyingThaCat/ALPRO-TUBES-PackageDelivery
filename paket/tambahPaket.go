@@ -56,6 +56,7 @@ func TambahPaket() {
 	// generate unique tracking number
 	input.NoResi = fmt.Sprintf("%d", len(datas.PaketDB)+1)
 	input.CreatedAt = time.Now()
+	input.UpdatedAt = time.Now()
 	// when creating a new package, the status is always "Dibuat"
 	input.Status = []string{"Paket Dibuat"}
 

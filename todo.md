@@ -39,7 +39,7 @@
 - tambah paket [X]
 - lihat paket  [X]
 - update paket [X]
-- hapus paket  []
+- hapus paket  [X]
 
 - tambah kurir []
 - lihat kurir  []

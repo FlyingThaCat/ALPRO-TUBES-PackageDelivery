@@ -30,7 +30,7 @@ jobs:
     - name: artifact
       uses: actions/upload-artifact@v4
       with:
-        name: PackageDelivery
+        name: PackageDelivery-linux-amd64
         path: ./PackageDelivery
   
   build-windows:
@@ -52,5 +52,5 @@ jobs:
     - name: artifact
       uses: actions/upload-artifact@v4
       with:
-        name: PackageDelivery
+        name: PackageDelivery-windows-amd64.exe
         path: PackageDelivery.exe

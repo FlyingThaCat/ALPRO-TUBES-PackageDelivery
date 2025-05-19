@@ -109,6 +109,8 @@ func main() {
 							paket.LihatPaket()
 						} else if opt == "3" {
 							admin.EditPaket()
+						} else if opt == "4" {
+							admin.HapusPaket()
 						}
 					}
 				}
@@ -234,6 +236,10 @@ func main() {
 									paket.LihatPaket()
 								} else if opt == "3" {
 									admin.EditPaket()
+								} else if opt == "4" {
+									admin.HapusPaket()
+								} else {
+									fmt.Print("Pilihan tidak valid.\n\n")
 								}
 							}
 						}

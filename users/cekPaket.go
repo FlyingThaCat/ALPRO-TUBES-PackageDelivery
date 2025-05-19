@@ -2,10 +2,12 @@ package users
 
 import (
 	"PackageDelivery/paket"
+	"PackageDelivery/utils"
 	"fmt"
 )
 
 func CekPaket() {
+	utils.ClearScreen()
 	var noResi string
 	fmt.Println("=== Cek Paket ===")
 	fmt.Print("Masukkan No Resi: ")

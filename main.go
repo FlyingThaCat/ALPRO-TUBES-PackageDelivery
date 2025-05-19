@@ -17,13 +17,14 @@ import (
 	"PackageDelivery/datas"
 )
 
-var DEBUG_ADMIN = true
+var DEBUG_ADMIN = false
 var DEBUG_KURIR = false
 var DEBUG_USER = false
 
 func register() {
+	utils.ClearScreen()
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("\n=== Register User ===\n")
+	fmt.Print("=== Register User ===\n")
 	fmt.Print("Masukkan username: ")
 	username, _ := reader.ReadString('\n')
 	username = strings.TrimSpace(username)
@@ -47,8 +48,9 @@ func register() {
 }
 
 func login() (*types.User, bool) {
+	utils.ClearScreen()
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Printf("\n=== Login ===\n")
+	fmt.Printf("=== Login ===\n")
 	fmt.Print("Username: ")
 	username, _ := reader.ReadString('\n')
 	username = strings.TrimSpace(username)
@@ -76,6 +78,7 @@ func login() (*types.User, bool) {
 }
 
 func main() {
+	utils.ClearScreen()
 	datas.Init() // Inisialisasi data awal
 	reader := bufio.NewReader(os.Stdin)
 
@@ -188,6 +191,7 @@ func main() {
 				}
 			}
 		} else {
+			// utils.ClearScreen()
 			fmt.Println("Pilih opsi:")
 			fmt.Println("1. Register")
 			fmt.Println("2. Login")
@@ -224,8 +228,8 @@ func main() {
 							case "user":
 								if opt == "1" {
 									paket.TambahPaket()
-								} else if opt == "2" {
-									fmt.Print("Cek Paket belum tersedia.\n\n")
+								} else if opt == "2" {			
+									users.CekPaket()
 								} else {
 									fmt.Print("Pilihan tidak valid.\n\n")
 								}

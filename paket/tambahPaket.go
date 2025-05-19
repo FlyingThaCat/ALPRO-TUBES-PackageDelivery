@@ -1,16 +1,19 @@
 package paket
+
 import (
 	"PackageDelivery/datas"
 	"PackageDelivery/types"
+	"PackageDelivery/utils"
 	"fmt"
 	"time"
 )
 
 func TambahPaket() {
+	utils.ClearScreen()
 	var input types.Paket
 	var confirm string
 
-	fmt.Print("\n=== Tambah Paket ===\n")
+	fmt.Print("=== Tambah Paket ===\n")
 	fmt.Println("Tipe Paket:")
 	for _, tipe := range types.PackageTypes {
 		fmt.Printf("- %s\n", tipe)

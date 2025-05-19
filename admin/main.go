@@ -1,10 +1,13 @@
 package admin
 
 import (
+	"PackageDelivery/utils"
 	"fmt"
 )
 
 func MenuAdmin() {
+	utils.ClearScreen()
+
 	fmt.Println("=== Menu Admin ===")
 	fmt.Println("===== Paket =====")
 	fmt.Println("1. Tambah Paket Baru")

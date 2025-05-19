@@ -22,6 +22,7 @@
     - username
     - password
     - role
+    - paket
 
 // Struct Paket
     - tipe
@@ -41,7 +42,7 @@
 - update paket [X]
 - hapus paket  [X]
 
-- tambah kurir []
+- tambah kurir [X]
 - lihat kurir  []
 - update kurir []
 - hapus kurir  []

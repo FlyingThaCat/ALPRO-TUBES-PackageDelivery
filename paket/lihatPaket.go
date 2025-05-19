@@ -2,12 +2,14 @@ package paket
 
 import (
 	"PackageDelivery/datas"
+	"PackageDelivery/utils"
 	"fmt"
 	"os"
 	"text/tabwriter"
 )
 
 func LihatPaket() {
+	utils.ClearScreen()
 	fmt.Println("\n=== Daftar Paket ===")
 
 	// Buat tabwriter dengan lebar kolom otomatis, padding 2 spasi
@@ -44,4 +46,11 @@ func LihatPaket() {
 
 	w.Flush()
 	fmt.Print("====================\n\n")
+
+	// press enter to continue
+	fmt.Println("Tekan Enter untuk melanjutkan...")
+	var input string
+	fmt.Scanln(&input)
+	fmt.Println("Melanjutkan...")
+	fmt.Print("\n\n")
 }

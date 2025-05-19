@@ -107,6 +107,8 @@ func main() {
 							paket.TambahPaket()
 						} else if opt == "2" {
 							paket.LihatPaket()
+						} else if opt == "3" {
+							admin.EditPaket()
 						}
 					}
 				}
@@ -230,6 +232,8 @@ func main() {
 									paket.TambahPaket()
 								} else if opt == "2" {
 									paket.LihatPaket()
+								} else if opt == "3" {
+									admin.EditPaket()
 								}
 							}
 						}

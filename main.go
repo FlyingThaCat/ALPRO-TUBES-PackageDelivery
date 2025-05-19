@@ -9,7 +9,7 @@ import (
 	"PackageDelivery/admin"
 	"PackageDelivery/kurir"
 	"PackageDelivery/types"
-	"PackageDelivery/userr"
+	"PackageDelivery/users"
 
 	"PackageDelivery/datas"
 )
@@ -91,7 +91,7 @@ func main() {
 				for {
 					switch user.Role {
 					case "user":
-						userr.MenuUser()
+						users.MenuUser()
 					case "kurir":
 						kurir.MenuKurir()
 					case "admin":

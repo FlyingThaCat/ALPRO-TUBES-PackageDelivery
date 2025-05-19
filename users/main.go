@@ -1,4 +1,4 @@
-package userr
+package users
 
 import (
 	"fmt"

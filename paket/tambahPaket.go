@@ -62,15 +62,5 @@ func TambahPaket() {
 	datas.PaketDB = append(datas.PaketDB, input)
 	fmt.Println("Paket berhasil ditambahkan.")
 
-	fmt.Println("=== Detail Paket ===")
-	fmt.Println("No Resi:", datas.PaketDB[len(datas.PaketDB)-1].NoResi)
-	fmt.Println("Tipe:", input.Tipe)
-	fmt.Println("Berat:", input.Berat)
-	fmt.Println("Harga:", input.Harga)
-	fmt.Println("Kota Pengirim:", input.SenderCity)
-	fmt.Println("Kota Tujuan:", input.ReceiverCity)
-	fmt.Println("Status:", input.Status)
-	fmt.Println("Dibuat pada:", input.CreatedAt.Format("2006-01-02 15:04:05"))
-	fmt.Println("Paket berhasil ditambahkan.")
-	fmt.Println("=== Detail Paket ===")
+	DetailPaket(input)
 }

@@ -33,7 +33,7 @@
 
 //user
 - tambah paket [X]
-- cek paket    []
+- cek paket    [X]
 
 //admin
 - tambah paket []

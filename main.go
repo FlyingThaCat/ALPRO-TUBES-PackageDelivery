@@ -17,9 +17,9 @@ import (
 	"PackageDelivery/datas"
 )
 
-var DEBUG_ADMIN = true
+var DEBUG_ADMIN = false
 var DEBUG_KURIR = false
-var DEBUG_USER = false
+var DEBUG_USER = true
 
 func register() {
 	reader := bufio.NewReader(os.Stdin)
@@ -176,7 +176,7 @@ func main() {
 						if opt == "1" {
 							paket.TambahPaket()
 						} else if opt == "2" {
-							fmt.Print("Cek Paket belum tersedia.\n\n")
+							users.CekPaket()
 						} else {
 							fmt.Print("Pilihan tidak valid.\n\n")
 						}

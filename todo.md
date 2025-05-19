@@ -30,3 +30,27 @@
     - route -> []array of kota
     - status -> []array of string
     - createdAt
+
+//user
+- tambah paket [X]
+- cek paket    []
+
+//admin
+- tambah paket []
+- lihat paket  [-]
+- update paket []
+- hapus paket  []
+
+- tambah kurir []
+- lihat kurir  []
+- update kurir []
+- hapus kurir  []
+
+- assign paket ke kurir []
+
+//kurir
+- lihat assigned kurir []
+- lihat paket          []
+
+//system
+- hitung harga         []

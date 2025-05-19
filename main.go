@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"PackageDelivery/paket"
 	"PackageDelivery/utils"
 
 	"PackageDelivery/admin"
@@ -15,6 +16,10 @@ import (
 
 	"PackageDelivery/datas"
 )
+
+var DEBUG_ADMIN = true
+var DEBUG_KURIR = false
+var DEBUG_USER = false
 
 func register() {
 	reader := bufio.NewReader(os.Stdin)
@@ -61,7 +66,7 @@ func login() (*types.User, bool) {
 		return nil, false
 	}
 
-	if user.Role != "user" { 
+	if user.Role != "user" {
 		fmt.Printf("Login berhasil, selamat datang %s! (role: %s)\n\n", user.Username, user.Role)
 	} else {
 		fmt.Printf("Login berhasil, selamat datang %s!\n\n", user.Username)
@@ -75,56 +80,167 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
-		fmt.Println("Pilih opsi:")
-		fmt.Println("1. Register")
-		fmt.Println("2. Login")
-		fmt.Println("3. Keluar")
-		fmt.Print("Masukkan pilihan (1/2/3): ")
-		choice, _ := reader.ReadString('\n')
-		choice = strings.TrimSpace(choice)
+		if DEBUG_ADMIN {
+			var user types.User
+			user.Role = "admin"
+			for {
+				switch user.Role {
+				case "user":
+					users.MenuUser()
+				case "kurir":
+					kurir.MenuKurir()
+				case "admin":
+					admin.MenuAdmin()
+				}
 
-		switch choice {
-		case "1":
-			register()
-		case "2":
-			user, loggedIn := login()
-			if loggedIn {
-				for {
+				fmt.Print("Pilih menu: ")
+				opt, _ := reader.ReadString('\n')
+				opt = strings.TrimSpace(opt)
+
+				if opt == "0" {
+					fmt.Print("exit app.\n\n")
+					os.Exit(0)
+				} else {
 					switch user.Role {
-					case "user":
-						users.MenuUser()
-					case "kurir":
-						kurir.MenuKurir()
 					case "admin":
-						admin.MenuAdmin()
-					}
-
-					fmt.Print("Pilih menu: ")
-					opt, _ := reader.ReadString('\n')
-					opt = strings.TrimSpace(opt)
-
-					if opt == "3" {
-						fmt.Print("Logout berhasil.\n\n")
-						break
-					} else {
-						switch user.Role {
-						case "user":
-							if opt == "1" {
-								users.TambahPaket()
-							} else if opt == "2" {
-								fmt.Print("Cek Paket belum tersedia.\n\n")
-							} else {
-								fmt.Print("Pilihan tidak valid.\n\n")
-							}
+						if opt == "1" {
+							paket.TambahPaket()
+						} else if opt == "2" {
+							paket.LihatPaket()
 						}
 					}
 				}
 			}
-		case "3":
-			fmt.Println("Terima kasih, sampai jumpa!")
-			return
-		default:
-			fmt.Print("Pilihan tidak valid.\n\n")
+		} else if DEBUG_KURIR {
+			var user types.User
+			user.Role = "kurir"
+			for {
+				switch user.Role {
+				case "user":
+					users.MenuUser()
+				case "kurir":
+					kurir.MenuKurir()
+				case "admin":
+					admin.MenuAdmin()
+				}
+
+				fmt.Print("Pilih menu: ")
+				opt, _ := reader.ReadString('\n')
+				opt = strings.TrimSpace(opt)
+
+				if opt == "0" {
+					fmt.Print("Kill app.\n\n")
+					os.Exit(0)
+				} else {
+					switch user.Role {
+					case "user":
+						if opt == "1" {
+							paket.TambahPaket()
+						} else if opt == "2" {
+							fmt.Print("Cek Paket belum tersedia.\n\n")
+						} else {
+							fmt.Print("Pilihan tidak valid.\n\n")
+						}
+					case "admin":
+						if opt == "1" {
+							paket.TambahPaket()
+						} else if opt == "2" {
+							paket.LihatPaket()
+						}
+					}
+				}
+			}
+		} else if DEBUG_USER {
+			var user types.User
+			user.Role = "user"
+			for {
+				switch user.Role {
+				case "user":
+					users.MenuUser()
+				case "kurir":
+					kurir.MenuKurir()
+				case "admin":
+					admin.MenuAdmin()
+				}
+
+				fmt.Print("Pilih menu: ")
+				opt, _ := reader.ReadString('\n')
+				opt = strings.TrimSpace(opt)
+
+				if opt == "0" {
+					fmt.Print("Kill app.\n\n")
+					os.Exit(0)
+				} else {
+					switch user.Role {
+					case "user":
+						if opt == "1" {
+							paket.TambahPaket()
+						} else if opt == "2" {
+							fmt.Print("Cek Paket belum tersedia.\n\n")
+						} else {
+							fmt.Print("Pilihan tidak valid.\n\n")
+						}
+					}
+				}
+			}
+		} else {
+			fmt.Println("Pilih opsi:")
+			fmt.Println("1. Register")
+			fmt.Println("2. Login")
+			fmt.Println("0. Keluar")
+			fmt.Print("Masukkan pilihan (1/2/0): ")
+			choice, _ := reader.ReadString('\n')
+			choice = strings.TrimSpace(choice)
+
+			switch choice {
+			case "1":
+				register()
+			case "2":
+				user, loggedIn := login()
+				if loggedIn {
+					for {
+						switch user.Role {
+						case "user":
+							users.MenuUser()
+						case "kurir":
+							kurir.MenuKurir()
+						case "admin":
+							admin.MenuAdmin()
+						}
+
+						fmt.Print("Pilih menu: ")
+						opt, _ := reader.ReadString('\n')
+						opt = strings.TrimSpace(opt)
+
+						if opt == "0" {
+							fmt.Print("Logout berhasil.\n\n")
+							break
+						} else {
+							switch user.Role {
+							case "user":
+								if opt == "1" {
+									paket.TambahPaket()
+								} else if opt == "2" {
+									fmt.Print("Cek Paket belum tersedia.\n\n")
+								} else {
+									fmt.Print("Pilihan tidak valid.\n\n")
+								}
+							case "admin":
+								if opt == "1" {
+									paket.TambahPaket()
+								} else if opt == "2" {
+									paket.LihatPaket()
+								}
+							}
+						}
+					}
+				}
+			case "0":
+				fmt.Println("Terima kasih, sampai jumpa!")
+				return
+			default:
+				fmt.Print("Pilihan tidak valid.\n\n")
+			}
 		}
 	}
 }

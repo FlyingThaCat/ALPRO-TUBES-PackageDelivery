@@ -11,4 +11,6 @@ type Paket struct {
 	ReceiverCity 	string
 	Status 			[]string
 	CreatedAt 		time.Time
+	UpdatedAt 		time.Time
+	Kurir 			string
 }

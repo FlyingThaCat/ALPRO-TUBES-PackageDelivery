@@ -36,8 +36,8 @@
 - cek paket    [X]
 
 //admin
-- tambah paket []
-- lihat paket  [-]
+- tambah paket [X]
+- lihat paket  [X]
 - update paket []
 - hapus paket  []
 

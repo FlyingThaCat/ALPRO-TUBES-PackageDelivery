@@ -17,9 +17,9 @@ import (
 	"PackageDelivery/datas"
 )
 
-var DEBUG_ADMIN = false
+var DEBUG_ADMIN = true
 var DEBUG_KURIR = false
-var DEBUG_USER = true
+var DEBUG_USER = false
 
 func register() {
 	reader := bufio.NewReader(os.Stdin)

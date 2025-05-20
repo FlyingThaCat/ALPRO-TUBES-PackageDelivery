@@ -47,11 +47,11 @@
 - update kurir [X]
 - hapus kurir  [X]
 
-- assign paket ke kurir []
+- assign paket ke kurir [X]
 
 //kurir
-- lihat assigned kurir []
-- lihat paket          []
+- lihat assigned paket []
+- ubah status paket    []
 
 //system
 - hitung harga         []

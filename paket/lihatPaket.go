@@ -8,8 +8,10 @@ import (
 	"text/tabwriter"
 )
 
-func LihatPaket() {
-	utils.ClearScreen()
+func LihatPaket(clear bool) {
+	if clear {
+		utils.ClearScreen()
+	}
 	fmt.Println("\n=== Daftar Paket ===")
 
 	// Buat tabwriter dengan lebar kolom otomatis, padding 2 spasi
@@ -47,5 +49,7 @@ func LihatPaket() {
 	w.Flush()
 	fmt.Print("====================\n\n")
 
-	utils.EnterToContinue()
+	if clear {
+		utils.EnterToContinue()
+	}
 }

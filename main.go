@@ -109,7 +109,7 @@ func main() {
 						if opt == "1" {
 							paket.TambahPaket()
 						} else if opt == "2" {
-							paket.LihatPaket()
+							paket.LihatPaket(true)
 						} else if opt == "3" {
 							admin.EditPaket()
 						} else if opt == "4" {
@@ -117,11 +117,15 @@ func main() {
 						} else if opt == "5" {
 							admin.TambahKurir()
 						} else if opt == "6" {
-							admin.LihatKurir()
+							admin.LihatKurir(true)
 						} else if opt == "7" {
 							admin.EditKurir()
 						} else if opt == "8" {
 							admin.HapusKurir()
+						} else if opt == "9" {
+							admin.AssignPaket()
+						} else {
+							fmt.Print("Pilihan tidak valid.\n\n")
 						}
 					}
 				}
@@ -160,7 +164,7 @@ func main() {
 						if opt == "1" {
 							paket.TambahPaket()
 						} else if opt == "2" {
-							paket.LihatPaket()
+							paket.LihatPaket(true)
 						}
 					}
 				}
@@ -245,7 +249,7 @@ func main() {
 								if opt == "1" {
 									paket.TambahPaket()
 								} else if opt == "2" {
-									paket.LihatPaket()
+									paket.LihatPaket(true)
 								} else if opt == "3" {
 									admin.EditPaket()
 								} else if opt == "4" {
@@ -253,11 +257,13 @@ func main() {
 								} else if opt == "5" {
 									admin.TambahKurir()
 								} else if opt == "6" {
-									admin.LihatKurir()
+									admin.LihatKurir(true)
 								} else if opt == "7" {
 									admin.EditKurir()
 								} else if opt == "8" {
 									admin.HapusKurir()
+								} else if opt == "9" {
+									admin.AssignPaket()
 								} else {
 									fmt.Print("Pilihan tidak valid.\n\n")
 								}

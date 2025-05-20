@@ -8,8 +8,10 @@ import (
 	"text/tabwriter"
 )
 
-func LihatKurir() {
-	utils.ClearScreen()
+func LihatKurir(clear bool) {
+	if clear {
+		utils.ClearScreen()
+	}
 	fmt.Println("\n=== Daftar Kurir ===")
 	
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
@@ -24,5 +26,7 @@ func LihatKurir() {
 	}
 	w.Flush()
 	fmt.Print("====================\n\n")
-	utils.EnterToContinue()
+	if clear {
+		utils.EnterToContinue()
+	}
 }

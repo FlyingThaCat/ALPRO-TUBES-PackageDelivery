@@ -3,10 +3,12 @@ package admin
 import (
 	"PackageDelivery/datas"
 	"PackageDelivery/types"
+	"PackageDelivery/utils"
 	"fmt"
 )
 
 func TambahKurir() {
+	utils.ClearScreen()
 	// Fungsi untuk menambahkan kurir baru
 	var username, password string
 
@@ -25,4 +27,6 @@ func TambahKurir() {
 	// Simpan kurir ke database (simulasi)
 	datas.UsersDB = append(datas.UsersDB, types.User{Username: username, Password: password, Role: "kurir"})
 	fmt.Println("Kurir berhasil ditambahkan.")
+
+	utils.EnterToContinue()
 }

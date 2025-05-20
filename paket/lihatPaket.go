@@ -47,10 +47,5 @@ func LihatPaket() {
 	w.Flush()
 	fmt.Print("====================\n\n")
 
-	// press enter to continue
-	fmt.Println("Tekan Enter untuk melanjutkan...")
-	var input string
-	fmt.Scanln(&input)
-	fmt.Println("Melanjutkan...")
-	fmt.Print("\n\n")
+	utils.EnterToContinue()
 }

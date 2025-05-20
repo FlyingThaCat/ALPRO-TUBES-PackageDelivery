@@ -29,7 +29,7 @@ func register() {
 	username, _ := reader.ReadString('\n')
 	username = strings.TrimSpace(username)
 
-	if user := utils.FindUserByUsername(username); user.Username != "" {
+	if user := datas.FindUserByUsername(username); user.Username != "" {
 		fmt.Print("Username sudah ada, silakan coba lagi.\n\n")
 		return
 	}
@@ -59,7 +59,7 @@ func login() (*types.User, bool) {
 	password, _ := reader.ReadString('\n')
 	password = strings.TrimSpace(password)
 
-	user := utils.FindUserByUsername(username)
+	user := datas.FindUserByUsername(username)
 	if user.Username == "" {
 		fmt.Print("Username tidak ditemukan.\n\n")
 		return nil, false
@@ -114,6 +114,10 @@ func main() {
 							admin.EditPaket()
 						} else if opt == "4" {
 							admin.HapusPaket()
+						} else if opt == "5" {
+							admin.TambahKurir()
+						} else if opt == "6" {
+							datas.ListAllKurir()
 						}
 					}
 				}
@@ -228,7 +232,7 @@ func main() {
 							case "user":
 								if opt == "1" {
 									paket.TambahPaket()
-								} else if opt == "2" {			
+								} else if opt == "2" {
 									users.CekPaket()
 								} else {
 									fmt.Print("Pilihan tidak valid.\n\n")
@@ -242,6 +246,10 @@ func main() {
 									admin.EditPaket()
 								} else if opt == "4" {
 									admin.HapusPaket()
+								} else if opt == "5" {
+									admin.TambahKurir()
+								} else if opt == "6" {
+									datas.ListAllKurir()
 								} else {
 									fmt.Print("Pilihan tidak valid.\n\n")
 								}

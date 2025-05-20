@@ -43,7 +43,7 @@
 - hapus paket  [X]
 
 - tambah kurir [X]
-- lihat kurir  []
+- lihat kurir  [-] Partial
 - update kurir []
 - hapus kurir  []
 

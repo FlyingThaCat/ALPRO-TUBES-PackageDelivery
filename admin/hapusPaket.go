@@ -2,6 +2,7 @@ package admin
 
 import (
 	"PackageDelivery/paket"
+	"PackageDelivery/utils"
 	"fmt"
 )
 
@@ -19,4 +20,6 @@ func HapusPaket() {
 	}
 
 	fmt.Printf("Paket dengan No Resi %s telah dihapus.\n\n", noResi)
+
+	utils.EnterToContinue()
 }

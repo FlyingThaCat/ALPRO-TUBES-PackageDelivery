@@ -2,6 +2,7 @@ package paket
 
 import (
 	"PackageDelivery/types"
+	"PackageDelivery/utils"
 	"fmt"
 )
 
@@ -24,10 +25,5 @@ func DetailPaket(paket types.Paket){
 	fmt.Println("Paket berhasil ditambahkan.")
 	fmt.Print("=== Detail Paket ===\n\n")
 
-	// press enter to continue
-	fmt.Println("Tekan Enter untuk melanjutkan...")
-	var input string
-	fmt.Scanln(&input)
-	fmt.Println("Melanjutkan...")
-	fmt.Print("\n\n")
+	utils.EnterToContinue()
 }

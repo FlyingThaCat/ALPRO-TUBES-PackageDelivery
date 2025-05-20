@@ -250,6 +250,10 @@ func main() {
 									admin.TambahKurir()
 								} else if opt == "6" {
 									datas.ListAllKurir()
+								} else if opt == "7" {
+									fmt.Print("Edit Kurir belum tersedia.\n\n")
+								} else if opt == "8" {
+									admin.HapusKurir()
 								} else {
 									fmt.Print("Pilihan tidak valid.\n\n")
 								}

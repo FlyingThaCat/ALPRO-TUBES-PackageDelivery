@@ -43,7 +43,7 @@
 - hapus paket  [X]
 
 - tambah kurir [X]
-- lihat kurir  [-] Partial
+- lihat kurir  [-] Partial, attribute kurang
 - update kurir []
 - hapus kurir  []
 

@@ -8,7 +8,8 @@ import (
 
 func HapusPaket() {
 	var noResi string
-	fmt.Print("\n=== Hapus Paket ===\n")
+	utils.ClearScreen()
+	fmt.Print("=== Hapus Paket ===\n")
 	fmt.Print("Masukkan No Resi Paket yang ingin dihapus: ")
 	fmt.Scanln(&noResi)
 

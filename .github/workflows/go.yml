@@ -52,5 +52,5 @@ jobs:
     - name: artifact
       uses: actions/upload-artifact@v4
       with:
-        name: PackageDelivery-windows-amd64.exe
+        name: PackageDelivery-windows-amd64
         path: PackageDelivery.exe

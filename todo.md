@@ -44,7 +44,7 @@
 
 - tambah kurir [X]
 - lihat kurir  [X]
-- update kurir []
+- update kurir [X]
 - hapus kurir  [X]
 
 - assign paket ke kurir []

@@ -3,6 +3,7 @@ package paket
 import (
 	"PackageDelivery/datas"
 	"PackageDelivery/types"
+	"PackageDelivery/utils"
 	"bufio"
 	"fmt"
 	"os"
@@ -12,6 +13,7 @@ import (
 
 
 func UbahPaket(paket types.Paket) {
+	utils.ClearScreen()
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("=== Ubah Paket ===")
@@ -58,6 +60,7 @@ func UbahPaket(paket types.Paket) {
 		}
 	}
 
+	utils.ClearScreen()
 	fmt.Println("\nPaket berhasil diubah:")
 	fmt.Printf("No Resi: %s\n", paket.NoResi)
 	fmt.Printf("Tipe: %s\n", paket.Tipe)
@@ -68,4 +71,5 @@ func UbahPaket(paket types.Paket) {
 	fmt.Printf("Status: %v\n", paket.Status)
 	fmt.Printf("Dibuat pada: %s\n", paket.CreatedAt.Format("2006-01-02 15:04:05"))
 	fmt.Printf("Diperbarui pada: %s\n", paket.UpdatedAt.Format("2006-01-02 15:04:05"))
+	utils.EnterToContinue()
 }

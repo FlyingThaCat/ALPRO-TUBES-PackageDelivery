@@ -118,6 +118,10 @@ func main() {
 							admin.TambahKurir()
 						} else if opt == "6" {
 							admin.LihatKurir()
+						} else if opt == "7" {
+							admin.EditKurir()
+						} else if opt == "8" {
+							admin.HapusKurir()
 						}
 					}
 				}
@@ -251,7 +255,7 @@ func main() {
 								} else if opt == "6" {
 									admin.LihatKurir()
 								} else if opt == "7" {
-									fmt.Print("Edit Kurir belum tersedia.\n\n")
+									admin.EditKurir()
 								} else if opt == "8" {
 									admin.HapusKurir()
 								} else {

@@ -3,6 +3,7 @@ package datas
 import (
 	"PackageDelivery/types"
 	"fmt"
+	"time"
 )
 
 var PaketDB = []types.Paket{}
@@ -27,7 +28,7 @@ func AssignPaketToKurir(username string, noResi string) bool {
 
 	// Assign paket ke kurir
 	paket.Kurir = username
-	
+
 	// modify usersDB
 	for i, user := range UsersDB {
 		if user.Username == username {
@@ -69,4 +70,21 @@ func UpdatePaket(paket types.Paket) {
 			return
 		}
 	}
+}
+
+func AddPaket(paket types.Paket) {
+	for _, p := range PaketDB {
+		if p.NoResi == paket.NoResi {
+			fmt.Println("Paket dengan nomor resi tersebut sudah ada.")
+			return
+		}
+	}
+
+	now := time.Now()
+	paket.CreatedAt = now
+	paket.UpdatedAt = now
+	paket.Status = append(paket.Status, "Paket dibuat")
+
+	PaketDB = append(PaketDB, paket)
+	fmt.Println("Paket berhasil ditambahkan.")
 }

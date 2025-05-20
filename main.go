@@ -74,6 +74,8 @@ func login() (*types.User, bool) {
 		fmt.Printf("Login berhasil, selamat datang %s!\n\n", user.Username)
 	}
 
+	utils.SetLoggedInUsername(user.Username)
+
 	return &user, true
 }
 
@@ -218,6 +220,7 @@ func main() {
 			case "2":
 				user, loggedIn := login()
 				if loggedIn {
+
 					for {
 						switch user.Role {
 						case "user":
@@ -236,6 +239,7 @@ func main() {
 							fmt.Print("Logout berhasil.\n\n")
 							break
 						} else {
+
 							switch user.Role {
 							case "user":
 								if opt == "1" {
@@ -264,6 +268,15 @@ func main() {
 									admin.HapusKurir()
 								} else if opt == "9" {
 									admin.AssignPaket()
+								} else {
+									fmt.Print("Pilihan tidak valid.\n\n")
+								}
+							case "kurir":
+								fmt.Println("masuk sini")
+								if opt == "1" {
+									kurir.CheckMyPaket()
+								} else if opt == "2" {
+									kurir.UpdateStatus()
 								} else {
 									fmt.Print("Pilihan tidak valid.\n\n")
 								}

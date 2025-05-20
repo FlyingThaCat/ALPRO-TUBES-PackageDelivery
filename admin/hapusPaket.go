@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"PackageDelivery/paket"
+	"PackageDelivery/datas"
 	"PackageDelivery/utils"
 	"fmt"
 )
@@ -13,7 +13,7 @@ func HapusPaket() {
 	fmt.Print("Masukkan No Resi Paket yang ingin dihapus: ")
 	fmt.Scanln(&noResi)
 
-	ok := paket.HapusPaket(noResi)
+	ok := datas.HapusPaket(noResi)
 
 	if !ok {
 		fmt.Println("Paket tidak dapat dihapus. No Resi tidak ditemukan.")

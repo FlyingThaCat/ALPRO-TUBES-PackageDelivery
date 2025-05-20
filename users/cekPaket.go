@@ -1,6 +1,7 @@
 package users
 
 import (
+	"PackageDelivery/datas"
 	"PackageDelivery/paket"
 	"PackageDelivery/utils"
 	"fmt"
@@ -12,7 +13,7 @@ func CekPaket() {
 	fmt.Println("=== Cek Paket ===")
 	fmt.Print("Masukkan No Resi: ")
 	fmt.Scanln(&noResi)
-	found := paket.CariPaket(noResi)
+	found := datas.CariPaket(noResi)
 	if found.NoResi == "" {
 		fmt.Println("Paket tidak ditemukan.")
 	} else {

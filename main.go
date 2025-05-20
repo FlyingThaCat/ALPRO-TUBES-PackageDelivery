@@ -117,7 +117,7 @@ func main() {
 						} else if opt == "5" {
 							admin.TambahKurir()
 						} else if opt == "6" {
-							datas.ListAllKurir()
+							admin.LihatKurir()
 						}
 					}
 				}
@@ -249,7 +249,7 @@ func main() {
 								} else if opt == "5" {
 									admin.TambahKurir()
 								} else if opt == "6" {
-									datas.ListAllKurir()
+									admin.LihatKurir()
 								} else if opt == "7" {
 									fmt.Print("Edit Kurir belum tersedia.\n\n")
 								} else if opt == "8" {

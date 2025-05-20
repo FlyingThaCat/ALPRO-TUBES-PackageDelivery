@@ -9,7 +9,7 @@ import (
 func HapusKurir() {
 	var username string
 	utils.ClearScreen()
-	fmt.Print("=== Hapus Paket ===\n")
+	fmt.Print("=== Hapus Kurir ===\n")
 	fmt.Print("Masukkan username kurir yang ingin dihapus: ")
 	fmt.Scanln(&username)
 

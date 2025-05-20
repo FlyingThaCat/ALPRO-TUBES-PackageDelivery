@@ -10,22 +10,31 @@ import (
 func TambahKurir() {
 	utils.ClearScreen()
 	// Fungsi untuk menambahkan kurir baru
-	var username, password string
+	var kurir types.User
 
 	println("=== Tambah Kurir ===")
+	print("Masukkan Nama: ")
+	fmt.Scanln(&kurir.Nama)
 	print("Masukkan Username: ")
-	fmt.Scanln(&username)
+	fmt.Scanln(&kurir.Username)
 	print("Masukkan Password: ")
-	fmt.Scanln(&password)
+	fmt.Scanln(&kurir.Password)
 
+	kurir.Role = "kurir"
+	
 	// Validasi username dan password
-	if username == "" || password == "" {
+	if kurir.Username == "" || kurir.Password == "" {
 		fmt.Println("Username dan password tidak boleh kosong.")
 		return
 	}
 
+	if cariKurir := datas.FindUserByUsername(kurir.Username); cariKurir.Username != "" {
+		fmt.Println("Username sudah terdaftar.")
+		return
+	}
+
 	// Simpan kurir ke database (simulasi)
-	datas.UsersDB = append(datas.UsersDB, types.User{Username: username, Password: password, Role: "kurir"})
+	datas.UsersDB = append(datas.UsersDB, kurir)
 	fmt.Println("Kurir berhasil ditambahkan.")
 
 	utils.EnterToContinue()

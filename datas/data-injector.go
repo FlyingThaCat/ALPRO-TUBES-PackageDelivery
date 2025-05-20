@@ -7,7 +7,7 @@ import (
 
 func Init() {
 	UsersDB = append(UsersDB, types.User{Username: "admin", Password: "1", Role: "admin"})
-	UsersDB = append(UsersDB, types.User{Username: "kurir", Password: "1", Role: "kurir"})
+	UsersDB = append(UsersDB, types.User{Nama: "kurir", Username: "kurir", Password: "1", Role: "kurir"})
 	UsersDB = append(UsersDB, types.User{Username: "user", Password: "1", Role: "user"})
 
 	PaketDB = append(PaketDB, types.Paket{NoResi: "1", Tipe: "Reguler", Berat: 1, Harga: 10000, SenderCity: "Jakarta", ReceiverCity: "Depok", Status: []string{"Paket Dibuat"}, CreatedAt: time.Now(), UpdatedAt: time.Now(), Kurir: "" })

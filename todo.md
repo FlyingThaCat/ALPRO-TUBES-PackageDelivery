@@ -43,9 +43,9 @@
 - hapus paket  [X]
 
 - tambah kurir [X]
-- lihat kurir  [-] Partial, attribute kurang
+- lihat kurir  [X]
 - update kurir []
-- hapus kurir  []
+- hapus kurir  [X]
 
 - assign paket ke kurir []
 

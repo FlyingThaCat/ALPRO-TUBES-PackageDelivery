@@ -35,7 +35,9 @@ func CheckMyPaket() {
 		return
 	}
 
+	utils.EnterToContinue()
 	fmt.Println("=== Daftar Paket Anda ===")
+	fmt.Print(user.Pakets)
 	for i, paket := range user.Pakets {
 		utils.EnterToContinue()
 		fmt.Printf("%d. No Resi: %s | Tipe: %s | Dari %s ke %s | Status Terakhir: %s\n",

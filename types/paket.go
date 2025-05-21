@@ -7,9 +7,9 @@ type Paket struct {
 	Tipe         string
 	Berat        float64
 	Harga        float64
-	SenderCity   string
-	ReceiverCity string
-	Status       []string // Paket Dibuat, Paket Telah Diserahkan ke kurir, Paket dalam Perjalanan, Paket Telah Sampai di tujuan
+	SenderCity   Cities
+	ReceiverCity Cities
+	Status       []string
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	Kurir        string

@@ -11,13 +11,12 @@ import (
 	"time"
 )
 
-
 func UbahPaket(paket types.Paket) {
 	utils.ClearScreen()
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("=== Ubah Paket ===")
-	
+
 	inputWithDefault := func(prompt string, current string) string {
 		fmt.Printf("%s [%s]: ", prompt, current)
 		text, _ := reader.ReadString('\n')
@@ -40,10 +39,24 @@ func UbahPaket(paket types.Paket) {
 	fmt.Sscanf(hargaStr, "%f", &paket.Harga)
 
 	// Kota Pengirim
-	paket.SenderCity = inputWithDefault("Kota Pengirim", paket.SenderCity)
+	senderCityStr := inputWithDefault("Kota Pengirim", string(paket.SenderCity))
+	senderCity, err := utils.ParseCity(senderCityStr)
+	if err != nil {
+		fmt.Println("Kota pengirim tidak valid:", err)
+		utils.EnterToContinue()
+		return
+	}
+	paket.SenderCity = senderCity
 
 	// Kota Tujuan
-	paket.ReceiverCity = inputWithDefault("Kota Tujuan", paket.ReceiverCity)
+	receiverCityStr := inputWithDefault("Kota Tujuan", string(paket.ReceiverCity))
+	receiverCity, err := utils.ParseCity(receiverCityStr)
+	if err != nil {
+		fmt.Println("Kota tujuan tidak valid:", err)
+		utils.EnterToContinue()
+		return
+	}
+	paket.ReceiverCity = receiverCity
 
 	// Status (untuk contoh ini kita tampilkan sebagai satu string, tidak array)
 	statusStr := inputWithDefault("Status (pisah dengan koma jika banyak)", strings.Join(paket.Status, ","))

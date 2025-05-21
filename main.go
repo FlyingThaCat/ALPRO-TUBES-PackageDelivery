@@ -272,7 +272,6 @@ func main() {
 									fmt.Print("Pilihan tidak valid.\n\n")
 								}
 							case "kurir":
-								fmt.Println("masuk sini")
 								if opt == "1" {
 									kurir.CheckMyPaket()
 								} else if opt == "2" {

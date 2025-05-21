@@ -88,3 +88,12 @@ func AddPaket(paket types.Paket) {
 	PaketDB = append(PaketDB, paket)
 	fmt.Println("Paket berhasil ditambahkan.")
 }
+
+func FindPaketByNoResi(noResi string) *types.Paket {
+	for i := range PaketDB {
+		if PaketDB[i].NoResi == noResi {
+			return &PaketDB[i]
+		}
+	}
+	return nil
+}

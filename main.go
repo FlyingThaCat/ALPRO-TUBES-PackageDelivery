@@ -6,6 +6,9 @@ import (
 	"os"
 	"strings"
 
+	"PackageDelivery/paket"
+	"PackageDelivery/utils"
+
 	"PackageDelivery/admin"
 	"PackageDelivery/kurir"
 	"PackageDelivery/types"
@@ -14,16 +17,20 @@ import (
 	"PackageDelivery/datas"
 )
 
+var DEBUG_ADMIN = false
+var DEBUG_KURIR = false
+var DEBUG_USER = false
 
 func register() {
+	utils.ClearScreen()
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("=== Register User ===")
+	fmt.Print("=== Register User ===\n")
 	fmt.Print("Masukkan username: ")
 	username, _ := reader.ReadString('\n')
 	username = strings.TrimSpace(username)
 
-	if _, exists := datas.UsersDB[username]; exists {
-		fmt.Println("Username sudah ada, silakan coba lagi.\n")
+	if user := datas.FindUserByUsername(username); user.Username != "" {
+		fmt.Print("Username sudah ada, silakan coba lagi.\n\n")
 		return
 	}
 
@@ -31,27 +38,19 @@ func register() {
 	password, _ := reader.ReadString('\n')
 	password = strings.TrimSpace(password)
 
-	fmt.Print("Masukkan role (user/kurir/admin): ")
-	role, _ := reader.ReadString('\n')
-	role = strings.TrimSpace(role)
-
-	if role != "user" && role != "kurir" && role != "admin" {
-		fmt.Println("Role tidak valid. Harus 'user', 'kurir', atau 'admin'.\n")
-		return
-	}
-
-	datas.UsersDB[username] = types.User{
+	datas.UsersDB = append(datas.UsersDB, types.User{
 		Username: username,
 		Password: password,
-		Role:     role,
-	}
+		Role:     "user",
+	})
 
-	fmt.Printf("User '%s' dengan role '%s' berhasil didaftarkan.\n\n", username, role)
+	fmt.Printf("User '%s' berhasil didaftarkan.\n\n", username)
 }
 
 func login() (*types.User, bool) {
+	utils.ClearScreen()
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("=== Login ===")
+	fmt.Printf("=== Login ===\n")
 	fmt.Print("Username: ")
 	username, _ := reader.ReadString('\n')
 	username = strings.TrimSpace(username)
@@ -60,25 +59,39 @@ func login() (*types.User, bool) {
 	password, _ := reader.ReadString('\n')
 	password = strings.TrimSpace(password)
 
-	user, ok := datas.UsersDB[username]
-	if !ok || user.Password != password {
-		fmt.Println("Username atau password salah.\n")
+	user := datas.FindUserByUsername(username)
+	if user.Username == "" {
+		fmt.Print("Username tidak ditemukan.\n\n")
+		return nil, false
+	} else if user.Password != password {
+		fmt.Print("Password salah.\n\n")
 		return nil, false
 	}
 
-	fmt.Printf("Login berhasil, selamat datang %s! (role: %s)\n\n", user.Username, user.Role)
+	if user.Role != "user" {
+		fmt.Printf("Login berhasil, selamat datang %s! (role: %s)\n\n", user.Username, user.Role)
+	} else {
+		fmt.Printf("Login berhasil, selamat datang %s!\n\n", user.Username)
+	}
+
+	utils.SetLoggedInUsername(user.Username)
+
 	return &user, true
 }
 
 func main() {
+	utils.ClearScreen()
+	datas.Init() // Inisialisasi data awal
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
+
+		// utils.ClearScreen()
 		fmt.Println("Pilih opsi:")
 		fmt.Println("1. Register")
 		fmt.Println("2. Login")
-		fmt.Println("3. Keluar")
-		fmt.Print("Masukkan pilihan (1/2/3): ")
+		fmt.Println("0. Keluar")
+		fmt.Print("Masukkan pilihan (1/2/0): ")
 		choice, _ := reader.ReadString('\n')
 		choice = strings.TrimSpace(choice)
 
@@ -88,6 +101,7 @@ func main() {
 		case "2":
 			user, loggedIn := login()
 			if loggedIn {
+
 				for {
 					switch user.Role {
 					case "user":
@@ -102,19 +116,59 @@ func main() {
 					opt, _ := reader.ReadString('\n')
 					opt = strings.TrimSpace(opt)
 
-					if opt == "3" {
-						fmt.Println("Logout berhasil.\n")
+					if opt == "0" {
+						fmt.Print("Logout berhasil.\n\n")
 						break
 					} else {
-						fmt.Printf("Menu pilihan '%s' sedang dalam pengembangan.\n\n", opt)
+
+						switch user.Role {
+						case "user":
+							if opt == "1" {
+								paket.TambahPaket()
+							} else if opt == "2" {
+								users.CekPaket()
+							} else {
+								fmt.Print("Pilihan tidak valid.\n\n")
+							}
+						case "admin":
+							if opt == "1" {
+								paket.TambahPaket()
+							} else if opt == "2" {
+								paket.LihatPaket(true)
+							} else if opt == "3" {
+								admin.EditPaket()
+							} else if opt == "4" {
+								admin.HapusPaket()
+							} else if opt == "5" {
+								admin.TambahKurir()
+							} else if opt == "6" {
+								admin.LihatKurir(true)
+							} else if opt == "7" {
+								admin.EditKurir()
+							} else if opt == "8" {
+								admin.HapusKurir()
+							} else if opt == "9" {
+								admin.AssignPaket()
+							} else {
+								fmt.Print("Pilihan tidak valid.\n\n")
+							}
+						case "kurir":
+							if opt == "1" {
+								kurir.CheckMyPaket()
+							} else if opt == "2" {
+								kurir.UpdateStatus()
+							} else {
+								fmt.Print("Pilihan tidak valid.\n\n")
+							}
+						}
 					}
 				}
 			}
-		case "3":
+		case "0":
 			fmt.Println("Terima kasih, sampai jumpa!")
 			return
 		default:
-			fmt.Println("Pilihan tidak valid.\n")
+			fmt.Print("Pilihan tidak valid.\n\n")
 		}
 	}
 }

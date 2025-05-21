@@ -1,12 +1,15 @@
 package users
 
 import (
+	"PackageDelivery/utils"
 	"fmt"
 )
 
 func MenuUser() {
+	utils.ClearScreen()
+
 	fmt.Println("=== Menu User ===")
-	fmt.Println("1. Cek Harga (limit 5 tempat)")
+	fmt.Println("1. Tambah Paket")
 	fmt.Println("2. Cek Paket")
-	fmt.Println("3. Logout")
+	fmt.Println("0. Logout")
 }

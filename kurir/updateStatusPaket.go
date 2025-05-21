@@ -51,16 +51,13 @@ func UpdateStatus() {
 			lastStatus = paket.Status[len(paket.Status)-1]
 		}
 		fmt.Printf("%d. NoResi: %s, Status terakhir: %s\n", i+1, paket.NoResi, lastStatus)
-		utils.EnterToContinue()
 	}
 
 	fmt.Print("\nMasukkan nomor urut paket yang ingin diupdate statusnya: ")
-	utils.EnterToContinue()
 	var pilih int
 	_, err := fmt.Scanln(&pilih)
 	if err != nil || pilih < 1 || pilih > len(paketList) {
 		fmt.Println("Pilihan tidak valid.")
-		utils.EnterToContinue()
 		return
 	}
 
@@ -73,20 +70,15 @@ func UpdateStatus() {
 	if statusBaru == "" {
 
 		fmt.Println("Status tidak boleh kosong.")
-		utils.EnterToContinue()
 		return
 	}
 
 	// Update status paket di DB utama
 	if updateStatusPaket(selectedPaket.NoResi, statusBaru) {
-
 		fmt.Println("Status paket berhasil diperbarui.")
-		utils.EnterToContinue()
-
 	} else {
-
 		fmt.Println("Gagal memperbarui status paket.")
-		utils.EnterToContinue()
 
 	}
+	utils.EnterToContinue()
 }

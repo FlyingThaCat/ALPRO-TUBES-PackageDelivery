@@ -1,57 +1,52 @@
-[-] Login 
- - Register user
+[-] Login
+
+- Register user
 
 [-] Login as (user)
- - Cek Harga + kirim *limit 5 tempat
- - Cek Paket
+
+- Cek Harga + kirim \*limit 5 tempat
+- Cek Paket
 
 [-] Login as (kurir)
- - Lihat Assigned Paket
-     - Update Status Paket
+
+- Lihat Assigned Paket
+  - Update Status Paket
 
 [-] Login as (admin)
- - Tambah Kurir (CRUD)
- - Assign Paket Ke Kurir
 
-// Struct Tempat
-    - city
-    - longtitude
-    - langtitude
+- Tambah Kurir (CRUD)
+- Assign Paket Ke Kurir
 
-// Struct User
-    - username
-    - password
-    - role
-    - paket
+// Struct Tempat - city - longtitude - langtitude
 
-// Struct Paket
-    - tipe
-    - berat
-    - harga
-    - route -> []array of kota
-    - status -> []array of string
-    - createdAt
+// Struct User - username - password - role - paket
+
+// Struct Paket - tipe - berat - harga - route -> []array of kota - status -> []array of string - createdAt
 
 //user
+
 - tambah paket [X]
-- cek paket    [X]
+- cek paket [X]
 
 //admin
+
 - tambah paket [X]
-- lihat paket  [X]
+- lihat paket [X]
 - update paket [X]
-- hapus paket  [X]
+- hapus paket [X]
 
 - tambah kurir [X]
-- lihat kurir  [X]
+- lihat kurir [X]
 - update kurir [X]
-- hapus kurir  [X]
+- hapus kurir [X]
 
 - assign paket ke kurir [X]
 
 //kurir
-- lihat assigned paket []
-- ubah status paket    []
+
+- lihat assigned paket [X] -> Belum rapih
+- ubah status paket []
 
 //system
-- hitung harga         []
+
+- hitung harga [X] -> Aman

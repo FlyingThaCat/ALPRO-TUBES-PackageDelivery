@@ -5,66 +5,123 @@ import (
 	"PackageDelivery/types"
 	"PackageDelivery/utils"
 	"fmt"
+	"strings"
 	"time"
 )
 
-func TambahPaket() {
-	utils.ClearScreen()
-	var input types.Paket
-	var confirm string
+const PricePerKm = 5000.0
 
-	fmt.Print("=== Tambah Paket ===\n")
+func CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon float64) (float64, float64) {
+	distance := utils.HitungTwoPoints(senderLat, senderLon, receiverLat, receiverLon)
+	price := utils.CalculatePrice(senderLat, senderLon, receiverLat, receiverLon, PricePerKm)
+	return distance, price
+}
+
+func Confirm(prompt string) bool {
+	var input string
+	fmt.Print(prompt + " (y/n): ")
+	fmt.Scanln(&input)
+	return input == "y" || input == "Y"
+}
+
+func InputPackageType() (string, error) {
 	fmt.Println("Tipe Paket:")
 	for _, tipe := range types.PackageTypes {
 		fmt.Printf("- %s\n", tipe)
 	}
-
 	fmt.Print("Masukkan tipe paket: ")
-	fmt.Scanln(&input.Tipe)
 
-	if !types.IsValidPackageType(input.Tipe) {
-		fmt.Println("Tipe paket tidak valid.")
+	var tipe string
+	fmt.Scanln(&tipe)
+	tipe = strings.TrimSpace(tipe)
+
+	if !types.IsValidPackageType(tipe) {
+		return "", fmt.Errorf("tipe paket tidak valid")
+	}
+	return tipe, nil
+}
+
+func InputCity(prompt string) (types.Tempat, error) {
+	fmt.Println(prompt)
+	for _, kota := range types.Kota {
+		fmt.Printf("- %s\n", kota)
+	}
+	fmt.Printf("Masukkan %s: ", strings.ToLower(prompt))
+
+	var cityName string
+	fmt.Scanln(&cityName)
+	cityName = strings.TrimSpace(cityName)
+
+	valid := false
+	for _, kota := range types.Kota {
+		if strings.EqualFold(kota, cityName) {
+			valid = true
+			cityName = kota
+			break
+		}
+	}
+	if !valid {
+		return types.Tempat{}, fmt.Errorf("kota %s tidak ditemukan", cityName)
+	}
+
+	for _, tempat := range types.DaftarTempat {
+		if tempat.City == cityName {
+			return tempat, nil
+		}
+	}
+
+	return types.Tempat{}, fmt.Errorf("koordinat untuk kota %s tidak ditemukan", cityName)
+}
+
+func TambahPaket() {
+	utils.ClearScreen()
+
+	tipe, err := InputPackageType()
+	if err != nil {
+		fmt.Println(err.Error())
 		return
 	}
 
 	fmt.Print("Masukkan berat paket (kg): ")
-	fmt.Scanln(&input.Berat)
+	var berat float64
+	fmt.Scanln(&berat)
 
-	fmt.Println("Kota Pengirim: ")
-	for _, tipe := range types.Kota {
-		fmt.Printf("- %s\n", tipe)
+	senderCity, err := InputCity("Kota Pengirim")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
 	}
-	fmt.Print("Masukkan kota pengirim: ")
-	fmt.Scanln(&input.SenderCity)
 
-	fmt.Println("Kota Tujuan:")
-	for _, tipe := range types.Kota {
-		fmt.Printf("- %s\n", tipe)
+	receiverCity, err := InputCity("Kota Tujuan")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
 	}
-	fmt.Print("Masukkan kota tujuan: ")
-	fmt.Scanln(&input.ReceiverCity)
 
-	// calculate price (for now dummy value)
-	input.Harga = 10000.0
+	distance, price := CalculatePackagePrice(senderCity.Latitude, senderCity.Longitude, receiverCity.Latitude, receiverCity.Longitude)
 
-	fmt.Printf("\n=== Konfirmasi Paket ===\n")
-	fmt.Println("Harga paket: Rp", input.Harga)
-	fmt.Printf("Apakah Anda yakin ingin menambahkan paket ini? (y/n): ")
-	fmt.Scanln(&confirm)
-	if confirm != "y" && confirm != "Y" {
+	fmt.Printf("\nJarak antar kota: %.2f km\n", distance)
+	fmt.Printf("Harga paket: Rp %.0f\n", price)
+
+	if !Confirm("Apakah Anda yakin ingin menambahkan paket ini?") {
 		fmt.Println("Paket tidak ditambahkan.")
 		return
 	}
 
-	// generate unique tracking number
+	// Buat paket baru
+	var input types.Paket
+	input.Tipe = tipe
+	input.Berat = berat
+	input.SenderCity = types.Cities(senderCity.City)
+	input.ReceiverCity = types.Cities(receiverCity.City)
+	input.Harga = price
 	input.NoResi = fmt.Sprintf("%d", len(datas.PaketDB)+1)
 	input.CreatedAt = time.Now()
 	input.UpdatedAt = time.Now()
-	// when creating a new package, the status is always "Dibuat"
 	input.Status = []string{"Paket Dibuat"}
 
 	datas.PaketDB = append(datas.PaketDB, input)
-	fmt.Println("Paket berhasil ditambahkan.")
 
+	fmt.Println("Paket berhasil ditambahkan.")
 	DetailPaket(input)
 }

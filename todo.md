@@ -45,8 +45,18 @@
 //kurir
 
 - lihat assigned paket [X] -> Belum rapih
-- ubah status paket []
+- ubah status paket [X]
 
 //system
 
 - hitung harga [X] -> Aman
+
+// New Goals
+
+- Sorting Jarak Paket
+- Kalkulasi Harga Dirubah, Berdasar Jenis, dan Berat
+- Menambahkan jumlah paket yang diassign ke kurir
+- Sorting paket kurir count
+- CLI UI UPDATES (Kasih Dekorasi)
+- Double Confirmation disetiap CRUD
+- Ganti yang ketik manual jadi angka

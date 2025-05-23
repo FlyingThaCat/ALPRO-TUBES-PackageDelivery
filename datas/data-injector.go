@@ -27,6 +27,38 @@ func Init() {
 				UpdatedAt:    now,
 				Kurir:        "kurir",
 			},
+			{
+			NoResi:       "1",
+			Tipe:         "Reguler",
+			Berat:        1,
+			Harga:        10000,
+			SenderCity:   types.Jakarta,
+			ReceiverCity: types.Depok,
+			Status:       []string{"Paket Dibuat"},
+			CreatedAt:    now,
+			UpdatedAt:    now,
+			Kurir:        "",
+		},
+		},
+	})
+	UsersDB = append(UsersDB, types.User{
+		Nama:     "kurir2",
+		Username: "kurir2",
+		Password: "1",
+		Role:     "kurir",
+		Pakets: []types.Paket{
+			{
+			NoResi:       "3",
+			Tipe:         "SameDay",
+			Berat:        2,
+			Harga:        60000,
+			SenderCity:   types.Depok,
+			ReceiverCity: types.Bogor,
+			Status:       []string{"Paket Dibuat"},
+			CreatedAt:    now,
+			UpdatedAt:    now,
+			Kurir:        "",
+		},
 		},
 	})
 	UsersDB = append(UsersDB, types.User{Username: "user", Password: "1", Role: "user", Pakets: []types.Paket{}})

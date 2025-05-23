@@ -13,11 +13,7 @@ func LihatPaket(clear bool) {
 		utils.ClearScreen()
 	}
 	fmt.Println("\n=== Daftar Paket ===")
-
-	// Buat tabwriter dengan lebar kolom otomatis, padding 2 spasi
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-
-	// Header kolom
 	fmt.Fprintln(w, "No Resi\tTipe\tBerat\tHarga\tKota Pengirim\tKota Tujuan\tStatus Terakhir\tDibuat Pada\tDiperbarui Pada\tKurir")
 
 	for _, paket := range datas.PaketDB {

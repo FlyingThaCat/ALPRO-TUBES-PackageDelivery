@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"PackageDelivery/datas"
 	"PackageDelivery/kurir"
 	"PackageDelivery/utils"
 	"fmt"
@@ -13,7 +12,7 @@ func EditKurir() {
 	fmt.Print("Masukkan Username Kurir yang ingin diedit: ")
 	var username string
 	fmt.Scanln(&username)
-	found := datas.FindUserByUsername(username)
+	found := utils.FindUserByUsername(username)
 	if found.Username == "" {
 		fmt.Println("Kurir tidak ditemukan.")
 		return

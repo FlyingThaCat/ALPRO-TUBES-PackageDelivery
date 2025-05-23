@@ -28,7 +28,7 @@ func TambahKurir() {
 		return
 	}
 
-	if cariKurir := datas.FindUserByUsername(kurir.Username); cariKurir.Username != "" {
+	if cariKurir := utils.FindUserByUsername(kurir.Username); cariKurir.Username != "" {
 		fmt.Println("Username sudah terdaftar.")
 		return
 	}

@@ -29,7 +29,7 @@ func register() {
 	username, _ := reader.ReadString('\n')
 	username = strings.TrimSpace(username)
 
-	if user := datas.FindUserByUsername(username); user.Username != "" {
+	if user := utils.FindUserByUsername(username); user.Username != "" {
 		fmt.Print("Username sudah ada, silakan coba lagi.\n\n")
 		return
 	}
@@ -59,7 +59,7 @@ func login() (*types.User, bool) {
 	password, _ := reader.ReadString('\n')
 	password = strings.TrimSpace(password)
 
-	user := datas.FindUserByUsername(username)
+	user := utils.FindUserByUsername(username)
 	if user.Username == "" {
 		fmt.Print("Username tidak ditemukan.\n\n")
 		return nil, false

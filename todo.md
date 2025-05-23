@@ -55,7 +55,7 @@
 
 - Sorting Jarak Paket GIBRAN
 - Kalkulasi Harga Dirubah, Berdasar Jenis, dan Berat GIBRAN
-- Menambahkan jumlah paket yang diassign ke kurir JOHN [X]
+- Menambahkan jumlah paket yang diassign ke kurir [X]
 - Sorting paket kurir count [X]
 - CLI UI UPDATES (Kasih Dekorasi) JOHN
 - Double Confirmation disetiap CRUD

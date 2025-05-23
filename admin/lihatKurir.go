@@ -27,27 +27,24 @@ func LihatKurir(clear bool) {
 		paketCounts[i] = len(k.Pakets)
 	}
 
-	type pair struct {
-		index int
-		count int
-	}
-	var pairs = make([]pair, len(paketCounts))
+	
+	var pairs = make([]types.RowPair, len(paketCounts))
 	for i := range paketCounts {
-		pairs[i] = pair {index: i, count: paketCounts[i]}
+		pairs[i] = types.RowPair{Index: i, Count: paketCounts[i]}
 	}
 
 	var indexes = make([]int, len(pairs))
 	for i := range pairs {
-		indexes[i] = pairs[i].count
+		indexes[i] = pairs[i].Count
 	}
 	utils.SortArray(indexes, "asc")
 
 	var sortedKurirs []types.User
 	for _, sortedCount := range indexes {
 		for i, p := range pairs {
-			if p.count == sortedCount && p.index != -1 {
-				sortedKurirs = append(sortedKurirs, kurirs[p.index])
-				pairs[i].index = -1
+			if p.Count == sortedCount && p.Index != -1 {
+				sortedKurirs = append(sortedKurirs, kurirs[p.Index])
+				pairs[i].Index = -1
 				break
 			}
 		}

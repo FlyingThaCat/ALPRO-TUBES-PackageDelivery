@@ -53,10 +53,10 @@
 
 // New Goals
 
-- Sorting Jarak Paket
-- Kalkulasi Harga Dirubah, Berdasar Jenis, dan Berat
-- Menambahkan jumlah paket yang diassign ke kurir
-- Sorting paket kurir count
-- CLI UI UPDATES (Kasih Dekorasi)
+- Sorting Jarak Paket GIBRAN
+- Kalkulasi Harga Dirubah, Berdasar Jenis, dan Berat GIBRAN
+- Menambahkan jumlah paket yang diassign ke kurir [X]
+- Sorting paket kurir count [X]
+- CLI UI UPDATES (Kasih Dekorasi) JOHN
 - Double Confirmation disetiap CRUD
 - Ganti yang ketik manual jadi angka

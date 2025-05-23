@@ -8,7 +8,7 @@ import (
 	"text/tabwriter"
 )
 
-func LihatPaket(clear bool) {
+func LihatPaket(clear bool, hideAssigned bool) {
 	if clear {
 		utils.ClearScreen()
 	}
@@ -17,6 +17,10 @@ func LihatPaket(clear bool) {
 	fmt.Fprintln(w, "No Resi\tTipe\tBerat\tHarga\tKota Pengirim\tKota Tujuan\tStatus Terakhir\tDibuat Pada\tDiperbarui Pada\tKurir")
 
 	for _, paket := range datas.PaketDB {
+		if hideAssigned && paket.Kurir != "" {
+			continue
+		}
+		
 		kurir := paket.Kurir
 		if kurir == "" {
 			kurir = "Belum Ditugaskan"

@@ -134,7 +134,7 @@ func main() {
 							if opt == "1" {
 								paket.TambahPaket()
 							} else if opt == "2" {
-								paket.LihatPaket(true)
+								paket.LihatPaket(true, false)
 							} else if opt == "3" {
 								admin.EditPaket()
 							} else if opt == "4" {

@@ -1,7 +1,6 @@
-package users
+package paket
 
 import (
-	"PackageDelivery/paket"
 	"PackageDelivery/utils"
 	"fmt"
 )
@@ -16,6 +15,6 @@ func CekPaket() {
 	if found.NoResi == "" {
 		fmt.Println("Paket tidak ditemukan.")
 	} else {
-		paket.DetailPaket(*found)
+		DetailPaket(*found)
 	}
 }

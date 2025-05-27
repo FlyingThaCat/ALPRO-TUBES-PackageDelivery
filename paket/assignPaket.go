@@ -1,7 +1,7 @@
-package admin
+package paket
 
 import (
-	"PackageDelivery/paket"
+	"PackageDelivery/admin"
 	"PackageDelivery/utils"
 	"fmt"
 )
@@ -10,8 +10,8 @@ func AssignPaket() {
 	utils.ClearScreen()
 	println("=== Assign Paket ===")
 	
-	paket.LihatPaket(false, true)
-	LihatKurir(false)
+	LihatPaket(false, true)
+	admin.LihatKurir(false)
 	
 	noResi := utils.GetString("Masukkan No Resi Paket yang ingin diassign: ", "Silakan masukkan No Resi yang valid.")
 	username := utils.GetString("Masukkan Username Kurir yang akan mengantarkan paket: ", "Silakan masukkan username kurir yang valid.")

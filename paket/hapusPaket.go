@@ -1,4 +1,4 @@
-package admin
+package paket
 
 import (
 	"PackageDelivery/utils"

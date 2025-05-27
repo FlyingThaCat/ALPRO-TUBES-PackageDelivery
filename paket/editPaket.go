@@ -1,7 +1,6 @@
-package admin
+package paket
 
 import (
-	"PackageDelivery/paket"
 	"PackageDelivery/utils"
 	"fmt"
 )
@@ -18,5 +17,5 @@ func EditPaket() {
 		return
 	}
 	
-	paket.UbahPaket(*found)
+	UbahPaket(*found)
 }

@@ -9,13 +9,14 @@ import (
 func EditPaket() {
 	utils.ClearScreen()
 	fmt.Println("=== Edit Paket ===")
-	fmt.Print("Masukkan No Resi Paket yang ingin diedit: ")
-	var noResi string
-	fmt.Scanln(&noResi)
+	
+	noResi := utils.GetString("Masukkan No Resi Paket yang ingin diedit: ", "Silakan masukkan No Resi yang valid.")
+	
 	found := utils.FindPaketByNoResi(noResi)
 	if found.NoResi == "" {
 		fmt.Println("Paket tidak ditemukan.")
 		return
 	}
+	
 	paket.UbahPaket(*found)
 }

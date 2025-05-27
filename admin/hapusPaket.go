@@ -6,11 +6,10 @@ import (
 )
 
 func HapusPaket() {
-	var noResi string
 	utils.ClearScreen()
 	fmt.Print("=== Hapus Paket ===\n")
-	fmt.Print("Masukkan No Resi Paket yang ingin dihapus: ")
-	fmt.Scanln(&noResi)
+	
+	noResi := utils.GetString("Masukkan No Resi Paket yang ingin dihapus: ", "Silakan masukkan No Resi yang valid.")
 
 	ok := utils.DeletePaket(noResi)
 

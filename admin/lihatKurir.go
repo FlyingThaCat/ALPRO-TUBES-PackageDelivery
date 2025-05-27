@@ -13,6 +13,7 @@ func LihatKurir(clear bool) {
 	if clear {
 		utils.ClearScreen()
 	}
+	
 	fmt.Println("\n=== Daftar Kurir ===")	
 
 	var kurirs []types.User

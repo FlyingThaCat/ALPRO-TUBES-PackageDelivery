@@ -9,9 +9,10 @@ import (
 func CekPaket() {
 	utils.ClearScreen()
 	fmt.Println("=== Cek Paket ===")
-	
-	noResi := utils.GetInput("Masukkan No Resi: ")
+
+	noResi := utils.GetString("Masukkan No Resi: ", "Silakan masukkan No Resi yang valid.")
 	found := utils.FindPaketByNoResi(noResi)
+	
 	if found.NoResi == "" {
 		fmt.Println("Paket tidak ditemukan.")
 	} else {

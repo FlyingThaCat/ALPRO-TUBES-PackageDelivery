@@ -20,19 +20,19 @@ import (
 func register() {
 	utils.ClearScreen()
 	fmt.Print("=== Register User ===\n")
-	username := utils.GetInput("Masukkan username: ")
+	username := utils.GetString("Masukkan username: ", "username tidak boleh kosong.")
 
 	if user := utils.FindUserByUsername(username); user.Username != "" {
 		fmt.Print("Username sudah ada, silakan coba lagi.\n\n")
 		return
 	}
 
-	password := utils.GetInput("Masukkan password: ")
+	password := utils.GetString("Masukkan password: ", "password tidak boleh kosong.")
 
-	datas.UsersDB = append(datas.UsersDB, types.User{
+	utils.AddUser(types.User{
 		Username: username,
 		Password: password,
-		Role:     "user",
+		Role:     "user", 
 	})
 
 	fmt.Printf("User '%s' berhasil didaftarkan.\n\n", username)
@@ -40,15 +40,10 @@ func register() {
 
 func login() (*types.User, bool) {
 	utils.ClearScreen()
-	reader := bufio.NewReader(os.Stdin)
 	fmt.Printf("=== Login ===\n")
-	fmt.Print("Username: ")
-	username, _ := reader.ReadString('\n')
-	username = strings.TrimSpace(username)
 
-	fmt.Print("Password: ")
-	password, _ := reader.ReadString('\n')
-	password = strings.TrimSpace(password)
+	username := utils.GetString("Masukkan username: ", "username tidak boleh kosong.")
+	password := utils.GetString("Masukkan password: ", "password tidak boleh kosong.")
 
 	user := utils.FindUserByUsername(username)
 	if user.Username == "" {
@@ -59,6 +54,7 @@ func login() (*types.User, bool) {
 		return nil, false
 	}
 
+	// BUGS
 	if user.Role != "user" {
 		fmt.Printf("Login berhasil, selamat datang %s! (role: %s)\n\n", user.Username, user.Role)
 	} else {
@@ -76,8 +72,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
-
-		// utils.ClearScreen()
+		utils.ClearScreen()
 		fmt.Println("Pilih opsi:")
 		fmt.Println("1. Register")
 		fmt.Println("2. Login")
@@ -107,7 +102,6 @@ func main() {
 					opt = strings.TrimSpace(opt)
 
 					if opt == "0" {
-						utils.ClearScreen()
 						fmt.Print("Logout berhasil.\n\n")
 						break
 					} else {

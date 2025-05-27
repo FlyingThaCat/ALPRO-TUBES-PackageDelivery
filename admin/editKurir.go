@@ -9,13 +9,14 @@ import (
 func EditKurir() {
 	utils.ClearScreen()
 	fmt.Println("=== Edit Kurir ===")
-	fmt.Print("Masukkan Username Kurir yang ingin diedit: ")
-	var username string
-	fmt.Scanln(&username)
+	
+	username := utils.GetString("Masukkan Username Kurir yang ingin diedit: ", "Silakan masukkan username kurir yang valid.")
+	
 	found := utils.FindUserByUsername(username)
 	if found.Username == "" {
 		fmt.Println("Kurir tidak ditemukan.")
 		return
 	}
+	
 	kurir.UbahKurir(found)
 }

@@ -7,7 +7,6 @@ import (
 
 func MenuAdmin() {
 	utils.ClearScreen()
-
 	fmt.Println("=== Menu Admin ===")
 	fmt.Println("===== Paket =====")
 	fmt.Println("1. Tambah Paket Baru")
@@ -21,5 +20,4 @@ func MenuAdmin() {
 	fmt.Println("8. Hapus Kurir")
 	fmt.Println("9. Assign Paket Ke Kurir")
 	fmt.Println("0. Logout")
-
 }

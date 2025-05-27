@@ -1,20 +1,18 @@
 package admin
 
 import (
-	"PackageDelivery/datas"
 	"PackageDelivery/utils"
 	"fmt"
 )
 
 func HapusKurir() {
-	var username string
 	utils.ClearScreen()
-	fmt.Print("=== Hapus Kurir ===\n")
-	fmt.Print("Masukkan username kurir yang ingin dihapus: ")
-	fmt.Scanln(&username)
+	fmt.Println("=== Hapus Kurir ===")
 
-	ok := datas.HapusKurir(username)
-
+	username := utils.GetString("Masukkan username kurir yang ingin dihapus: ", "Silakan masukkan username kurir yang valid.")
+	
+	ok := utils.DeleteUser(username)
+	
 	if !ok {
 		fmt.Println("Kurir tidak dapat dihapus. Username tidak ditemukan.")
 		return

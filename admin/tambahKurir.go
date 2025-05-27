@@ -9,20 +9,15 @@ import (
 
 func TambahKurir() {
 	utils.ClearScreen()
-	// Fungsi untuk menambahkan kurir baru
+	println("=== Tambah Kurir ===")
+	
 	var kurir types.User
 
-	println("=== Tambah Kurir ===")
-	print("Masukkan Nama: ")
-	fmt.Scanln(&kurir.Nama)
-	print("Masukkan Username: ")
-	fmt.Scanln(&kurir.Username)
-	print("Masukkan Password: ")
-	fmt.Scanln(&kurir.Password)
-
+	kurir.Nama = utils.GetString("Masukkan Nama: ", "Nama tidak boleh kosong.")
+	kurir.Username = utils.GetString("Masukkan Username: ", "Username tidak boleh kosong.")
+	kurir.Password = utils.GetString("Masukkan Password: ", "Password tidak boleh kosong.")
 	kurir.Role = "kurir"
 	
-	// Validasi username dan password
 	if kurir.Username == "" || kurir.Password == "" {
 		fmt.Println("Username dan password tidak boleh kosong.")
 		return

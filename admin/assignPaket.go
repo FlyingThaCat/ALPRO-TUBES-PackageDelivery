@@ -8,19 +8,13 @@ import (
 
 func AssignPaket() {
 	utils.ClearScreen()
+	println("=== Assign Paket ===")
 	
-	var noResi string
-	var username string
-
 	paket.LihatPaket(false, true)
 	LihatKurir(false)
 	
-	println("=== Assign Paket ===")
-	print("Masukkan No Resi Paket yang ingin diassign: ")
-	fmt.Scanln(&noResi)
-	
-	print("Masukkan Username Kurir yang akan mengantarkan paket: ")
-	fmt.Scanln(&username)
+	noResi := utils.GetString("Masukkan No Resi Paket yang ingin diassign: ", "Silakan masukkan No Resi yang valid.")
+	username := utils.GetString("Masukkan Username Kurir yang akan mengantarkan paket: ", "Silakan masukkan username kurir yang valid.")
 
 	foundPaket := utils.FindPaketByNoResi(noResi)
 	if foundPaket.NoResi == "" {

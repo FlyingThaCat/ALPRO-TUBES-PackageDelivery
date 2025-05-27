@@ -17,23 +17,12 @@ func CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon float6
 	return distance, price
 }
 
-func Confirm(prompt string) bool {
-	var input string
-	fmt.Print(prompt + " (y/n): ")
-	fmt.Scanln(&input)
-	return input == "y" || input == "Y"
-}
-
 func InputPackageType() (string, error) {
 	fmt.Println("Tipe Paket:")
 	for _, tipe := range types.PackageTypes {
 		fmt.Printf("- %s\n", tipe)
 	}
-	fmt.Print("Masukkan tipe paket: ")
-
-	var tipe string
-	fmt.Scanln(&tipe)
-	tipe = strings.TrimSpace(tipe)
+	tipe := utils.GetInput("Masukkan tipe paket: ", false, "Tipe paket tidak boleh kosong.")
 
 	if !types.IsValidPackageType(tipe) {
 		return "", fmt.Errorf("tipe paket tidak valid")
@@ -48,9 +37,7 @@ func InputCity(prompt string) (types.Tempat, error) {
 	}
 	fmt.Printf("Masukkan %s: ", strings.ToLower(prompt))
 
-	var cityName string
-	fmt.Scanln(&cityName)
-	cityName = strings.TrimSpace(cityName)
+	cityName := utils.GetInput("", false, "Kota tidak boleh kosong.")
 
 	valid := false
 	for _, kota := range types.Kota {
@@ -82,9 +69,7 @@ func TambahPaket() {
 		return
 	}
 
-	fmt.Print("Masukkan berat paket (kg): ")
-	var berat float64
-	fmt.Scanln(&berat)
+	berat := utils.GetFloat("Masukkan berat paket (kg): ", "Berat tidak boleh kosong dan harus berupa angka.")
 
 	senderCity, err := InputCity("Kota Pengirim")
 	if err != nil {
@@ -103,7 +88,7 @@ func TambahPaket() {
 	fmt.Printf("\nJarak antar kota: %.2f km\n", distance)
 	fmt.Printf("Harga paket: Rp %.0f\n", price)
 
-	if !Confirm("Apakah Anda yakin ingin menambahkan paket ini?") {
+	if !utils.GetConfirmation("Apakah Anda yakin ingin menambahkan paket ini?", "Silakan masukkan 'y' untuk ya atau 'n' untuk tidak.") {
 		fmt.Println("Paket tidak ditambahkan.")
 		return
 	}

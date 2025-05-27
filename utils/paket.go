@@ -7,6 +7,25 @@ import (
 	"time"
 )
 
+func FindPaketByNoResi(noResi string) *types.Paket {
+	for i := range datas.PaketDB {
+		if datas.PaketDB[i].NoResi == noResi {
+			return &datas.PaketDB[i]
+		}
+	}
+	return nil
+}
+
+func FindPaketByUsername(username string) []types.Paket {
+	var result []types.Paket
+	for _, paket := range datas.PaketDB {
+		if paket.Kurir == username {
+			result = append(result, paket)
+		}
+	}
+	return result
+}
+
 func AssignPaketToKurir(username string, noResi string) bool {
 	// Cari kurir berdasarkan username
 	kurir := FindUserByUsername(username)
@@ -77,13 +96,4 @@ func AddPaket(paket types.Paket) {
 
 	datas.PaketDB = append(datas.PaketDB, paket)
 	fmt.Println("Paket berhasil ditambahkan.")
-}
-
-func FindPaketByNoResi(noResi string) *types.Paket {
-	for i := range datas.PaketDB {
-		if datas.PaketDB[i].NoResi == noResi {
-			return &datas.PaketDB[i]
-		}
-	}
-	return nil
 }

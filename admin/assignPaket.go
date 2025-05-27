@@ -11,11 +11,14 @@ func AssignPaket() {
 	
 	var noResi string
 	var username string
+
 	paket.LihatPaket(false, true)
 	LihatKurir(false)
+	
 	println("=== Assign Paket ===")
 	print("Masukkan No Resi Paket yang ingin diassign: ")
 	fmt.Scanln(&noResi)
+	
 	print("Masukkan Username Kurir yang akan mengantarkan paket: ")
 	fmt.Scanln(&username)
 

@@ -17,26 +17,17 @@ import (
 	"PackageDelivery/datas"
 )
 
-var DEBUG_ADMIN = false
-var DEBUG_KURIR = false
-var DEBUG_USER = false
-
 func register() {
 	utils.ClearScreen()
-	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("=== Register User ===\n")
-	fmt.Print("Masukkan username: ")
-	username, _ := reader.ReadString('\n')
-	username = strings.TrimSpace(username)
+	username := utils.GetInput("Masukkan username: ")
 
 	if user := utils.FindUserByUsername(username); user.Username != "" {
 		fmt.Print("Username sudah ada, silakan coba lagi.\n\n")
 		return
 	}
 
-	fmt.Print("Masukkan password: ")
-	password, _ := reader.ReadString('\n')
-	password = strings.TrimSpace(password)
+	password := utils.GetInput("Masukkan password: ")
 
 	datas.UsersDB = append(datas.UsersDB, types.User{
 		Username: username,
@@ -101,7 +92,6 @@ func main() {
 		case "2":
 			user, loggedIn := login()
 			if loggedIn {
-
 				for {
 					switch user.Role {
 					case "user":
@@ -117,10 +107,10 @@ func main() {
 					opt = strings.TrimSpace(opt)
 
 					if opt == "0" {
+						utils.ClearScreen()
 						fmt.Print("Logout berhasil.\n\n")
 						break
 					} else {
-
 						switch user.Role {
 						case "user":
 							if opt == "1" {

@@ -28,7 +28,7 @@ func GetInput(prompt string, allowEmpty bool, messageEmpty string) string {
 	}
 }
 
-func GetInt(prompt string, message string) (int, error) {
+func GetInt(prompt string, message string) int {
 	if message == "" {
 		message = "Silakan masukkan angka yang valid."
 	}
@@ -40,11 +40,11 @@ func GetInt(prompt string, message string) (int, error) {
 			fmt.Println(message)
 			continue
 		}
-		return value, nil
+		return value
 	}
 }
 
-func GetFloat(prompt string, message string) (float64, error) {
+func GetFloat(prompt string, message string) float64 {
 	if message == "" {
 		message = "Silakan masukkan angka desimal yang valid."
 	}
@@ -56,11 +56,11 @@ func GetFloat(prompt string, message string) (float64, error) {
 			fmt.Println(message)
 			continue
 		}
-		return value, nil
+		return value
 	}
 }
 
-func GetConfirmation(prompt string, message string) (bool, error) {
+func GetConfirmation(prompt string, message string) bool {
 	if message == "" {
 		message = "Silakan masukkan 'y' atau 'n'."
 	}
@@ -69,9 +69,9 @@ func GetConfirmation(prompt string, message string) (bool, error) {
 		input := strings.ToLower(GetInput(prompt+" (y/n): ", false, message))
 		switch input {
 		case "y", "yes":
-			return true, nil
+			return true
 		case "n", "no":
-			return false, nil
+			return false
 		default:
 			fmt.Println("Input tidak valid. " + message)
 		}

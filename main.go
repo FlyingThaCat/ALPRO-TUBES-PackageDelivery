@@ -43,10 +43,10 @@ func login() (*types.User, bool) {
 
 	user := utils.FindUserByUsername(username)
 	if user.Username == "" {
-		fmt.Print("Username tidak ditemukan.\n\n")
+		utils.ShowDelayedMessage("Username tidak ditemukan.", 2, true)
 		return nil, false
 	} else if user.Password != password {
-		fmt.Print("Password salah.\n\n")
+		utils.ShowDelayedMessage("Password salah.", 2, true)
 		return nil, false
 	}
 

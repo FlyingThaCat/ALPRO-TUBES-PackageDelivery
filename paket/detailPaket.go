@@ -11,7 +11,7 @@ func DetailPaket(paket types.Paket){
 	fmt.Println("No Resi:", paket.NoResi)
 	fmt.Println("Tipe:", paket.Tipe)
 	fmt.Println("Berat:", paket.Berat)
-	fmt.Println("Harga:", paket.Harga)
+	fmt.Printf("Harga: %.0f \n", paket.Harga)
 	fmt.Println("Kota Pengirim:", paket.SenderCity)
 	fmt.Println("Kota Tujuan:", paket.ReceiverCity)
 	fmt.Println("Status:", paket.Status)

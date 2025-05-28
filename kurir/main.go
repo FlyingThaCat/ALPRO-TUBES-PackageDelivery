@@ -3,13 +3,18 @@ package kurir
 import (
 	"PackageDelivery/utils"
 	"fmt"
+	"strings"
 )
 
 func MenuKurir() {
 	utils.ClearScreen()
 
-	fmt.Println("=== Menu Kurir ===")
-	fmt.Println("1. Lihat Assigned Paket")
-	fmt.Println("2. Update Status Paket")
-	fmt.Println("0. Logout")
+	fmt.Println(strings.Repeat("=", 40))
+	fmt.Println("🚚  MENU KURIR")
+	fmt.Println(strings.Repeat("=", 40))
+
+	fmt.Println("1️⃣  Lihat Assigned Paket")
+	fmt.Println("2️⃣  Update Status Paket")
+	fmt.Println("0️⃣  Logout")
+	fmt.Println(strings.Repeat("=", 40))
 }

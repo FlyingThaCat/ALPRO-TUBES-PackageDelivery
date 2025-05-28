@@ -63,22 +63,46 @@ func UpdateStatus() {
 
 	selectedPaket := &paketList[pilih-1]
 
-	fmt.Println("Masukkan status baru paket (contoh: Diambil, Dalam Pengiriman, Terkirim):")
-	var statusBaru string
-	fmt.Scanln(&statusBaru)
-	statusBaru = strings.TrimSpace(statusBaru)
-	if statusBaru == "" {
+	// Daftar status enum
+	statusOptions := []string{
+		"Diambil",
+		"Dalam Pengiriman",
+		"Terkirim",
+		"Pengiriman Gagal",
+	}
 
-		fmt.Println("Status tidak boleh kosong.")
+	fmt.Println("\nPilih status baru untuk paket:")
+	for i, s := range statusOptions {
+		fmt.Printf("%d. %s\n", i+1, s)
+	}
+
+	fmt.Print("Masukkan nomor status baru: ")
+	var statusChoice int
+	_, err = fmt.Scanln(&statusChoice)
+	if err != nil || statusChoice < 1 || statusChoice > len(statusOptions) {
+		fmt.Println("Pilihan status tidak valid.")
 		return
 	}
 
-	// Update status paket di DB utama
+	statusBaru := statusOptions[statusChoice-1]
+
+	// Konfirmasi
+	fmt.Printf("Anda akan mengubah status paket NoResi %s menjadi \"%s\". Lanjutkan? (y/n): ", selectedPaket.NoResi, statusBaru)
+	var confirm string
+	fmt.Scanln(&confirm)
+	confirm = strings.TrimSpace(strings.ToLower(confirm))
+	if confirm != "y" {
+		fmt.Println("Update status dibatalkan.")
+		utils.EnterToContinue()
+		return
+	}
+
+	// Update status di database utama
 	if updateStatusPaket(selectedPaket.NoResi, statusBaru) {
 		fmt.Println("Status paket berhasil diperbarui.")
 	} else {
 		fmt.Println("Gagal memperbarui status paket.")
-
 	}
+
 	utils.EnterToContinue()
 }

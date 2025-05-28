@@ -11,12 +11,30 @@ import (
 
 const PricePerKm = 5000.0
 
-func CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon float64) (float64, float64) {
-	distance := utils.HitungTwoPoints(senderLat, senderLon, receiverLat, receiverLon)
-	price := utils.CalculatePrice(senderLat, senderLon, receiverLat, receiverLon, PricePerKm)
-	return distance, price
+var PaketTypeMultiplier = map[string]float64{
+	"reguler": 1.0,
+	"express": 1.25,
+	"sameday": 1.5,
 }
 
+func CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon float64, berat float64, tipe string) (float64, float64) {
+	distance := utils.HitungTwoPoints(senderLat, senderLon, receiverLat, receiverLon)
+	basePrice := distance * PricePerKm
+
+	if berat > 5 {
+		basePrice += (berat - 5) * 1000
+	}
+
+	multiplier, ok := PaketTypeMultiplier[strings.ToLower(tipe)]
+	if !ok {
+		multiplier = 1.0
+	}
+	totalPrice := basePrice * multiplier
+
+	return distance, totalPrice
+}
+
+// InputPackageType meminta input dari user terkait tipe paket
 func InputPackageType() (string, error) {
 	fmt.Println("Tipe Paket:")
 	for _, tipe := range types.PackageTypes {
@@ -30,6 +48,7 @@ func InputPackageType() (string, error) {
 	return tipe, nil
 }
 
+// InputCity meminta input nama kota dan validasi keberadaannya
 func InputCity(prompt string) (types.Tempat, error) {
 	fmt.Println(prompt)
 	for _, kota := range types.Kota {
@@ -60,6 +79,7 @@ func InputCity(prompt string) (types.Tempat, error) {
 	return types.Tempat{}, fmt.Errorf("koordinat untuk kota %s tidak ditemukan", cityName)
 }
 
+// TambahPaket menambahkan data paket baru dengan harga berdasarkan jarak, berat, dan tipe
 func TambahPaket() {
 	utils.ClearScreen()
 
@@ -83,7 +103,11 @@ func TambahPaket() {
 		return
 	}
 
-	distance, price := CalculatePackagePrice(senderCity.Latitude, senderCity.Longitude, receiverCity.Latitude, receiverCity.Longitude)
+	distance, price := CalculatePackagePrice(
+		senderCity.Latitude, senderCity.Longitude,
+		receiverCity.Latitude, receiverCity.Longitude,
+		berat, tipe,
+	)
 
 	fmt.Printf("\nJarak antar kota: %.2f km\n", distance)
 	fmt.Printf("Harga paket: Rp %.0f\n", price)

@@ -1,0 +1,49 @@
+direction: down
+
+start: "Mulai AddPaket(paket)" {
+  shape: oval
+}
+
+loopCekNoResi: "Loop setiap paket di datas.PaketDB" {
+  shape: rectangle
+}
+
+cekNoResi: "Apakah p.NoResi == paket.NoResi?" {
+  shape: diamond
+}
+
+printExists: "Print 'Paket dengan nomor resi tersebut sudah ada.'" {
+  shape: rectangle
+}
+
+returnEarly: "return" {
+  shape: rectangle
+}
+
+setWaktu: "Set paket.CreatedAt dan paket.UpdatedAt = time.Now()" {
+  shape: rectangle
+}
+
+addStatus: "Tambahkan status 'Paket dibuat' ke paket.Status" {
+  shape: rectangle
+}
+
+appendDB: "Append paket ke datas.PaketDB" {
+  shape: rectangle
+}
+
+printSuccess: "Print 'Paket berhasil ditambahkan.'" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> loopCekNoResi -> cekNoResi
+cekNoResi -> printExists: Ya
+printExists -> returnEarly -> end
+cekNoResi -> loopCekNoResi: Tidak
+
+loopCekNoResi -> setWaktu
+setWaktu -> addStatus -> appendDB -> printSuccess -> end

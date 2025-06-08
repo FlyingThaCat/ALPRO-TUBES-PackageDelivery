@@ -1,0 +1,69 @@
+direction: down
+
+start: "Mulai ParseCity(name string)" {
+  shape: oval
+}
+
+lowercase: "name = strings.ToLower(name)" {
+  shape: rectangle
+}
+
+decisionJakarta: "Apakah name == 'jakarta'?" {
+  shape: diamond
+}
+
+decisionBogor: "Apakah name == 'bogor'?" {
+  shape: diamond
+}
+
+decisionDepok: "Apakah name == 'depok'?" {
+  shape: diamond
+}
+
+decisionTangerang: "Apakah name == 'tangerang'?" {
+  shape: diamond
+}
+
+decisionBekasi: "Apakah name == 'bekasi'?" {
+  shape: diamond
+}
+
+returnJakarta: "Return types.Jakarta, nil" {
+  shape: rectangle
+}
+
+returnBogor: "Return types.Bogor, nil" {
+  shape: rectangle
+}
+
+returnDepok: "Return types.Depok, nil" {
+  shape: rectangle
+}
+
+returnTangerang: "Return types.Tangerang, nil" {
+  shape: rectangle
+}
+
+returnBekasi: "Return types.Bekasi, nil" {
+  shape: rectangle
+}
+
+returnError: "Return error: 'kota tidak dikenali: ' + name" {
+  shape: rectangle
+}
+
+start -> lowercase -> decisionJakarta
+decisionJakarta -> returnJakarta [yes]
+decisionJakarta -> decisionBogor [no]
+
+decisionBogor -> returnBogor [yes]
+decisionBogor -> decisionDepok [no]
+
+decisionDepok -> returnDepok [yes]
+decisionDepok -> decisionTangerang [no]
+
+decisionTangerang -> returnTangerang [yes]
+decisionTangerang -> decisionBekasi [no]
+
+decisionBekasi -> returnBekasi [yes]
+decisionBekasi -> returnError [no]

@@ -1,0 +1,36 @@
+direction: down
+
+start: "Mulai DeleteUser(username)" {
+  shape: oval
+}
+
+loop: "Loop setiap user di datas.UsersDB" {
+  shape: rectangle
+}
+
+cekUsername: "Apakah user.Username == username?" {
+  shape: diamond
+}
+
+hapusUser: "Hapus user dari datas.UsersDB" {
+  shape: rectangle
+}
+
+returnTrue: "return true" {
+  shape: rectangle
+}
+
+returnFalse: "return false" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> loop -> cekUsername
+cekUsername -> hapusUser: Ya
+hapusUser -> returnTrue -> end
+cekUsername -> loop: Tidak
+loop -> returnFalse
+returnFalse -> end

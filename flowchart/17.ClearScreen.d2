@@ -1,0 +1,37 @@
+direction: down
+
+start: "Mulai ClearScreen()" {
+  shape: oval
+}
+
+getOS: "Ambil OS dengan runtime.GOOS" {
+  shape: rectangle
+}
+
+switchOS: "Switch OSType" {
+  shape: diamond
+}
+
+windows: "Jika windows\njalankan 'cmd /c cls'" {
+  shape: rectangle
+}
+
+linuxDarwin: "Jika linux/darwin\njalankan 'clear'" {
+  shape: rectangle
+}
+
+defaultCase: "Default\njalankan 'clear'" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> getOS -> switchOS
+switchOS -> windows: "windows"
+switchOS -> linuxDarwin: "linux atau darwin"
+switchOS -> defaultCase: "lainnya"
+windows -> end
+linuxDarwin -> end
+defaultCase -> end

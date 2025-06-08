@@ -1,0 +1,107 @@
+direction: down
+
+start: "Mulai TambahPaket()" {
+  shape: oval
+}
+
+clearScreen: "Clear screen" {
+  shape: rectangle
+}
+
+inputTipe: "Input tipe paket (InputPackageType)" {
+  shape: rectangle
+}
+
+checkErrorTipe: "Error pada tipe paket?" {
+  shape: diamond
+}
+
+printErrorTipe: "Tampilkan error tipe" {
+  shape: rectangle
+}
+
+inputBerat: "Input berat paket (GetFloat)" {
+  shape: rectangle
+}
+
+inputSenderCity: "Input kota pengirim (InputCity)" {
+  shape: rectangle
+}
+
+checkErrorSenderCity: "Error pada kota pengirim?" {
+  shape: diamond
+}
+
+printErrorSenderCity: "Tampilkan error kota pengirim" {
+  shape: rectangle
+}
+
+inputReceiverCity: "Input kota tujuan (InputCity)" {
+  shape: rectangle
+}
+
+checkErrorReceiverCity: "Error pada kota tujuan?" {
+  shape: diamond
+}
+
+printErrorReceiverCity: "Tampilkan error kota tujuan" {
+  shape: rectangle
+}
+
+calculatePrice: "Hitung jarak & harga (CalculatePackagePrice)" {
+  shape: rectangle
+}
+
+printDistancePrice: "Tampilkan jarak & harga" {
+  shape: rectangle
+}
+
+confirmAdd: "Konfirmasi tambah paket (GetConfirmation)" {
+  shape: diamond
+}
+
+printCancel: "Tampilkan 'Paket tidak ditambahkan'" {
+  shape: rectangle
+}
+
+createPaket: "Buat objek paket baru" {
+  shape: rectangle
+}
+
+appendPaket: "Tambahkan paket ke database" {
+  shape: rectangle
+}
+
+printSuccess: "Tampilkan 'Paket berhasil ditambahkan'" {
+  shape: rectangle
+}
+
+callDetailPaket: "Panggil DetailPaket(input)" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clearScreen -> inputTipe -> checkErrorTipe
+checkErrorTipe -> printErrorTipe: Ya
+printErrorTipe -> end
+checkErrorTipe -> inputBerat: Tidak
+
+inputBerat -> inputSenderCity -> checkErrorSenderCity
+checkErrorSenderCity -> printErrorSenderCity: Ya
+printErrorSenderCity -> end
+checkErrorSenderCity -> inputReceiverCity: Tidak
+
+inputReceiverCity -> checkErrorReceiverCity
+checkErrorReceiverCity -> printErrorReceiverCity: Ya
+printErrorReceiverCity -> end
+checkErrorReceiverCity -> calculatePrice: Tidak
+
+calculatePrice -> printDistancePrice -> confirmAdd
+confirmAdd -> printCancel: Tidak
+printCancel -> end
+confirmAdd -> createPaket: Ya
+
+createPaket -> appendPaket -> printSuccess -> callDetailPaket ->

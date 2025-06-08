@@ -1,0 +1,107 @@
+direction: down
+
+start: "Mulai AssignPaket()" {
+  shape: oval
+}
+
+clearScreen: "Clear screen" {
+  shape: rectangle
+}
+
+printTitle: "Tampilkan '=== Assign Paket ==='" {
+  shape: rectangle
+}
+
+showPackages: "Tampilkan daftar paket (LihatPaket)" {
+  shape: rectangle
+}
+
+showCouriers: "Tampilkan daftar kurir (admin.LihatKurir)" {
+  shape: rectangle
+}
+
+inputNoResi: "Input No Resi paket (GetString)" {
+  shape: rectangle
+}
+
+inputUsername: "Input username kurir (GetString)" {
+  shape: rectangle
+}
+
+findPackage: "Cari paket berdasarkan No Resi (FindPaketByNoResi)" {
+  shape: rectangle
+}
+
+checkPackageFound: "Apakah paket ditemukan?" {
+  shape: diamond
+}
+
+printPackageNotFound: "Tampilkan 'Paket tidak ditemukan'" {
+  shape: rectangle
+}
+
+findCourier: "Cari user berdasarkan username (FindUserByUsername)" {
+  shape: rectangle
+}
+
+checkCourierFound: "Apakah kurir ditemukan?" {
+  shape: diamond
+}
+
+printCourierNotFound: "Tampilkan 'Kurir tidak ditemukan'" {
+  shape: rectangle
+}
+
+checkRoleCourier: "Apakah role user 'kurir'?" {
+  shape: diamond
+}
+
+printNotCourier: "Tampilkan 'Username bukan kurir'" {
+  shape: rectangle
+}
+
+assignPaket: "Assign paket ke kurir (AssignPaketToKurir)" {
+  shape: rectangle
+}
+
+checkAssignSuccess: "Apakah assign berhasil?" {
+  shape: diamond
+}
+
+printAssignSuccess: "Tampilkan 'Paket berhasil diassign'" {
+  shape: rectangle
+}
+
+printAssignFail: "Tampilkan 'Paket gagal diassign'" {
+  shape: rectangle
+}
+
+enterToContinue: "Tunggu user tekan Enter (EnterToContinue)" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clearScreen -> printTitle -> showPackages -> showCouriers
+-> inputNoResi -> inputUsername -> findPackage -> checkPackageFound
+checkPackageFound -> printPackageNotFound: Tidak
+printPackageNotFound -> end
+checkPackageFound -> findCourier: Ya
+
+findCourier -> checkCourierFound
+checkCourierFound -> printCourierNotFound: Tidak
+printCourierNotFound -> end
+checkCourierFound -> checkRoleCourier: Ya
+
+checkRoleCourier -> printNotCourier: Tidak
+printNotCourier -> end
+checkRoleCourier -> assignPaket: Ya
+
+assignPaket -> checkAssignSuccess
+checkAssignSuccess -> printAssignSuccess: Ya
+checkAssignSuccess -> printAssignFail: Tidak
+
+printAssignSuccess -> enterToContinue -> end
+printAssignFail -> enterToContinue -> end

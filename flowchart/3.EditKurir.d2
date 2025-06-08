@@ -1,0 +1,47 @@
+direction: down
+
+start: "Mulai EditKurir()" {
+  shape: oval
+}
+
+clear: "Clear Screen" {
+  shape: rectangle
+}
+
+title: "Tampilkan '=== Edit Kurir ==='" {
+  shape: rectangle
+}
+
+inputUsername: "Input Username Kurir yang ingin diedit" {
+  shape: parallelogram
+}
+
+findUser: "Cari user dengan utils.FindUserByUsername(username)" {
+  shape: rectangle
+}
+
+checkFound: "Apakah user ditemukan?" {
+  shape: diamond
+}
+
+printNotFound: "Tampilkan pesan 'Kurir tidak ditemukan.'" {
+  shape: rectangle
+}
+
+returnNotFound: "Keluar fungsi (return)" {
+  shape: oval
+}
+
+callEdit: "Panggil kurir.UbahKurir(found)" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clear -> title -> inputUsername -> findUser -> checkFound
+checkFound -> printNotFound: Tidak
+printNotFound -> returnNotFound
+checkFound -> callEdit: Ya
+callEdit -> end

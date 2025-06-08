@@ -1,0 +1,78 @@
+direction: down
+
+start: "Mulai TambahKurir()" {
+  shape: oval
+}
+
+clear: "Clear Screen" {
+  shape: rectangle
+}
+
+title: "Tampilkan 'Tambah Kurir'" {
+  shape: rectangle
+}
+
+inputNama: "Input Nama" {
+  shape: parallelogram
+}
+
+inputUsername: "Input Username" {
+  shape: parallelogram
+}
+
+inputPassword: "Input Password" {
+  shape: parallelogram
+}
+
+setRole: "Set kurir.Role = 'kurir'" {
+  shape: rectangle
+}
+
+checkEmpty: "Apakah Username atau Password kosong?" {
+  shape: diamond
+}
+
+printErrorEmpty: "Tampilkan pesan: 'Username dan password tidak boleh kosong.'" {
+  shape: rectangle
+}
+
+returnEmpty: "Keluar fungsi (return)" {
+  shape: oval
+}
+
+checkUsername: "Apakah Username sudah terdaftar?" {
+  shape: diamond
+}
+
+printErrorExists: "Tampilkan pesan: 'Username sudah terdaftar.'" {
+  shape: rectangle
+}
+
+returnExists: "Keluar fungsi (return)" {
+  shape: oval
+}
+
+saveUser: "Simpan kurir ke database" {
+  shape: rectangle
+}
+
+printSuccess: "Tampilkan pesan: 'Kurir berhasil ditambahkan.'" {
+  shape: rectangle
+}
+
+waitContinue: "Tunggu Enter untuk lanjut" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clear -> title -> inputNama -> inputUsername -> inputPassword -> setRole -> checkEmpty
+checkEmpty -> printErrorEmpty: Ya
+printErrorEmpty -> returnEmpty
+checkEmpty -> checkUsername: Tidak
+checkUsername -> printErrorExists: Ya
+printErrorExists -> returnExists
+checkUsername -> saveUser: Tidak
+saveUser -> printSuccess -> waitContinue -> end

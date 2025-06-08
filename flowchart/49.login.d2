@@ -1,0 +1,63 @@
+direction: down
+
+start: "Mulai login()" {
+  shape: oval
+}
+
+clearScreen: "utils.ClearScreen()" {
+  shape: rectangle
+}
+
+inputUsername: "Input username" {
+  shape: rectangle
+}
+
+inputPassword: "Input password" {
+  shape: rectangle
+}
+
+findUser: "Cari user berdasarkan username" {
+  shape: rectangle
+}
+
+checkUserExist: "User ditemukan?" {
+  shape: diamond
+}
+
+showUserNotFound: "Tampilkan 'Username tidak ditemukan'" {
+  shape: rectangle
+}
+
+checkPassword: "Password cocok?" {
+  shape: diamond
+}
+
+showPasswordWrong: "Tampilkan 'Password salah'" {
+  shape: rectangle
+}
+
+setLoggedIn: "Set logged in username" {
+  shape: rectangle
+}
+
+returnSuccess: "Return &user, true" {
+  shape: rectangle
+}
+
+returnFail: "Return nil, false" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clearScreen -> inputUsername -> inputPassword -> findUser -> checkUserExist
+checkUserExist -> showUserNotFound: no
+showUserNotFound -> returnFail
+checkUserExist -> checkPassword: yes
+checkPassword -> showPasswordWrong: no
+showPasswordWrong -> returnFail
+checkPassword -> setLoggedIn: yes
+setLoggedIn -> returnSuccess -> end
+returnFail -> end

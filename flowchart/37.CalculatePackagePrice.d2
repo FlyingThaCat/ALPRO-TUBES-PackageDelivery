@@ -1,0 +1,51 @@
+direction: down
+
+start: "Mulai CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon, berat, tipe)" {
+  shape: oval
+}
+
+hitungJarak: "Hitung jarak dengan HitungTwoPoints" {
+  shape: rectangle
+}
+
+hitungBasePrice: "Hitung basePrice = distance * PricePerKm" {
+  shape: rectangle
+}
+
+cekBerat: "Apakah berat > 5?" {
+  shape: diamond
+}
+
+tambahBiaya: "Tambah biaya untuk berat lebih dari 5" {
+  shape: rectangle
+}
+
+cariMultiplier: "Cari multiplier berdasarkan tipe paket" {
+  shape: rectangle
+}
+
+cekMultiplier: "Apakah multiplier ditemukan?" {
+  shape: diamond
+}
+
+setMultiplierDefault: "Set multiplier = 1.0" {
+  shape: rectangle
+}
+
+hitungTotalHarga: "Hitung totalPrice = basePrice * multiplier" {
+  shape: rectangle
+}
+
+returnResult: "Return distance dan totalPrice" {
+  shape: oval
+}
+
+start -> hitungJarak -> hitungBasePrice -> cekBerat
+cekBerat -> tambahBiaya: Ya
+cekBerat -> cariMultiplier: Tidak
+tambahBiaya -> cariMultiplier
+cariMultiplier -> cekMultiplier
+cekMultiplier -> hitungTotalHarga: Ya
+cekMultiplier -> setMultiplierDefault: Tidak
+setMultiplierDefault -> hitungTotalHarga
+hitungTotalHarga -> returnResult

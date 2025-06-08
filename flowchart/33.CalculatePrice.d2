@@ -1,0 +1,19 @@
+direction: down
+
+start: "Mulai CalculatePrice(lat1, lon1, lat2, lon2, pricePerKm)" {
+  shape: oval
+}
+
+callDistance: "Panggil HitungTwoPoints(lat1, lon1, lat2, lon2)\nDapatkan distance" {
+  shape: rectangle
+}
+
+calcPrice: "price = distance * pricePerKm" {
+  shape: rectangle
+}
+
+returnPrice: "Return price" {
+  shape: oval
+}
+
+start -> callDistance -> calcPrice -> returnPrice

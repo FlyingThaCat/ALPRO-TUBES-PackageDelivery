@@ -1,0 +1,35 @@
+direction: down
+
+start: "Mulai DeletePaket(noResi)" {
+  shape: oval
+}
+
+loop: "Loop setiap paket di datas.PaketDB" {
+  shape: rectangle
+}
+
+cekNoResi: "Apakah p.NoResi == noResi?" {
+  shape: diamond
+}
+
+hapusPaket: "Hapus paket dari datas.PaketDB" {
+  shape: rectangle
+}
+
+returnTrue: "return true" {
+  shape: rectangle
+}
+
+returnFalse: "return false" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> loop -> cekNoResi
+cekNoResi -> hapusPaket: Ya
+hapusPaket -> returnTrue -> end
+cekNoResi -> loop: Tidak
+loop -> returnFalse -> end

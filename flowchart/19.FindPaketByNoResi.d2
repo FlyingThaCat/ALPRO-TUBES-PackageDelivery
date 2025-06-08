@@ -1,0 +1,32 @@
+direction: down
+
+start: "Mulai FindPaketByNoResi(noResi)" {
+  shape: oval
+}
+
+loop: "Loop i dari 0 sampai len(datas.PaketDB)-1" {
+  shape: rectangle
+}
+
+cekNoResi: "Apakah datas.PaketDB[i].NoResi == noResi?" {
+  shape: diamond
+}
+
+returnPaket: "return &datas.PaketDB[i]" {
+  shape: rectangle
+}
+
+returnNil: "return nil" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> loop -> cekNoResi
+cekNoResi -> returnPaket: Ya
+returnPaket -> end
+cekNoResi -> loop: Tidak
+loop -> returnNil
+returnNil -> end

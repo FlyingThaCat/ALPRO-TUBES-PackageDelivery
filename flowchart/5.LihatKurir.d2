@@ -1,0 +1,58 @@
+direction: down
+
+start: "Mulai LihatKurir(clear)" {
+  shape: oval
+}
+
+checkClear: "Apakah clear == true?" {
+  shape: diamond
+}
+
+clearScreen: "Clear Screen" {
+  shape: rectangle
+}
+
+printTitle: "Tampilkan judul 'Daftar Kurir'" {
+  shape: rectangle
+}
+
+initKurirs: "Buat slice kosong: kurirs" {
+  shape: rectangle
+}
+
+loopDB: "Loop semua user dalam UsersDB" {
+  shape: rectangle
+}
+
+filterKurir: "Jika user.Role == 'kurir', masukkan ke kurirs" {
+  shape: rectangle
+}
+
+sortKurirs: "Urutkan kurirs dengan insertion sort berdasarkan len(Pakets)" {
+  shape: rectangle
+}
+
+printTable: "Cetak tabel kurir ke terminal (Nama, Username, Password, Paket)" {
+  shape: rectangle
+}
+
+checkClear2: "Apakah clear == true?" {
+  shape: diamond
+}
+
+enterToContinue: "Tunggu Enter untuk lanjut" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> checkClear
+checkClear -> clearScreen: Ya
+checkClear -> printTitle: Tidak
+clearScreen -> printTitle
+printTitle -> initKurirs -> loopDB -> filterKurir -> sortKurirs -> printTable -> checkClear2
+checkClear2 -> enterToContinue: Ya
+checkClear2 -> end: Tidak
+enterToContinue -> end

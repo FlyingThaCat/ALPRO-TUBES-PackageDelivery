@@ -1,0 +1,43 @@
+direction: down
+
+start: "Mulai GetString(prompt, message)" {
+  shape: oval
+}
+
+checkMessage: "Jika message kosong\n=> message = 'Silakan masukkan string yang valid.'" {
+  shape: rectangle
+}
+
+loop: "Loop meminta input string" {
+  shape: rectangle
+}
+
+callGetInput: "input = GetInput(prompt, false, message)" {
+  shape: rectangle
+}
+
+checkInput: "Apakah input kosong?" {
+  shape: diamond
+}
+
+printMessage: "Tampilkan pesan error" {
+  shape: rectangle
+}
+
+continueLoop: "Ulangi loop" {
+  shape: rectangle
+}
+
+returnInput: "Return input" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> checkMessage -> loop -> callGetInput -> checkInput
+checkInput -> printMessage: Ya
+checkInput -> returnInput: Tidak
+printMessage -> continueLoop -> loop
+returnInput -> end

@@ -4,79 +4,99 @@ start: "Mulai TambahPaket()" {
   shape: oval
 }
 
-clearScreen: "Clear screen" {
+clearScreen: "utils.ClearScreen()" {
   shape: rectangle
 }
 
-inputTipe: "Input tipe paket (InputPackageType)" {
+inputTipe: "tipe, err := InputPackageType()" {
   shape: rectangle
 }
 
-checkErrorTipe: "Error pada tipe paket?" {
+checkErrTipe: "err != nil?" {
   shape: diamond
 }
 
-printErrorTipe: "Tampilkan error tipe" {
+printErrTipe: "fmt.Println(err.Error())" {
   shape: rectangle
 }
 
-inputBerat: "Input berat paket (GetFloat)" {
+endEarly1: "Return" {
+  shape: oval
+}
+
+inputBerat: "Input berat paket (kg)" {
   shape: rectangle
 }
 
-inputSenderCity: "Input kota pengirim (InputCity)" {
+inputSenderCity: "senderCity, err := InputCity('Kota Pengirim')" {
   shape: rectangle
 }
 
-checkErrorSenderCity: "Error pada kota pengirim?" {
+checkErrSenderCity: "err != nil?" {
   shape: diamond
 }
 
-printErrorSenderCity: "Tampilkan error kota pengirim" {
+printErrSenderCity: "fmt.Println(err.Error())" {
   shape: rectangle
 }
 
-inputReceiverCity: "Input kota tujuan (InputCity)" {
+endEarly2: "Return" {
+  shape: oval
+}
+
+inputReceiverCity: "receiverCity, err := InputCity('Kota Tujuan')" {
   shape: rectangle
 }
 
-checkErrorReceiverCity: "Error pada kota tujuan?" {
+checkErrReceiverCity: "err != nil?" {
   shape: diamond
 }
 
-printErrorReceiverCity: "Tampilkan error kota tujuan" {
+printErrReceiverCity: "fmt.Println(err.Error())" {
   shape: rectangle
 }
 
-calculatePrice: "Hitung jarak & harga (CalculatePackagePrice)" {
+endEarly3: "Return" {
+  shape: oval
+}
+
+calcPrice: "distance, price := CalculatePackagePrice(...)" {
   shape: rectangle
 }
 
-printDistancePrice: "Tampilkan jarak & harga" {
+printDistance: "Print jarak antar kota" {
   shape: rectangle
 }
 
-confirmAdd: "Konfirmasi tambah paket (GetConfirmation)" {
+printPrice: "Print harga paket" {
+  shape: rectangle
+}
+
+confirmAdd: "Confirm('Apakah Anda yakin...?')" {
   shape: diamond
 }
 
-printCancel: "Tampilkan 'Paket tidak ditambahkan'" {
+printNotAdded: "fmt.Println('Paket tidak ditambahkan.')" {
   shape: rectangle
 }
 
-createPaket: "Buat objek paket baru" {
+endEarly4: "Return" {
+  shape: oval
+}
+
+createPackage: "Buat struct Paket baru" {
   shape: rectangle
 }
 
-appendPaket: "Tambahkan paket ke database" {
+appendPackage: "Tambahkan paket ke datas.PaketDB" {
   shape: rectangle
 }
 
-printSuccess: "Tampilkan 'Paket berhasil ditambahkan'" {
+printSuccess: "fmt.Println('Paket berhasil ditambahkan.')" {
   shape: rectangle
 }
 
-callDetailPaket: "Panggil DetailPaket(input)" {
+callDetail: "DetailPaket(input)" {
   shape: rectangle
 }
 
@@ -84,24 +104,24 @@ end: "Selesai" {
   shape: oval
 }
 
-start -> clearScreen -> inputTipe -> checkErrorTipe
-checkErrorTipe -> printErrorTipe: Ya
-printErrorTipe -> end
-checkErrorTipe -> inputBerat: Tidak
+start -> clearScreen -> inputTipe -> checkErrTipe
+checkErrTipe -> printErrTipe: Ya
+printErrTipe -> endEarly1
+checkErrTipe -> inputBerat: Tidak
 
-inputBerat -> inputSenderCity -> checkErrorSenderCity
-checkErrorSenderCity -> printErrorSenderCity: Ya
-printErrorSenderCity -> end
-checkErrorSenderCity -> inputReceiverCity: Tidak
+inputBerat -> inputSenderCity -> checkErrSenderCity
+checkErrSenderCity -> printErrSenderCity: Ya
+printErrSenderCity -> endEarly2
+checkErrSenderCity -> inputReceiverCity: Tidak
 
-inputReceiverCity -> checkErrorReceiverCity
-checkErrorReceiverCity -> printErrorReceiverCity: Ya
-printErrorReceiverCity -> end
-checkErrorReceiverCity -> calculatePrice: Tidak
+inputReceiverCity -> checkErrReceiverCity
+checkErrReceiverCity -> printErrReceiverCity: Ya
+printErrReceiverCity -> endEarly3
+checkErrReceiverCity -> calcPrice: Tidak
 
-calculatePrice -> printDistancePrice -> confirmAdd
-confirmAdd -> printCancel: Tidak
-printCancel -> end
-confirmAdd -> createPaket: Ya
+calcPrice -> printDistance -> printPrice -> confirmAdd
+confirmAdd -> printNotAdded: Tidak
+printNotAdded -> endEarly4
+confirmAdd -> createPackage: Ya
 
-createPaket -> appendPaket -> printSuccess -> callDetailPaket ->
+createPackage -> appendPackage -> printSuccess -> callDetail -> end

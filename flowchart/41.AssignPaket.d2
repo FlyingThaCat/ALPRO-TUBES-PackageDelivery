@@ -4,79 +4,87 @@ start: "Mulai AssignPaket()" {
   shape: oval
 }
 
-clearScreen: "Clear screen" {
+clearScreen: "utils.ClearScreen()" {
   shape: rectangle
 }
 
-printTitle: "Tampilkan '=== Assign Paket ==='" {
+lihatPaket: "paket.LihatPaket(false, true)" {
   shape: rectangle
 }
 
-showPackages: "Tampilkan daftar paket (LihatPaket)" {
+lihatKurir: "LihatKurir(false)" {
   shape: rectangle
 }
 
-showCouriers: "Tampilkan daftar kurir (admin.LihatKurir)" {
+inputNoResi: "Input noResi" {
   shape: rectangle
 }
 
-inputNoResi: "Input No Resi paket (GetString)" {
+inputUsername: "Input username Kurir" {
   shape: rectangle
 }
 
-inputUsername: "Input username kurir (GetString)" {
+cariPaket: "foundPaket := datas.CariPaket(noResi)" {
   shape: rectangle
 }
 
-findPackage: "Cari paket berdasarkan No Resi (FindPaketByNoResi)" {
-  shape: rectangle
-}
-
-checkPackageFound: "Apakah paket ditemukan?" {
+checkPaket: "foundPaket.NoResi == ''?" {
   shape: diamond
 }
 
-printPackageNotFound: "Tampilkan 'Paket tidak ditemukan'" {
+printPaketNotFound: "fmt.Println('Paket tidak ditemukan.')" {
   shape: rectangle
 }
 
-findCourier: "Cari user berdasarkan username (FindUserByUsername)" {
+endEarly1: "Return" {
+  shape: oval
+}
+
+findUser: "foundKurir := datas.FindUserByUsername(username)" {
   shape: rectangle
 }
 
-checkCourierFound: "Apakah kurir ditemukan?" {
+checkKurirFound: "foundKurir.Username == ''?" {
   shape: diamond
 }
 
-printCourierNotFound: "Tampilkan 'Kurir tidak ditemukan'" {
+printKurirNotFound: "fmt.Println('Kurir tidak ditemukan.')" {
   shape: rectangle
 }
 
-checkRoleCourier: "Apakah role user 'kurir'?" {
+endEarly2: "Return" {
+  shape: oval
+}
+
+checkRoleKurir: "foundKurir.Role != 'kurir'?" {
   shape: diamond
 }
 
-printNotCourier: "Tampilkan 'Username bukan kurir'" {
+printNotKurir: "fmt.Println('Username bukan kurir.')" {
   shape: rectangle
 }
 
-assignPaket: "Assign paket ke kurir (AssignPaketToKurir)" {
+endEarly3: "Return" {
+  shape: oval
+}
+
+assign: "datas.AssignPaketToKurir(foundKurir.Username, foundPaket.NoResi)" {
   shape: rectangle
 }
 
-checkAssignSuccess: "Apakah assign berhasil?" {
+checkAssignSuccess: "Assign berhasil?" {
   shape: diamond
 }
 
-printAssignSuccess: "Tampilkan 'Paket berhasil diassign'" {
+printAssignSuccess: "fmt.Println('Paket berhasil diassign ke kurir.')" {
   shape: rectangle
 }
 
-printAssignFail: "Tampilkan 'Paket gagal diassign'" {
+printAssignFail: "fmt.Println('Paket gagal diassign.')" {
   shape: rectangle
 }
 
-enterToContinue: "Tunggu user tekan Enter (EnterToContinue)" {
+enterContinue: "utils.EnterToContinue()" {
   shape: rectangle
 }
 
@@ -84,24 +92,23 @@ end: "Selesai" {
   shape: oval
 }
 
-start -> clearScreen -> printTitle -> showPackages -> showCouriers
--> inputNoResi -> inputUsername -> findPackage -> checkPackageFound
-checkPackageFound -> printPackageNotFound: Tidak
-printPackageNotFound -> end
-checkPackageFound -> findCourier: Ya
+start -> clearScreen -> lihatPaket -> lihatKurir -> inputNoResi -> inputUsername -> cariPaket -> checkPaket
+checkPaket -> printPaketNotFound: Ya
+printPaketNotFound -> endEarly1
+checkPaket -> findUser: Tidak
 
-findCourier -> checkCourierFound
-checkCourierFound -> printCourierNotFound: Tidak
-printCourierNotFound -> end
-checkCourierFound -> checkRoleCourier: Ya
+findUser -> checkKurirFound
+checkKurirFound -> printKurirNotFound: Ya
+printKurirNotFound -> endEarly2
+checkKurirFound -> checkRoleKurir: Tidak
 
-checkRoleCourier -> printNotCourier: Tidak
-printNotCourier -> end
-checkRoleCourier -> assignPaket: Ya
+checkRoleKurir -> printNotKurir: Ya
+printNotKurir -> endEarly3
+checkRoleKurir -> assign: Tidak
 
-assignPaket -> checkAssignSuccess
+assign -> checkAssignSuccess
 checkAssignSuccess -> printAssignSuccess: Ya
 checkAssignSuccess -> printAssignFail: Tidak
 
-printAssignSuccess -> enterToContinue -> end
-printAssignFail -> enterToContinue -> end
+printAssignSuccess -> enterContinue -> end
+printAssignFail -> enterContinue -> end

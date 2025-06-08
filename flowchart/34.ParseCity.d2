@@ -1,30 +1,14 @@
 direction: down
 
-start: "Mulai ParseCity(name string)" {
+start: "Mulai ParseCity(name)" {
   shape: oval
 }
 
-lowercase: "name = strings.ToLower(name)" {
+toLower: "name = strings.ToLower(name)" {
   shape: rectangle
 }
 
-decisionJakarta: "Apakah name == 'jakarta'?" {
-  shape: diamond
-}
-
-decisionBogor: "Apakah name == 'bogor'?" {
-  shape: diamond
-}
-
-decisionDepok: "Apakah name == 'depok'?" {
-  shape: diamond
-}
-
-decisionTangerang: "Apakah name == 'tangerang'?" {
-  shape: diamond
-}
-
-decisionBekasi: "Apakah name == 'bekasi'?" {
+switchJakarta: "Apakah name == 'jakarta'?" {
   shape: diamond
 }
 
@@ -32,38 +16,65 @@ returnJakarta: "Return types.Jakarta, nil" {
   shape: rectangle
 }
 
+switchBogor: "Apakah name == 'bogor'?" {
+  shape: diamond
+}
+
 returnBogor: "Return types.Bogor, nil" {
   shape: rectangle
+}
+
+switchDepok: "Apakah name == 'depok'?" {
+  shape: diamond
 }
 
 returnDepok: "Return types.Depok, nil" {
   shape: rectangle
 }
 
+switchTangerang: "Apakah name == 'tangerang'?" {
+  shape: diamond
+}
+
 returnTangerang: "Return types.Tangerang, nil" {
   shape: rectangle
+}
+
+switchBekasi: "Apakah name == 'bekasi'?" {
+  shape: diamond
 }
 
 returnBekasi: "Return types.Bekasi, nil" {
   shape: rectangle
 }
 
-returnError: "Return error: 'kota tidak dikenali: ' + name" {
+returnError: "Return \"\", fmt.Errorf(\"kota tidak dikenali: %s\", name)" {
   shape: rectangle
 }
 
-start -> lowercase -> decisionJakarta
-decisionJakarta -> returnJakarta [yes]
-decisionJakarta -> decisionBogor [no]
+end: "Selesai" {
+  shape: oval
+}
 
-decisionBogor -> returnBogor [yes]
-decisionBogor -> decisionDepok [no]
+start -> toLower -> switchJakarta
+switchJakarta -> returnJakarta: Ya
+switchJakarta -> switchBogor: Tidak
 
-decisionDepok -> returnDepok [yes]
-decisionDepok -> decisionTangerang [no]
+switchBogor -> returnBogor: Ya
+switchBogor -> switchDepok: Tidak
 
-decisionTangerang -> returnTangerang [yes]
-decisionTangerang -> decisionBekasi [no]
+switchDepok -> returnDepok: Ya
+switchDepok -> switchTangerang: Tidak
 
-decisionBekasi -> returnBekasi [yes]
-decisionBekasi -> returnError [no]
+switchTangerang -> returnTangerang: Ya
+switchTangerang -> switchBekasi: Tidak
+
+switchBekasi -> returnBekasi: Ya
+switchBekasi -> returnError: Tidak
+
+returnJakarta -> end
+returnBogor -> end
+returnDepok -> end
+returnTangerang -> end
+returnBekasi -> end
+returnError -> end

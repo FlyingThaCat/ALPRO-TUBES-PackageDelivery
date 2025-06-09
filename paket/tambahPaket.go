@@ -9,60 +9,38 @@ import (
 	"time"
 )
 
-const PricePerKm = 5000.0
-
-func CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon float64) (float64, float64) {
-	distance := utils.HitungTwoPoints(senderLat, senderLon, receiverLat, receiverLon)
-	price := utils.CalculatePrice(senderLat, senderLon, receiverLat, receiverLon, PricePerKm)
-	return distance, price
-}
-
-func Confirm(prompt string) bool {
-	var input string
-	fmt.Print(prompt + " (y/n): ")
-	fmt.Scanln(&input)
-	return input == "y" || input == "Y"
-}
-
 func InputPackageType() (string, error) {
-	fmt.Println("Tipe Paket:")
-	for _, tipe := range types.PackageTypes {
-		fmt.Printf("- %s\n", tipe)
+	fmt.Println("========================================")
+	fmt.Println("📦  PILIH TIPE PAKET")
+	fmt.Println("========================================")
+	for i, tipe := range types.PackageTypes {
+		fmt.Printf("%d️⃣  %s\n", i+1, tipe)
 	}
-	fmt.Print("Masukkan tipe paket: ")
+	fmt.Println("========================================")
 
-	var tipe string
-	fmt.Scanln(&tipe)
-	tipe = strings.TrimSpace(tipe)
-
-	if !types.IsValidPackageType(tipe) {
-		return "", fmt.Errorf("tipe paket tidak valid")
+	choice := utils.GetInt(fmt.Sprintf("Masukkan nomor tipe paket (1-%d): ", len(types.PackageTypes)), "")
+	if choice < 1 || choice > len(types.PackageTypes) {
+		return "", fmt.Errorf("pilihan tipe paket tidak valid")
 	}
-	return tipe, nil
+
+	return types.PackageTypes[choice-1], nil
 }
 
 func InputCity(prompt string) (types.Tempat, error) {
-	fmt.Println(prompt)
-	for _, kota := range types.Kota {
-		fmt.Printf("- %s\n", kota)
+	fmt.Println("========================================")
+	fmt.Printf("🏙️  PILIH %s\n", strings.ToUpper(prompt))
+	fmt.Println("========================================")
+	for i, kota := range types.Kota {
+		fmt.Printf("%d️⃣  %s\n", i+1, kota)
 	}
-	fmt.Printf("Masukkan %s: ", strings.ToLower(prompt))
+	fmt.Println("========================================")
 
-	var cityName string
-	fmt.Scanln(&cityName)
-	cityName = strings.TrimSpace(cityName)
+	choice := utils.GetInt(fmt.Sprintf("Masukkan nomor %s (1-%d): ", strings.ToLower(prompt), len(types.Kota)), "")
+	if choice < 1 || choice > len(types.Kota) {
+		return types.Tempat{}, fmt.Errorf("pilihan kota tidak valid")
+	}
 
-	valid := false
-	for _, kota := range types.Kota {
-		if strings.EqualFold(kota, cityName) {
-			valid = true
-			cityName = kota
-			break
-		}
-	}
-	if !valid {
-		return types.Tempat{}, fmt.Errorf("kota %s tidak ditemukan", cityName)
-	}
+	cityName := types.Kota[choice-1]
 
 	for _, tempat := range types.DaftarTempat {
 		if tempat.City == cityName {
@@ -82,9 +60,7 @@ func TambahPaket() {
 		return
 	}
 
-	fmt.Print("Masukkan berat paket (kg): ")
-	var berat float64
-	fmt.Scanln(&berat)
+	berat := utils.GetFloat("Masukkan berat paket (kg): ", "Berat tidak boleh kosong dan harus berupa angka.")
 
 	senderCity, err := InputCity("Kota Pengirim")
 	if err != nil {
@@ -98,17 +74,20 @@ func TambahPaket() {
 		return
 	}
 
-	distance, price := CalculatePackagePrice(senderCity.Latitude, senderCity.Longitude, receiverCity.Latitude, receiverCity.Longitude)
+	distance, price := utils.CalculatePackagePrice(
+		senderCity.Latitude, senderCity.Longitude,
+		receiverCity.Latitude, receiverCity.Longitude,
+		berat, tipe,
+	)
 
 	fmt.Printf("\nJarak antar kota: %.2f km\n", distance)
 	fmt.Printf("Harga paket: Rp %.0f\n", price)
 
-	if !Confirm("Apakah Anda yakin ingin menambahkan paket ini?") {
+	if !utils.GetConfirmation("Apakah Anda yakin ingin menambahkan paket ini?", "Silakan masukkan 'y' untuk ya atau 'n' untuk tidak.") {
 		fmt.Println("Paket tidak ditambahkan.")
 		return
 	}
 
-	// Buat paket baru
 	var input types.Paket
 	input.Tipe = tipe
 	input.Berat = berat

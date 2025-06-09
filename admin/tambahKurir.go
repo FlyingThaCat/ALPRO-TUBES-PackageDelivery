@@ -9,33 +9,34 @@ import (
 
 func TambahKurir() {
 	utils.ClearScreen()
-	// Fungsi untuk menambahkan kurir baru
+	fmt.Println("========================================")
+	fmt.Println("🚚  TAMBAH KURIR")
+	fmt.Println("========================================")
+
 	var kurir types.User
 
-	println("=== Tambah Kurir ===")
-	print("Masukkan Nama: ")
-	fmt.Scanln(&kurir.Nama)
-	print("Masukkan Username: ")
-	fmt.Scanln(&kurir.Username)
-	print("Masukkan Password: ")
-	fmt.Scanln(&kurir.Password)
-
+	kurir.Nama = utils.GetString("Masukkan Nama: ", "Nama tidak boleh kosong.")
+	kurir.Username = utils.GetString("Masukkan Username: ", "Username tidak boleh kosong.")
+	kurir.Password = utils.GetString("Masukkan Password: ", "Password tidak boleh kosong.")
 	kurir.Role = "kurir"
-	
-	// Validasi username dan password
+
 	if kurir.Username == "" || kurir.Password == "" {
-		fmt.Println("Username dan password tidak boleh kosong.")
+		fmt.Println("\n⚠️  Username dan password tidak boleh kosong.")
+		utils.EnterToContinue()
 		return
 	}
 
-	if cariKurir := datas.FindUserByUsername(kurir.Username); cariKurir.Username != "" {
-		fmt.Println("Username sudah terdaftar.")
+	if cariKurir := utils.FindUserByUsername(kurir.Username); cariKurir.Username != "" {
+		fmt.Println("\n⚠️  Username sudah terdaftar.")
+		utils.EnterToContinue()
 		return
 	}
 
 	// Simpan kurir ke database (simulasi)
 	datas.UsersDB = append(datas.UsersDB, kurir)
-	fmt.Println("Kurir berhasil ditambahkan.")
+
+	fmt.Println("\n✅  Kurir berhasil ditambahkan.")
+	fmt.Println("========================================")
 
 	utils.EnterToContinue()
 }

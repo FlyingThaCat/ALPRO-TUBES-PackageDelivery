@@ -54,9 +54,9 @@
 // New Goals
 
 - Sorting Jarak Paket GIBRAN
-- Kalkulasi Harga Dirubah, Berdasar Jenis, dan Berat GIBRAN
+- Kalkulasi Harga Dirubah, Berdasar Jenis, dan Berat GIBRAN [X]
 - Menambahkan jumlah paket yang diassign ke kurir [X]
 - Sorting paket kurir count [X]
-- CLI UI UPDATES (Kasih Dekorasi) JOHN
+- CLI UI UPDATES (Kasih Dekorasi) [X]
 - Double Confirmation disetiap CRUD
 - Ganti yang ketik manual jadi angka

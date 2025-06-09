@@ -9,6 +9,14 @@ import (
 	"time"
 )
 
+var statusPriority = map[string]int{
+	"Paket Dibuat":     1,
+	"Diambil":          2,
+	"Dalam Pengiriman": 3,
+	"Terkirim":         4,
+	"Pengiriman Gagal": 5,
+}
+
 func filterPaketByKurir(username string) []types.Paket {
 	var result []types.Paket
 	for _, p := range datas.PaketDB {
@@ -19,10 +27,20 @@ func filterPaketByKurir(username string) []types.Paket {
 	return result
 }
 
-// updateStatusPaket cari paket berdasarkan NoResi lalu update status terakhirnya
 func updateStatusPaket(noResi, statusBaru string) bool {
 	for i := range datas.PaketDB {
 		if datas.PaketDB[i].NoResi == noResi {
+			lastStatus := ""
+			if len(datas.PaketDB[i].Status) > 0 {
+				lastStatus = datas.PaketDB[i].Status[len(datas.PaketDB[i].Status)-1]
+			}
+			if lastStatus == statusBaru {
+				return false
+			}
+			if statusPriority[lastStatus] > statusPriority[statusBaru] && statusBaru != "Pengiriman Gagal" {
+				return false
+			}
+
 			datas.PaketDB[i].Status = append(datas.PaketDB[i].Status, statusBaru)
 			datas.PaketDB[i].UpdatedAt = time.Now()
 			return true
@@ -31,19 +49,7 @@ func updateStatusPaket(noResi, statusBaru string) bool {
 	return false
 }
 
-// UpdateStatus menampilkan paket yang ditangani kurir dan mengupdate status paket yang dipilih
-func UpdateStatus() {
-	utils.ClearScreen()
-
-	username := utils.GetLoggedInUsername()
-
-	paketList := filterPaketByKurir(username)
-	if len(paketList) == 0 {
-		fmt.Println("Tidak ada paket yang sedang Anda tangani.")
-		utils.EnterToContinue()
-		return
-	}
-
+func pilihPaket(paketList []types.Paket) *types.Paket {
 	fmt.Println("Daftar paket yang Anda tangani:")
 	for i, paket := range paketList {
 		lastStatus := "Belum ada status"
@@ -58,19 +64,26 @@ func UpdateStatus() {
 	_, err := fmt.Scanln(&pilih)
 	if err != nil || pilih < 1 || pilih > len(paketList) {
 		fmt.Println("Pilihan tidak valid.")
-		return
+		utils.EnterToContinue()
+		return nil
 	}
 
-	selectedPaket := &paketList[pilih-1]
+	return &paketList[pilih-1]
+}
 
-	// Daftar status enum
-	statusOptions := []string{
-		"Diambil",
-		"Dalam Pengiriman",
-		"Terkirim",
-		"Pengiriman Gagal",
+func getStatusOptions(lastStatus string) []string {
+	options := []string{}
+	validStatuses := []string{"Diambil", "Dalam Pengiriman", "Terkirim", "Pengiriman Gagal"}
+
+	for _, s := range validStatuses {
+		if s == "Pengiriman Gagal" || statusPriority[s] > statusPriority[lastStatus] {
+			options = append(options, s)
+		}
 	}
+	return options
+}
 
+func pilihStatus(statusOptions []string) string {
 	fmt.Println("\nPilih status baru untuk paket:")
 	for i, s := range statusOptions {
 		fmt.Printf("%d. %s\n", i+1, s)
@@ -78,30 +91,67 @@ func UpdateStatus() {
 
 	fmt.Print("Masukkan nomor status baru: ")
 	var statusChoice int
-	_, err = fmt.Scanln(&statusChoice)
+	_, err := fmt.Scanln(&statusChoice)
 	if err != nil || statusChoice < 1 || statusChoice > len(statusOptions) {
 		fmt.Println("Pilihan status tidak valid.")
-		return
+		utils.EnterToContinue()
+		return ""
 	}
 
-	statusBaru := statusOptions[statusChoice-1]
+	return statusOptions[statusChoice-1]
+}
 
-	// Konfirmasi
-	fmt.Printf("Anda akan mengubah status paket NoResi %s menjadi \"%s\". Lanjutkan? (y/n): ", selectedPaket.NoResi, statusBaru)
+func konfirmasiUpdate(noResi, statusBaru string) bool {
+	fmt.Printf("Anda akan mengubah status paket NoResi %s menjadi \"%s\". Lanjutkan? (y/n): ", noResi, statusBaru)
 	var confirm string
 	fmt.Scanln(&confirm)
 	confirm = strings.TrimSpace(strings.ToLower(confirm))
-	if confirm != "y" {
+	return confirm == "y"
+}
+
+func UpdateStatus() {
+	utils.ClearScreen()
+
+	username := utils.GetLoggedInUsername()
+	paketList := filterPaketByKurir(username)
+	if len(paketList) == 0 {
+		fmt.Println("Tidak ada paket yang sedang Anda tangani.")
+		utils.EnterToContinue()
+		return
+	}
+
+	selectedPaket := pilihPaket(paketList)
+	if selectedPaket == nil {
+		return
+	}
+
+	lastStatus := ""
+	if len(selectedPaket.Status) > 0 {
+		lastStatus = selectedPaket.Status[len(selectedPaket.Status)-1]
+	}
+
+	statusOptions := getStatusOptions(lastStatus)
+	if len(statusOptions) == 0 {
+		fmt.Println("Tidak ada status baru yang bisa dipilih berdasarkan status terakhir.")
+		utils.EnterToContinue()
+		return
+	}
+
+	statusBaru := pilihStatus(statusOptions)
+	if statusBaru == "" {
+		return
+	}
+
+	if !konfirmasiUpdate(selectedPaket.NoResi, statusBaru) {
 		fmt.Println("Update status dibatalkan.")
 		utils.EnterToContinue()
 		return
 	}
 
-	// Update status di database utama
 	if updateStatusPaket(selectedPaket.NoResi, statusBaru) {
 		fmt.Println("Status paket berhasil diperbarui.")
 	} else {
-		fmt.Println("Gagal memperbarui status paket.")
+		fmt.Println("Gagal memperbarui status paket. Pastikan status baru valid dan tidak mundur.")
 	}
 
 	utils.EnterToContinue()

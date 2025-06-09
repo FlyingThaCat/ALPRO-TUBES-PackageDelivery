@@ -135,7 +135,7 @@ func main() {
 							}
 						case "kurir":
 							if option == 1 {
-								kurir.CheckMyPaket()
+								kurir.CheckMyPaketSorted()
 							} else if option == 2 {
 								kurir.UpdateStatus()
 							} else {

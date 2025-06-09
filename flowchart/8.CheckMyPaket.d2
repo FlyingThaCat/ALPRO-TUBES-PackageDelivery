@@ -1,0 +1,55 @@
+direction: down
+
+start: "Mulai CheckMyPaket()" {
+  shape: oval
+}
+
+clearScreen: "Clear Screen" {
+  shape: rectangle
+}
+
+getUsername: "Ambil username dari sesi login" {
+  shape: rectangle
+}
+
+findPaket: "Cari paket berdasarkan username" {
+  shape: rectangle
+}
+
+checkEmpty: "Apakah len(pakets) == 0?" {
+  shape: diamond
+}
+
+printKosong: "Tampilkan: Tidak ada paket yang sedang Anda tangani" {
+  shape: rectangle
+}
+
+waitKosong: "Tunggu Enter untuk lanjut" {
+  shape: rectangle
+}
+
+returnKosong: "Keluar fungsi" {
+  shape: oval
+}
+
+printTitle: "Tampilkan: 'Daftar Paket Anda'" {
+  shape: rectangle
+}
+
+loopPaket: "Loop dan tampilkan info setiap paket" {
+  shape: rectangle
+}
+
+waitAkhir: "Tunggu Enter untuk lanjut" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clearScreen -> getUsername -> findPaket -> checkEmpty
+checkEmpty -> printKosong: Ya
+printKosong -> waitKosong -> returnKosong
+checkEmpty -> printTitle: Tidak
+printTitle -> loopPaket -> waitAkhir -> end

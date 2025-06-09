@@ -1,0 +1,10 @@
+EnterToContinue: {
+  start: { text: "Mulai Fungsi EnterToContinue()" }
+  callGetInput: { text: "Panggil GetInput(prompt='Tekan Enter untuk melanjutkan...', allowEmpty=true, messageEmpty='')" }
+  waitInput: { text: "Tunggu user tekan Enter" }
+  end: { text: "Selesai Fungsi" }
+
+  start: -> callGetInput:
+  callGetInput: -> waitInput:
+  waitInput: -> end:
+}

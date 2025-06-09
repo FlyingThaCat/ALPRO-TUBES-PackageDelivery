@@ -1,0 +1,114 @@
+direction: down
+
+start: "Mulai AssignPaket()" {
+  shape: oval
+}
+
+clearScreen: "utils.ClearScreen()" {
+  shape: rectangle
+}
+
+lihatPaket: "paket.LihatPaket(false, true)" {
+  shape: rectangle
+}
+
+lihatKurir: "LihatKurir(false)" {
+  shape: rectangle
+}
+
+inputNoResi: "Input noResi" {
+  shape: rectangle
+}
+
+inputUsername: "Input username Kurir" {
+  shape: rectangle
+}
+
+cariPaket: "foundPaket := datas.CariPaket(noResi)" {
+  shape: rectangle
+}
+
+checkPaket: "foundPaket.NoResi == ''?" {
+  shape: diamond
+}
+
+printPaketNotFound: "fmt.Println('Paket tidak ditemukan.')" {
+  shape: rectangle
+}
+
+endEarly1: "Return" {
+  shape: oval
+}
+
+findUser: "foundKurir := datas.FindUserByUsername(username)" {
+  shape: rectangle
+}
+
+checkKurirFound: "foundKurir.Username == ''?" {
+  shape: diamond
+}
+
+printKurirNotFound: "fmt.Println('Kurir tidak ditemukan.')" {
+  shape: rectangle
+}
+
+endEarly2: "Return" {
+  shape: oval
+}
+
+checkRoleKurir: "foundKurir.Role != 'kurir'?" {
+  shape: diamond
+}
+
+printNotKurir: "fmt.Println('Username bukan kurir.')" {
+  shape: rectangle
+}
+
+endEarly3: "Return" {
+  shape: oval
+}
+
+assign: "datas.AssignPaketToKurir(foundKurir.Username, foundPaket.NoResi)" {
+  shape: rectangle
+}
+
+checkAssignSuccess: "Assign berhasil?" {
+  shape: diamond
+}
+
+printAssignSuccess: "fmt.Println('Paket berhasil diassign ke kurir.')" {
+  shape: rectangle
+}
+
+printAssignFail: "fmt.Println('Paket gagal diassign.')" {
+  shape: rectangle
+}
+
+enterContinue: "utils.EnterToContinue()" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clearScreen -> lihatPaket -> lihatKurir -> inputNoResi -> inputUsername -> cariPaket -> checkPaket
+checkPaket -> printPaketNotFound: Ya
+printPaketNotFound -> endEarly1
+checkPaket -> findUser: Tidak
+
+findUser -> checkKurirFound
+checkKurirFound -> printKurirNotFound: Ya
+printKurirNotFound -> endEarly2
+checkKurirFound -> checkRoleKurir: Tidak
+
+checkRoleKurir -> printNotKurir: Ya
+printNotKurir -> endEarly3
+checkRoleKurir -> assign: Tidak
+
+assign -> checkAssignSuccess
+checkAssignSuccess -> printAssignSuccess: Ya
+checkAssignSuccess -> printAssignFail: Tidak
+
+printAssignSuccess -> enterContinue -> end
+printAssignFail -> enterContinue -> end

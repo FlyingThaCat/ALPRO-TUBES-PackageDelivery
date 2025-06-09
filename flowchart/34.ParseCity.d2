@@ -1,0 +1,80 @@
+direction: down
+
+start: "Mulai ParseCity(name)" {
+  shape: oval
+}
+
+toLower: "name = strings.ToLower(name)" {
+  shape: rectangle
+}
+
+switchJakarta: "Apakah name == 'jakarta'?" {
+  shape: diamond
+}
+
+returnJakarta: "Return types.Jakarta, nil" {
+  shape: rectangle
+}
+
+switchBogor: "Apakah name == 'bogor'?" {
+  shape: diamond
+}
+
+returnBogor: "Return types.Bogor, nil" {
+  shape: rectangle
+}
+
+switchDepok: "Apakah name == 'depok'?" {
+  shape: diamond
+}
+
+returnDepok: "Return types.Depok, nil" {
+  shape: rectangle
+}
+
+switchTangerang: "Apakah name == 'tangerang'?" {
+  shape: diamond
+}
+
+returnTangerang: "Return types.Tangerang, nil" {
+  shape: rectangle
+}
+
+switchBekasi: "Apakah name == 'bekasi'?" {
+  shape: diamond
+}
+
+returnBekasi: "Return types.Bekasi, nil" {
+  shape: rectangle
+}
+
+returnError: "Return \"\", fmt.Errorf(\"kota tidak dikenali: %s\", name)" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> toLower -> switchJakarta
+switchJakarta -> returnJakarta: Ya
+switchJakarta -> switchBogor: Tidak
+
+switchBogor -> returnBogor: Ya
+switchBogor -> switchDepok: Tidak
+
+switchDepok -> returnDepok: Ya
+switchDepok -> switchTangerang: Tidak
+
+switchTangerang -> returnTangerang: Ya
+switchTangerang -> switchBekasi: Tidak
+
+switchBekasi -> returnBekasi: Ya
+switchBekasi -> returnError: Tidak
+
+returnJakarta -> end
+returnBogor -> end
+returnDepok -> end
+returnTangerang -> end
+returnBekasi -> end
+returnError -> end

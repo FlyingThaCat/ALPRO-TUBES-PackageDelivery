@@ -1,0 +1,98 @@
+direction: down
+
+start: "Mulai LihatPaket(clear, hideAssigned)" {
+  shape: oval
+}
+
+cekClear: "Apakah clear == true?" {
+  shape: diamond
+}
+
+clearScreen: "Panggil utils.ClearScreen()" {
+  shape: rectangle
+}
+
+printHeader: "Cetak header tabel paket" {
+  shape: rectangle
+}
+
+loopPaket: "Loop setiap paket di datas.PaketDB" {
+  shape: rectangle
+}
+
+cekHideAssigned: "Apakah hideAssigned == true dan paket.Kurir != kosong?" {
+  shape: diamond
+}
+
+skipPaket: "Lewati paket ini (continue)" {
+  shape: rectangle
+}
+
+setKurir: "Set kurir = paket.Kurir atau 'Belum Ditugaskan' jika kosong" {
+  shape: rectangle
+}
+
+cekStatus: "Apakah paket.Status tidak kosong?" {
+  shape: diamond
+}
+
+setStatusTerakhir: "Set statusTerakhir = status terakhir paket.Status" {
+  shape: rectangle
+}
+
+setStatusDefault: "Set statusTerakhir = '-'" {
+  shape: rectangle
+}
+
+printBaris: "Cetak baris paket ke tabel" {
+  shape: rectangle
+}
+
+flushWriter: "Panggil w.Flush()" {
+  shape: rectangle
+}
+
+printFooter: "Cetak garis pemisah" {
+  shape: rectangle
+}
+
+cekClear2: "Apakah clear == true?" {
+  shape: diamond
+}
+
+enterToContinue: "Panggil utils.EnterToContinue()" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> cekClear
+cekClear -> clearScreen: Ya
+cekClear -> printHeader: Tidak
+clearScreen -> printHeader
+
+printHeader -> loopPaket
+
+loopPaket -> cekHideAssigned
+cekHideAssigned -> skipPaket: Ya
+cekHideAssigned -> setKurir: Tidak
+
+skipPaket -> loopPaket
+
+setKurir -> cekStatus
+cekStatus -> setStatusTerakhir: Ya
+cekStatus -> setStatusDefault: Tidak
+
+setStatusTerakhir -> printBaris
+setStatusDefault -> printBaris
+
+printBaris -> loopPaket
+
+loopPaket -> flushWriter
+flushWriter -> printFooter
+printFooter -> cekClear2
+cekClear2 -> enterToContinue: Ya
+cekClear2 -> end: Tidak
+enterToContinue -> end

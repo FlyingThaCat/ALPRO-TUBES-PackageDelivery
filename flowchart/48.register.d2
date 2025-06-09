@@ -1,0 +1,51 @@
+direction: down
+
+start: "Mulai register()" {
+  shape: oval
+}
+
+clearScreen: "utils.ClearScreen()" {
+  shape: rectangle
+}
+
+inputUsername: "Input username" {
+  shape: rectangle
+}
+
+checkUsernameExist: "Username sudah ada?" {
+  shape: diamond
+}
+
+showUsernameExists: "Tampilkan 'Username sudah ada'" {
+  shape: rectangle
+}
+
+returnEnd1: "Return" {
+  shape: rectangle
+}
+
+inputPassword: "Input password" {
+  shape: rectangle
+}
+
+addUser: "Tambah user baru ke database" {
+  shape: rectangle
+}
+
+showSuccess: "Tampilkan 'User berhasil didaftarkan'" {
+  shape: rectangle
+}
+
+returnEnd2: "Return" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clearScreen -> inputUsername -> checkUsernameExist
+checkUsernameExist -> showUsernameExists: yes
+showUsernameExists -> returnEnd1 -> end
+checkUsernameExist -> inputPassword: no
+inputPassword -> addUser -> showSuccess -> returnEnd2 -> end

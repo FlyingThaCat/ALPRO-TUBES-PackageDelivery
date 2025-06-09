@@ -1,0 +1,54 @@
+direction: down
+
+start: "Mulai GetConfirmation(prompt, message)" {
+  shape: oval
+}
+
+checkMessage: "Jika message kosong\n=> message = 'Silakan masukkan 'y' atau 'n'.'" {
+  shape: rectangle
+}
+
+loop: "Loop meminta input 'y' atau 'n'" {
+  shape: rectangle
+}
+
+callGetInput: "input = strings.ToLower(GetInput(prompt + ' (y/n): ', false, message))" {
+  shape: rectangle
+}
+
+checkInput: "Input = 'y' atau 'yes'?" {
+  shape: diamond
+}
+
+returnTrue: "Return true" {
+  shape: rectangle
+}
+
+checkInputNo: "Input = 'n' atau 'no'?" {
+  shape: diamond
+}
+
+returnFalse: "Return false" {
+  shape: rectangle
+}
+
+printInvalid: "Tampilkan 'Input tidak valid.' + message" {
+  shape: rectangle
+}
+
+continueLoop: "Ulangi loop" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> checkMessage -> loop -> callGetInput -> checkInput
+checkInput -> returnTrue: Ya
+checkInput -> checkInputNo: Tidak
+checkInputNo -> returnFalse: Ya
+checkInputNo -> printInvalid: Tidak
+printInvalid -> continueLoop -> loop
+returnTrue -> end
+returnFalse -> end

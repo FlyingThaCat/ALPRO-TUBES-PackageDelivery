@@ -1,0 +1,56 @@
+direction: down
+
+start: "Mulai UbahKurir(kurir)" {
+  shape: oval
+}
+
+clear1: "Clear Screen" {
+  shape: rectangle
+}
+
+showTitle: "Tampilkan judul 'Ubah Kurir'" {
+  shape: rectangle
+}
+
+saveOld: "Simpan oldUsername = kurir.Username" {
+  shape: rectangle
+}
+
+inputNama: "Input Nama (pakai default jika kosong)" {
+  shape: parallelogram
+}
+
+inputUsername: "Input Username (pakai default jika kosong)" {
+  shape: parallelogram
+}
+
+inputPassword: "Input Password (pakai default jika kosong)" {
+  shape: parallelogram
+}
+
+inputRole: "Input Role (pakai default jika kosong)" {
+  shape: parallelogram
+}
+
+updateDB: "Cari user dengan oldUsername dan update data" {
+  shape: rectangle
+}
+
+clear2: "Clear Screen" {
+  shape: rectangle
+}
+
+printResult: "Tampilkan data kurir baru" {
+  shape: rectangle
+}
+
+waitEnter: "Tunggu Enter untuk lanjut" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clear1 -> showTitle -> saveOld
+saveOld -> inputNama -> inputUsername -> inputPassword -> inputRole -> updateDB -> clear2 -> printResult -> waitEnter -> end

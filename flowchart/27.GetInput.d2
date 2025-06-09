@@ -1,0 +1,43 @@
+direction: down
+
+start: "Mulai GetInput(prompt, allowEmpty, messageEmpty)" {
+  shape: oval
+}
+
+loop: "Loop meminta input user" {
+  shape: rectangle
+}
+
+printPrompt: "Print prompt" {
+  shape: rectangle
+}
+
+readInput: "Baca input dan trim spasi" {
+  shape: rectangle
+}
+
+checkEmpty: "Input kosong?\n&& allowEmpty==false?" {
+  shape: diamond
+}
+
+printError1: "Print messageEmpty (jika ada)\natau 'Input tidak boleh kosong.'" {
+  shape: rectangle
+}
+
+continueLoop: "Kembali ke awal loop" {
+  shape: rectangle
+}
+
+returnInput: "Return input valid" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> loop -> printPrompt -> readInput -> checkEmpty
+checkEmpty -> printError1: Ya
+printError1 -> continueLoop -> loop
+checkEmpty -> returnInput: Tidak
+returnInput -> end

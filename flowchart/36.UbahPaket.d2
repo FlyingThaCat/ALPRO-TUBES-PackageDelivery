@@ -1,0 +1,85 @@
+direction: down
+
+start: "Mulai UbahPaket(paket)" {
+  shape: oval
+}
+
+clearScreen1: "Clear screen" {
+  shape: rectangle
+}
+
+inputTipe: "Input tipe paket (default: paket.Tipe)" {
+  shape: rectangle
+}
+
+inputBerat: "Input berat paket (default: paket.Berat)" {
+  shape: rectangle
+}
+
+inputHarga: "Input harga paket (default: paket.Harga)" {
+  shape: rectangle
+}
+
+inputSenderCity: "Input kota pengirim (default: paket.SenderCity)" {
+  shape: rectangle
+}
+
+checkSenderCityValid: "Validasi kota pengirim?" {
+  shape: diamond
+}
+
+errorSenderCity: "Tampilkan error kota pengirim\n& keluar" {
+  shape: rectangle
+}
+
+inputReceiverCity: "Input kota tujuan (default: paket.ReceiverCity)" {
+  shape: rectangle
+}
+
+checkReceiverCityValid: "Validasi kota tujuan?" {
+  shape: diamond
+}
+
+errorReceiverCity: "Tampilkan error kota tujuan\n& keluar" {
+  shape: rectangle
+}
+
+inputStatus: "Input status baru (pisah koma)" {
+  shape: rectangle
+}
+
+updateUpdatedAt: "Update waktu diperbarui" {
+  shape: rectangle
+}
+
+saveToDB: "Simpan paket ke database" {
+  shape: rectangle
+}
+
+clearScreen2: "Clear screen" {
+  shape: rectangle
+}
+
+printSuccess: "Tampilkan paket berhasil diubah" {
+  shape: rectangle
+}
+
+enterToContinue: "Tunggu user tekan enter" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clearScreen1 -> inputTipe -> inputBerat -> inputHarga -> inputSenderCity -> checkSenderCityValid
+checkSenderCityValid -> errorSenderCity: Tidak valid
+checkSenderCityValid -> inputReceiverCity: Valid
+
+inputReceiverCity -> checkReceiverCityValid
+checkReceiverCityValid -> errorReceiverCity: Tidak valid
+checkReceiverCityValid -> inputStatus: Valid
+
+inputStatus -> updateUpdatedAt -> saveToDB -> clearScreen2 -> printSuccess -> enterToContinue -> end
+errorSenderCity -> end
+errorReceiverCity -> end

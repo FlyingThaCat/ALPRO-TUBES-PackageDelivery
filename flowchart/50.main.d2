@@ -1,0 +1,231 @@
+direction: down
+
+start: "Mulai main()" {
+  shape: oval
+}
+
+clearInit: "utils.ClearScreen() dan datas.Init()" {
+  shape: rectangle
+}
+
+loopMainMenu: "Loop utama (selamanya)" {
+  shape: rectangle
+}
+
+clearScreenLoop: "utils.ClearScreen()" {
+  shape: rectangle
+}
+
+printMenu: "Cetak pilihan:\n1. Register\n2. Login\n0. Keluar" {
+  shape: rectangle
+}
+
+inputChoice: "Input choice (1/2/0)" {
+  shape: rectangle
+}
+
+switchChoice: "Switch choice" {
+  shape: diamond
+}
+
+caseRegister: "Panggil register()" {
+  shape: rectangle
+}
+
+caseLogin: "Panggil login() -> user, loggedIn" {
+  shape: rectangle
+}
+
+checkLoggedIn: "Apakah loggedIn == true?" {
+  shape: diamond
+}
+
+loopRoleMenu: "Loop menu sesuai role" {
+  shape: rectangle
+}
+
+switchRole: "Switch user.Role" {
+  shape: diamond
+}
+
+roleUserMenu: "users.MenuUser()" {
+  shape: rectangle
+}
+
+roleKurirMenu: "kurir.MenuKurir()" {
+  shape: rectangle
+}
+
+roleAdminMenu: "admin.MenuAdmin()" {
+  shape: rectangle
+}
+
+inputOption: "Input option (menu pilihan)" {
+  shape: rectangle
+}
+
+checkLogout: "Apakah option == 0?" {
+  shape: diamond
+}
+
+logoutMsg: "Cetak 'Logout berhasil'" {
+  shape: rectangle
+}
+
+switchUserOption: "Switch option untuk user" {
+  shape: diamond
+}
+
+userOpt1: "paket.TambahPaket()" {
+  shape: rectangle
+}
+
+userOpt2: "paket.CekPaket()" {
+  shape: rectangle
+}
+
+defaultUserMenu: "users.MenuUser()" {
+  shape: rectangle
+}
+
+switchAdminOption: "Switch option untuk admin" {
+  shape: diamond
+}
+
+adminOpt1: "paket.TambahPaket()" {
+  shape: rectangle
+}
+
+adminOpt2: "paket.LihatPaket(true, false)" {
+  shape: rectangle
+}
+
+adminOpt3: "paket.EditPaket()" {
+  shape: rectangle
+}
+
+adminOpt4: "paket.HapusPaket()" {
+  shape: rectangle
+}
+
+adminOpt5: "admin.TambahKurir()" {
+  shape: rectangle
+}
+
+adminOpt6: "admin.LihatKurir(true)" {
+  shape: rectangle
+}
+
+adminOpt7: "admin.EditKurir()" {
+  shape: rectangle
+}
+
+adminOpt8: "admin.HapusKurir()" {
+  shape: rectangle
+}
+
+adminOpt9: "paket.AssignPaket()" {
+  shape: rectangle
+}
+
+defaultAdminMenu: "admin.MenuAdmin()" {
+  shape: rectangle
+}
+
+switchKurirOption: "Switch option untuk kurir" {
+  shape: diamond
+}
+
+kurirOpt1: "kurir.CheckMyPaket()" {
+  shape: rectangle
+}
+
+kurirOpt2: "kurir.UpdateStatus()" {
+  shape: rectangle
+}
+
+defaultKurirMenu: "kurir.MenuKurir()" {
+  shape: rectangle
+}
+
+caseExit: "Cetak pesan keluar dan return" {
+  shape: rectangle
+}
+
+caseDefault: "Tampilkan pesan pilihan tidak valid" {
+  shape: rectangle
+}
+
+end: "Selesai" {
+  shape: oval
+}
+
+start -> clearInit -> loopMainMenu
+loopMainMenu -> clearScreenLoop -> printMenu -> inputChoice -> switchChoice
+switchChoice -> caseRegister: choice == 1
+switchChoice -> caseLogin: choice == 2
+switchChoice -> caseExit: choice == 0
+switchChoice -> caseDefault: otherwise
+
+caseRegister -> loopMainMenu
+
+caseLogin -> checkLoggedIn
+checkLoggedIn -> loopRoleMenu: yes
+checkLoggedIn -> loopMainMenu: no
+
+loopRoleMenu -> switchRole
+
+switchRole -> roleUserMenu: role == "user"
+switchRole -> roleKurirMenu: role == "kurir"
+switchRole -> roleAdminMenu: role == "admin"
+
+roleUserMenu -> inputOption -> checkLogout
+roleKurirMenu -> inputOption -> checkLogout
+roleAdminMenu -> inputOption -> checkLogout
+
+checkLogout -> logoutMsg: yes
+logoutMsg -> loopMainMenu
+
+checkLogout -> switchUserOption: no and role == "user"
+checkLogout -> switchAdminOption: no and role == "admin"
+checkLogout -> switchKurirOption: no and role == "kurir"
+
+switchUserOption -> userOpt1: option == 1
+switchUserOption -> userOpt2: option == 2
+switchUserOption -> defaultUserMenu: otherwise
+userOpt1 -> loopRoleMenu
+userOpt2 -> loopRoleMenu
+defaultUserMenu -> loopRoleMenu
+
+switchAdminOption -> adminOpt1: option == 1
+switchAdminOption -> adminOpt2: option == 2
+switchAdminOption -> adminOpt3: option == 3
+switchAdminOption -> adminOpt4: option == 4
+switchAdminOption -> adminOpt5: option == 5
+switchAdminOption -> adminOpt6: option == 6
+switchAdminOption -> adminOpt7: option == 7
+switchAdminOption -> adminOpt8: option == 8
+switchAdminOption -> adminOpt9: option == 9
+switchAdminOption -> defaultAdminMenu: otherwise
+
+adminOpt1 -> loopRoleMenu
+adminOpt2 -> loopRoleMenu
+adminOpt3 -> loopRoleMenu
+adminOpt4 -> loopRoleMenu
+adminOpt5 -> loopRoleMenu
+adminOpt6 -> loopRoleMenu
+adminOpt7 -> loopRoleMenu
+adminOpt8 -> loopRoleMenu
+adminOpt9 -> loopRoleMenu
+defaultAdminMenu -> loopRoleMenu
+
+switchKurirOption -> kurirOpt1: option == 1
+switchKurirOption -> kurirOpt2: option == 2
+switchKurirOption -> defaultKurirMenu: otherwise
+
+kurirOpt1 -> loopRoleMenu
+kurirOpt2 -> loopRoleMenu
+defaultKurirMenu -> loopRoleMenu
+
+caseExit -> end
+caseDefault -> loopMainMenu

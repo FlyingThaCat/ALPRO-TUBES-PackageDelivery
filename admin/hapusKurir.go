@@ -7,18 +7,20 @@ import (
 
 func HapusKurir() {
 	utils.ClearScreen()
-	fmt.Println("=== Hapus Kurir ===")
+	fmt.Println("========================================")
+	fmt.Println("🗑️  HAPUS KURIR")
+	fmt.Println("========================================")
 
 	username := utils.GetString("Masukkan username kurir yang ingin dihapus: ", "Silakan masukkan username kurir yang valid.")
-	
+
 	ok := utils.DeleteUser(username)
-	
+
 	if !ok {
-		fmt.Println("Kurir tidak dapat dihapus. Username tidak ditemukan.")
+		fmt.Println("\n⚠️  Kurir tidak dapat dihapus. Username tidak ditemukan.")
+		utils.EnterToContinue()
 		return
 	}
 
-	fmt.Printf("Kurir dengan username %s telah dihapus.\n\n", username)
-
+	fmt.Printf("\n✅ Kurir dengan username '%s' telah dihapus.\n\n", username)
 	utils.EnterToContinue()
 }

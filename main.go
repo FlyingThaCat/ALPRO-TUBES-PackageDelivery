@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"PackageDelivery/paket"
 	"PackageDelivery/utils"
+	"fmt"
 
 	"PackageDelivery/admin"
 	"PackageDelivery/kurir"
@@ -15,50 +15,53 @@ import (
 
 func register() {
 	utils.ClearScreen()
-	fmt.Print("=== Register User ===\n")
-	username := utils.GetString("Masukkan username: ", "username tidak boleh kosong.")
+	fmt.Println("========================================")
+	fmt.Println("🆕  REGISTER USER")
+	fmt.Println("========================================")
+
+	username := utils.GetString("Masukkan username: ", "Username tidak boleh kosong.")
 
 	if user := utils.FindUserByUsername(username); user.Username != "" {
-		fmt.Print("Username sudah ada, silakan coba lagi.\n\n")
+		fmt.Println("\n❌ Username sudah ada, silakan coba lagi.\n")
 		return
 	}
 
-	password := utils.GetString("Masukkan password: ", "password tidak boleh kosong.")
+	password := utils.GetString("Masukkan password: ", "Password tidak boleh kosong.")
 
 	utils.AddUser(types.User{
 		Username: username,
 		Password: password,
-		Role:     "user", 
+		Role:     "user",
 	})
 
-	fmt.Printf("User '%s' berhasil didaftarkan.\n\n", username)
+	fmt.Printf("\n✅ User '%s' berhasil didaftarkan.\n\n", username)
 }
 
 func login() (*types.User, bool) {
 	utils.ClearScreen()
-	fmt.Printf("=== Login ===\n")
+	fmt.Println("========================================")
+	fmt.Println("🔐  LOGIN")
+	fmt.Println("========================================")
 
-	username := utils.GetString("Masukkan username: ", "username tidak boleh kosong.")
-	password := utils.GetString("Masukkan password: ", "password tidak boleh kosong.")
+	username := utils.GetString("Masukkan username: ", "Username tidak boleh kosong.")
+	password := utils.GetString("Masukkan password: ", "Password tidak boleh kosong.")
 
 	user := utils.FindUserByUsername(username)
 	if user.Username == "" {
-		utils.ShowDelayedMessage("Username tidak ditemukan.", 2, true)
+		utils.ShowDelayedMessage("\n❌ Username tidak ditemukan.\n", 2, true)
 		return nil, false
 	} else if user.Password != password {
-		utils.ShowDelayedMessage("Password salah.", 2, true)
+		utils.ShowDelayedMessage("\n❌ Password salah.\n", 2, true)
 		return nil, false
 	}
 
-	// BUGS
 	if user.Role != "user" {
-		fmt.Printf("Login berhasil, selamat datang %s! (role: %s)\n\n", user.Username, user.Role)
+		fmt.Printf("\n✅ Login berhasil, selamat datang %s! (role: %s)\n\n", user.Username, user.Role)
 	} else {
-		fmt.Printf("Login berhasil, selamat datang %s!\n\n", user.Username)
+		fmt.Printf("\n✅ Login berhasil, selamat datang %s!\n\n", user.Username)
 	}
 
 	utils.SetLoggedInUsername(user.Username)
-
 	return &user, true
 }
 
@@ -68,11 +71,15 @@ func main() {
 
 	for {
 		utils.ClearScreen()
-		fmt.Println("Pilih opsi:")
-		fmt.Println("1. Register")
-		fmt.Println("2. Login")
-		fmt.Println("0. Keluar")
-		choice := utils.GetInt("Masukkan pilihan (1/2/0): ", "")
+		fmt.Println("========================================")
+		fmt.Println("🔐  SELAMAT DATANG DI APLIKASI")
+		fmt.Println("========================================")
+		fmt.Println("Silakan pilih menu:")
+		fmt.Println("1️⃣  Register")
+		fmt.Println("2️⃣  Login")
+		fmt.Println("0️⃣  Keluar")
+		fmt.Println("========================================")
+		choice := utils.GetInt("Pilih menu: ", "")
 
 		switch choice {
 		case 1:
@@ -89,7 +96,7 @@ func main() {
 					case "admin":
 						admin.MenuAdmin()
 					}
-					
+
 					option := utils.GetInt("Pilih menu: ", "Silakan masukkan menu yang valid (0 untuk logout).")
 					if option == 0 {
 						fmt.Print("Logout berhasil.\n\n")

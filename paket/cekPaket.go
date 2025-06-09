@@ -7,14 +7,19 @@ import (
 
 func CekPaket() {
 	utils.ClearScreen()
-	fmt.Println("=== Cek Paket ===")
+	fmt.Println("========================================")
+	fmt.Println("📦  CEK PAKET")
+	fmt.Println("========================================")
 
 	noResi := utils.GetString("Masukkan No Resi: ", "Silakan masukkan No Resi yang valid.")
 	found := utils.FindPaketByNoResi(noResi)
-	
+
 	if found.NoResi == "" {
-		fmt.Println("Paket tidak ditemukan.")
+		fmt.Println("\n⚠️  Paket tidak ditemukan.")
 	} else {
+		fmt.Println()
 		DetailPaket(*found)
 	}
+
+	utils.EnterToContinue()
 }

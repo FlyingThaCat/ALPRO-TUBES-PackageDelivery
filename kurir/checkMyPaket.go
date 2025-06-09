@@ -10,23 +10,28 @@ func CheckMyPaket() {
 
 	username := utils.GetLoggedInUsername()
 
-	pakets := (utils.FindPaketByUsername(username))
+	pakets := utils.FindPaketByUsername(username)
 
 	if len(pakets) == 0 {
-
+		fmt.Println("========================================")
+		fmt.Println("📦  DAFTAR PAKET ANDA")
+		fmt.Println("========================================")
 		fmt.Print("\nTidak ada paket yang sedang Anda tangani.\n")
 		utils.EnterToContinue()
 		return
 	}
 
-	// utils.EnterToContinue()
-	fmt.Println("=== Daftar Paket Anda ===")
+	fmt.Println("========================================")
+	fmt.Println("📦  DAFTAR PAKET ANDA")
+	fmt.Println("========================================")
+
 	for i, paket := range pakets {
 		fmt.Printf("%d. No Resi: %s | Tipe: %s | Dari %s ke %s | Status Terakhir: %s\n",
 			i+1, paket.NoResi, paket.Tipe, paket.SenderCity, paket.ReceiverCity,
 			paket.Status[len(paket.Status)-1],
 		)
 	}
-	utils.EnterToContinue()
 
+	fmt.Println("========================================")
+	utils.EnterToContinue()
 }

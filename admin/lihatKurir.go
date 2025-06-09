@@ -13,8 +13,10 @@ func LihatKurir(clear bool) {
 	if clear {
 		utils.ClearScreen()
 	}
-	
-	fmt.Println("\n=== Daftar Kurir ===")	
+
+	fmt.Println("========================================")
+	fmt.Println("🚚  DAFTAR KURIR")
+	fmt.Println("========================================")
 
 	var kurirs []types.User
 	for _, user := range datas.UsersDB {
@@ -23,6 +25,7 @@ func LihatKurir(clear bool) {
 		}
 	}
 
+	// Sorting kurir berdasarkan jumlah paket yang diassign, ascending
 	for i := 1; i < len(kurirs); i++ {
 		temp := kurirs[i]
 		j := i - 1
@@ -36,10 +39,11 @@ func LihatKurir(clear bool) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	fmt.Fprintln(w, "Nama\tUsername\tPassword\tPaket yang Diassign")
 	for _, kurir := range kurirs {
-		fmt.Fprintf(w, "%s\t%s\t%s\t%v\n", kurir.Nama, kurir.Username, kurir.Password, len(kurir.Pakets))
+		fmt.Fprintf(w, "%s\t%s\t%s\t%d\n", kurir.Nama, kurir.Username, kurir.Password, len(kurir.Pakets))
 	}
 	w.Flush()
-	fmt.Print("====================\n\n")
+
+	fmt.Println("========================================")
 	if clear {
 		utils.EnterToContinue()
 	}

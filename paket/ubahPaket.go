@@ -15,7 +15,9 @@ func UbahPaket(paket types.Paket) {
 	utils.ClearScreen()
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("=== Ubah Paket ===")
+	fmt.Println("========================================")
+	fmt.Println("✏️  UBAH DATA PAKET")
+	fmt.Println("========================================")
 
 	inputWithDefault := func(prompt string, current string) string {
 		fmt.Printf("%s [%s]: ", prompt, current)
@@ -27,45 +29,56 @@ func UbahPaket(paket types.Paket) {
 		return text
 	}
 
-	// Tipe
-	paket.Tipe = inputWithDefault("Tipe", string(paket.Tipe))
+	paket.Tipe = inputWithDefault("Tipe Paket", string(paket.Tipe))
 
-	// Berat (float)
-	beratStr := inputWithDefault("Berat", fmt.Sprintf("%.2f", paket.Berat))
+	beratStr := inputWithDefault("Berat (kg)", fmt.Sprintf("%.2f", paket.Berat))
 	fmt.Sscanf(beratStr, "%f", &paket.Berat)
 
-	// Harga (float)
-	hargaStr := inputWithDefault("Harga", fmt.Sprintf("%.0f", paket.Harga))
-	fmt.Sscanf(hargaStr, "%f", &paket.Harga)
-
-	// Kota Pengirim
+	// Ambil kota pengirim dan validasi
 	senderCityStr := inputWithDefault("Kota Pengirim", string(paket.SenderCity))
 	senderCity, err := utils.ParseCity(senderCityStr)
 	if err != nil {
-		fmt.Println("Kota pengirim tidak valid:", err)
+		fmt.Printf("\n⚠️  Kota pengirim tidak valid: %s\n", err)
 		utils.EnterToContinue()
 		return
 	}
 	paket.SenderCity = senderCity
 
-	// Kota Tujuan
+	// Ambil kota tujuan dan validasi
 	receiverCityStr := inputWithDefault("Kota Tujuan", string(paket.ReceiverCity))
 	receiverCity, err := utils.ParseCity(receiverCityStr)
 	if err != nil {
-		fmt.Println("Kota tujuan tidak valid:", err)
+		fmt.Printf("\n⚠️  Kota tujuan tidak valid: %s\n", err)
 		utils.EnterToContinue()
 		return
 	}
 	paket.ReceiverCity = receiverCity
 
-	// Status (untuk contoh ini kita tampilkan sebagai satu string, tidak array)
-	statusStr := inputWithDefault("Status (pisah dengan koma jika banyak)", strings.Join(paket.Status, ","))
+	// Ambil status
+	statusStr := inputWithDefault("Status Paket (pisahkan dengan koma)", strings.Join(paket.Status, ","))
 	paket.Status = strings.Split(statusStr, ",")
 
-	// Update waktu diperbarui
+	// Hitung ulang harga berdasarkan koordinat dan data paket
+	senderLat, senderLon, err := utils.GetCoordinates(paket.SenderCity)
+	if err != nil {
+		fmt.Printf("\n⚠️ Error koordinat kota pengirim: %s\n", err)
+		utils.EnterToContinue()
+		return
+	}
+
+	receiverLat, receiverLon, err := utils.GetCoordinates(paket.ReceiverCity)
+	if err != nil {
+		fmt.Printf("\n⚠️ Error koordinat kota tujuan: %s\n", err)
+		utils.EnterToContinue()
+		return
+	}
+
+	_, newPrice := utils.CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon, paket.Berat, strings.ToLower(paket.Tipe))
+	paket.Harga = newPrice
+
 	paket.UpdatedAt = time.Now()
 
-	// Simpan perubahan ke database (simulasi)
+	// Update paket di database
 	for i, p := range datas.PaketDB {
 		if p.NoResi == paket.NoResi {
 			datas.PaketDB[i] = paket
@@ -74,15 +87,18 @@ func UbahPaket(paket types.Paket) {
 	}
 
 	utils.ClearScreen()
-	fmt.Println("\nPaket berhasil diubah:")
-	fmt.Printf("No Resi: %s\n", paket.NoResi)
-	fmt.Printf("Tipe: %s\n", paket.Tipe)
-	fmt.Printf("Berat: %.2f\n", paket.Berat)
-	fmt.Printf("Harga: %.0f\n", paket.Harga)
-	fmt.Printf("Kota Pengirim: %s\n", paket.SenderCity)
-	fmt.Printf("Kota Tujuan: %s\n", paket.ReceiverCity)
-	fmt.Printf("Status: %v\n", paket.Status)
-	fmt.Printf("Dibuat pada: %s\n", paket.CreatedAt.Format("2006-01-02 15:04:05"))
-	fmt.Printf("Diperbarui pada: %s\n", paket.UpdatedAt.Format("2006-01-02 15:04:05"))
+	fmt.Println("========================================")
+	fmt.Println("✅  DATA PAKET BERHASIL DIUBAH")
+	fmt.Println("========================================")
+	fmt.Printf("No Resi        : %s\n", paket.NoResi)
+	fmt.Printf("Tipe Paket     : %s\n", paket.Tipe)
+	fmt.Printf("Berat          : %.2f kg\n", paket.Berat)
+	fmt.Printf("Harga          : Rp %.0f\n", paket.Harga)
+	fmt.Printf("Kota Pengirim  : %s\n", paket.SenderCity)
+	fmt.Printf("Kota Tujuan    : %s\n", paket.ReceiverCity)
+	fmt.Printf("Status         : %v\n", paket.Status)
+	fmt.Printf("Dibuat Pada    : %s\n", paket.CreatedAt.Format("2006-01-02 15:04:05"))
+	fmt.Printf("Diperbarui Pada: %s\n", paket.UpdatedAt.Format("2006-01-02 15:04:05"))
+
 	utils.EnterToContinue()
 }

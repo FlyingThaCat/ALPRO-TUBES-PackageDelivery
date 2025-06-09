@@ -7,18 +7,20 @@ import (
 
 func HapusPaket() {
 	utils.ClearScreen()
-	fmt.Print("=== Hapus Paket ===\n")
-	
-	noResi := utils.GetString("Masukkan No Resi Paket yang ingin dihapus: ", "Silakan masukkan No Resi yang valid.")
+	fmt.Println("========================================")
+	fmt.Println("🗑️  HAPUS PAKET")
+	fmt.Println("========================================")
+
+	noResi := utils.GetString("Masukkan No Resi Paket yang ingin dihapus: ", "⚠️  Silakan masukkan No Resi yang valid.")
 
 	ok := utils.DeletePaket(noResi)
 
 	if !ok {
-		fmt.Println("Paket tidak dapat dihapus. No Resi tidak ditemukan.")
+		fmt.Printf("\n⚠️  Paket dengan No Resi %s tidak ditemukan. Penghapusan dibatalkan.\n\n", noResi)
+		utils.EnterToContinue()
 		return
 	}
 
-	fmt.Printf("Paket dengan No Resi %s telah dihapus.\n\n", noResi)
-
+	fmt.Printf("\n✅  Paket dengan No Resi %s telah berhasil dihapus.\n\n", noResi)
 	utils.EnterToContinue()
 }

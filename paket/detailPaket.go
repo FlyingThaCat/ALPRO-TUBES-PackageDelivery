@@ -36,6 +36,7 @@ func DetailPaket(paket types.Paket) {
 	} else {
 		fmt.Println("Kurir         : Belum Ditugaskan")
 	}
+	fmt.Println("Dibuat Oleh   :", paket.CreatedBy)
 
 	fmt.Println("========================================")
 }

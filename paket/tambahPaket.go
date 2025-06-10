@@ -92,6 +92,8 @@ func TambahPaket() {
 		return
 	}
 
+	username := utils.GetLoggedInUsername()
+
 	var input types.Paket
 	input.Tipe = tipe
 	input.Berat = berat
@@ -102,6 +104,7 @@ func TambahPaket() {
 	input.CreatedAt = time.Now()
 	input.UpdatedAt = time.Now()
 	input.Status = []string{"Paket Dibuat"}
+	input.CreatedBy = username
 
 	datas.PaketDB = append(datas.PaketDB, input)
 

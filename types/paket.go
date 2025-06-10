@@ -13,4 +13,5 @@ type Paket struct {
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	Kurir        string
+	CreatedBy    string
 }

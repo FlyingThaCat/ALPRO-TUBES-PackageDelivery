@@ -14,7 +14,7 @@ func CekPaket() {
 	noResi := utils.GetString("Masukkan No Resi: ", "Silakan masukkan No Resi yang valid.")
 	found := utils.FindPaketByNoResi(noResi)
 
-	if found.NoResi == "" {
+	if found == nil {
 		fmt.Println("\n⚠️  Paket tidak ditemukan.")
 	} else {
 		fmt.Println()

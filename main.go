@@ -141,6 +141,8 @@ func main() {
 							} else {
 								kurir.MenuKurir()
 							}
+						default:
+							utils.ShowDelayedMessage("Pilihan tidak valid. Silakan masukkan menu yang sesuai.", 2, true)
 						}
 					}
 				}

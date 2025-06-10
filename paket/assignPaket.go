@@ -19,15 +19,15 @@ func AssignPaket() {
 	noResi := utils.GetString("Masukkan No Resi Paket yang ingin di-assign: ", "Silakan masukkan No Resi yang valid.")
 	username := utils.GetString("Masukkan Username Kurir yang akan mengantarkan paket: ", "Silakan masukkan username kurir yang valid.")
 	foundPaket := utils.FindPaketByNoResi(noResi)
-
-	if foundPaket.Kurir != "" {
-		fmt.Println("❌ Paket sduah ditugaskan ke ", foundPaket.Kurir)
+	
+	if foundPaket == nil {
+		fmt.Println("❌ Paket tidak ditemukan.")
 		utils.EnterToContinue()
 		return
 	}
 
-	if foundPaket.NoResi == "" {
-		fmt.Println("❌ Paket tidak ditemukan.")
+	if foundPaket.Kurir != "" {
+		fmt.Println("❌ Paket sudah ditugaskan ke ", foundPaket.Kurir)
 		utils.EnterToContinue()
 		return
 	}

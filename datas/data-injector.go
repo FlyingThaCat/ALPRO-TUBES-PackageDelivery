@@ -58,6 +58,7 @@ func Init() {
 			{NoResi: "17", Tipe: "Express", Berat: 3.0, Harga: 40000, SenderCity: types.Bekasi, ReceiverCity: types.Jakarta, Status: []string{"Paket Dibuat", "Diambil Kurir"}, CreatedAt: now.Add(-17 * time.Hour), UpdatedAt: now.Add(-10 * time.Hour), Kurir: "anton"},
 			{NoResi: "20", Tipe: "Express", Berat: 1.5, Harga: 25000, SenderCity: types.Jakarta, ReceiverCity: types.Depok, Status: []string{"Paket Dibuat", "Diambil Kurir"}, CreatedAt: now.Add(-20 * time.Hour), UpdatedAt: now.Add(-12 * time.Hour), Kurir: "anton"},
 			{NoResi: "25", Tipe: "Reguler", Berat: 1.0, Harga: 10000, SenderCity: types.Tangerang, ReceiverCity: types.Depok, Status: []string{"Paket Dibuat", "Diambil Kurir"}, CreatedAt: now.Add(-25 * time.Hour), UpdatedAt: now.Add(-15 * time.Hour), Kurir: "anton"},
+
 		},
 	})
 

@@ -32,7 +32,6 @@ func UbahKurir(kurir types.User) {
 	kurir.Nama = inputWithDefault("Nama", string(kurir.Nama))
 	kurir.Username = inputWithDefault("Username", string(kurir.Username))
 	kurir.Password = inputWithDefault("Password", string(kurir.Password))
-	kurir.Role = inputWithDefault("Role", string(kurir.Role))
 	
 	// Simpan perubahan ke database (simulasi)
 	for i, p := range datas.UsersDB {
@@ -47,6 +46,5 @@ func UbahKurir(kurir types.User) {
 	fmt.Printf("Nama: %s\n", kurir.Nama)
 	fmt.Printf("Username: %s\n", kurir.Username)
 	fmt.Printf("Password: %s\n", kurir.Password)
-	fmt.Printf("Role: %s\n", kurir.Role)
 	utils.EnterToContinue()
 }

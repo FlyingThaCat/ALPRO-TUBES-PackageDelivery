@@ -15,6 +15,7 @@ func EditKurir() {
 	found := utils.FindUserByUsername(username)
 	if found.Username == "" {
 		fmt.Println("Kurir tidak ditemukan.")
+		utils.EnterToContinue()
 		return
 	}
 	

@@ -15,8 +15,9 @@ func EditPaket() {
 	noResi := utils.GetString("Masukkan No Resi paket yang ingin diedit: ", "Silakan masukkan No Resi yang valid.")
 
 	found := utils.FindPaketByNoResi(noResi)
-	if found.NoResi == "" {
+	if found == nil {
 		fmt.Println("⚠️  Paket tidak ditemukan.")
+		utils.EnterToContinue()
 		return
 	}
 

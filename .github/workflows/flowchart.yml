@@ -1,0 +1,39 @@
+name: Compile D2 Diagrams
+
+on:
+  push:
+    paths:
+      - '**.d2'
+      - 'compiled2.sh'
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js (for PNG rendering via Puppeteer)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21' # or '20'
+
+      - name: Install D2
+        run: |
+          curl -fsSL https://d2lang.com/install.sh | sh -s --
+          echo "$HOME/.d2/bin" >> $GITHUB_PATH
+
+      - name: Make script executable
+        run: chmod +x flowchart/compiled2.sh
+
+      - name: Compile D2 diagrams
+        working-directory: flowchart
+        run: ./compiled2.sh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: d2-diagrams
+          path: flowchart/output

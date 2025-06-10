@@ -1,0 +1,23 @@
+getReferenceCity: {
+  label: "getReferenceCity(paket, status)"
+  shape: rectangle
+}
+
+isPengirimanOrDiambil: {
+  label: "status == \"Dalam Pengiriman\"\n|| status == \"Diambil\"?"
+  shape: diamond
+}
+
+returnReceiver: {
+  label: "return paket.ReceiverCity"
+  shape: rectangle
+}
+
+returnSender: {
+  label: "return paket.SenderCity"
+  shape: rectangle
+}
+
+getReferenceCity -> isPengirimanOrDiambil
+isPengirimanOrDiambil -> returnReceiver: ya
+isPengirimanOrDiambil -> returnSender: tidak

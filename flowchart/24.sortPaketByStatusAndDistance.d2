@@ -1,0 +1,63 @@
+sortPaketByStatusAndDistance: {
+  label: "sortPaketByStatusAndDistance(pakets, currentCity)"
+  shape: rectangle
+}
+
+statusPriority: {
+  label: "Inisialisasi\nstatusPriority map"
+  shape: rectangle
+}
+
+getLastStatus: {
+  label: "Fungsi lokal\ngetLastStatus()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+sortSlice: {
+  label: "sort.SliceStable"
+  shape: rectangle
+}
+
+getLastStatusI: {
+  label: "Ambil status terakhir paket[i]"
+  shape: rectangle
+}
+
+getLastStatusJ: {
+  label: "Ambil status terakhir paket[j]"
+  shape: rectangle
+}
+
+compareStatus: {
+  label: "Bandingkan statusPriority[i] < statusPriority[j]?"
+  shape: diamond
+}
+
+getCityIJ: {
+  label: "Ambil cityI & cityJ\ndengan getReferenceCity()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+getJarakIJ: {
+  label: "Hitung jarak ke\ncityI & cityJ dengan\nutils.GetJarak()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+compareDist: {
+  label: "Bandingkan distI < distJ"
+  shape: rectangle
+}
+
+returnResult: {
+  label: "Return hasil perbandingan"
+  shape: rectangle
+}
+
+sortPaketByStatusAndDistance -> statusPriority -> getLastStatus -> sortSlice
+sortSlice -> getLastStatusI -> getLastStatusJ -> compareStatus
+compareStatus -> returnResult: ya
+compareStatus -> getCityIJ: tidak
+getCityIJ -> getJarakIJ -> compareDist -> returnResult

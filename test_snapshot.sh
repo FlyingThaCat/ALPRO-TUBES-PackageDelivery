@@ -39,130 +39,95 @@ type_input_no_enter "1"
 log_file
 send -- "\r"
 
+screenshot "2.inputCredentials" "register/user"
 expect -re "Masukkan username:"
 type_input_no_enter "testuser"
 send -- "\r"
 
 expect -re "Masukkan password:"
 type_input_no_enter "testpass"
-screenshot "3.input_password" "register/user"
 send -- "\r"
-
-
-# LOGIN AS USER
-expect -re "Masukkan pilihan \\(1/2/0\\):"
-type_input_no_enter "2"
-screenshot "1.select_menu" "flow/user"
-send -- "\r"
-
-# 2. Type username as user role
-expect -re "Masukkan username:"
-type_input_no_enter "testuser"
-screenshot "2.type_user_username" "flow/user"
-send -- "\r"
-
-# 3. Type password as user role
-expect -re "Masukkan password:"
-type_input_no_enter "testpass"
-screenshot "3.type_user_password" "flow/user"
-send -- "\r"
-
 
 log_file
 
+# LOGIN AS USER
+screenshot "1.PilihMenu" "login/user"
+expect -re "Silakan pilih menu:"
+type_input_no_enter "2"
+log_file
+send -- "\r"
 
-# ------------------------------------------------------------------------------
+screenshot "2.InputCredentials" "login/user"
+expect -re "Masukkan username:"
+type_input_no_enter "testuser"
+send -- "\r"
 
-# ------------------------------------------------------------------------------
-# role user flow
-# ------------------------------------------------------------------------------
+expect -re "Masukkan password:"
+type_input_no_enter "testpass"
+send -- "\r"
 
+log_file
 
+# ADD PAKET AS USER
+screenshot "1.PilihMenu" "user/tambahPaket"
+expect -re "Pilih menu:"
+type_input_no_enter "1"
+log_file
+send -- "\r"
 
+screenshot "2.PilihTipePaket" "user/tambahPaket"
+expect -re "Masukkan nomor tipe paket"
+type_input_no_enter "1"
+send -- "\r"
 
+expect -re "Masukkan berat paket"
+type_input_no_enter "5"
+send -- "\r"
 
-# # 1. Select “add package”
-# expect -re "Pilih menu:"
-# type_input_no_enter "1"
-# screenshot "1.select_user_menu" "flow/user/add_package"
-# send -- "\r"
+expect -re "Masukkan nomor kota pengirim"
+type_input_no_enter "1"
+send -- "\r"
 
-# # 2. Type package type
-# expect -re "Masukkan tipe paket:"
-# type_input_no_enter "Reguler"
-# screenshot "2.type_package_type" "flow/user/add_package"
-# send -- "\r"
+expect -re "Masukkan nomor kota tujuan"
+type_input_no_enter "5"
+send -- "\r"
 
-# # 3. Type package weight
-# expect -re "Masukkan berat paket \\(kg\\):"
-# type_input_no_enter "5"
-# screenshot "3.type_package_weight" "flow/user/add_package"
-# send -- "\r"
+expect -re "Jarak antar kota: 16.33 km"
+expect -re "Harga paket: Rp 81651"
 
-# # 4. Type package sender
-# expect -re "Masukkan kota pengirim:"
-# type_input_no_enter "Jakarta"
-# screenshot "4.type_package_sender" "flow/user/add_package"
-# send -- "\r"
+expect -re "Apakah Anda yakin ingin menambahkan paket ini"
+type_input_no_enter "y"
+log_file
+send -- "\r"
 
-# # 5. Type package receiver
-# expect -re "Masukkan kota tujuan:"
-# type_input_no_enter "Bekasi"
-# screenshot "5.type_package_receiver" "flow/user/add_package"
-# send -- "\r"
+screenshot "7.PaketBerhasilDitambahkan" "user/tambahPaket"
+expect -re "Paket Dibuat"
+log_file
+send -- "\r"
 
-# expect -re "Jarak antar kota: 16.33 km"
-# expect -re "Harga paket: Rp 81651"
+# VIEW PACKAGE STATUS AS USER
+screenshot "1.PilihMenu" "user/cekPaket"
+expect -re "Silakan pilih menu:"
+type_input_no_enter "2"
+log_file
+send -- "\r"
 
-# # 6. Confirm package
-# expect -re "Apakah Anda yakin ingin menambahkan paket ini\\? \\(y/n\\):"
-# type_input_no_enter "y"
-# screenshot "6.confirm_package" "flow/user/add_package"
-# send -- "\r"
+screenshot "2.InputNoResi" "user/cekPaket"
+expect -re "Masukkan No Resi"
+type_input_no_enter "26"
+log_file
+send -- "\r"
 
-# # 7. Package added successfully
-# expect -re "Paket berhasil ditambahkan."
-# screenshot "7.package_added" "flow/user/add_package"
-# send -- "\r"
+screenshot "7.PaketBerhasilDicek" "user/cekPaket"
+expect -re "Paket Dibuat"
+log_file
+send -- "\r"
 
-
-
-
-# # 1. Select “Cek Paket”
-# expect -re "Pilih menu:"
-# type_input_no_enter "2"
-# screenshot "1.select_user_menu" "flow/user/check_package"
-# send -- "\r"
-
-# # 2. Type tracking number
-# expect -re "Masukkan No Resi:"
-# type_input_no_enter "6"
-# screenshot "2.type_tracking_number" "flow/user/check_package"
-# send -- "\r"
-
-# # 3. Check package status
-# expect -re "No Resi: 6"
-# expect -re "Tipe: Reguler"
-# expect -re "Berat: 5"
-# expect -re "Harga: 81651"
-# expect -re "Kota Pengirim: Jakarta"
-# expect -re "Kota Tujuan: Bekasi"
-# expect -re {Status: \[Paket Dibuat\]}
-# expect -re "Dibuat pada:"
-# expect -re "Diperbarui pada:"
-# expect -re "Kurir: Belum Ditugaskan"
-# expect -re "Paket berhasil ditambahkan."
-# screenshot "3.check_package_status" "flow/user/check_package"
-# send -- "\r"
-
-
-
-
-# # 4. Logout To Continue with Admin Role
-# expect -re "Pilih menu:"
-# type_input_no_enter "0"
-# screenshot "4.logout_as_user" "flow/user"
-# send -- "\r"
+screenshot "1.logout" "user/logout"
+expect -re "Pilih menu:"
+type_input_no_enter "0"
+log_file
+send -- "\r"
 
 # # ------------------------------------------------------------------------------
 

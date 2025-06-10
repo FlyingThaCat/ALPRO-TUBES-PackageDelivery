@@ -44,7 +44,14 @@ jobs:
       - name: Record CLI session with Asciinema
         run: |
           mkdir -p logs
-          asciinema rec -q -c "./test_snapshot.sh" logs/session.json
+          # Launch an xterm on DISPLAY, tell it to run bash -lc "./test_snapshot.sh", then exit
+          xterm \
+            -display $DISPLAY \
+            -fa "Noto Mono" \
+            -fs 14 \
+            -geometry 80x24+0+0 \
+            -e bash -lc "./test_snapshot.sh" &
+          wait
 
       - name: Render session to SVG
         run: |

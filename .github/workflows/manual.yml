@@ -22,6 +22,7 @@ jobs:
             expect \
             xdotool \
             golang \
+            scrot \
             imagemagick \
             xvfb
 

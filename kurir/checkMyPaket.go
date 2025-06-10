@@ -147,14 +147,26 @@ func printSortedPaketList(pakets []types.Paket, currentCity types.Cities, order 
         entries = append(entries, entry{paket: p, jarak: dist})
     }
 
-    // sort by jarak
-    sort.Slice(entries, func(i, j int) bool {
-        if strings.ToLower(order) == "desc" {
-            return entries[i].jarak > entries[j].jarak
+    // custom selection sort by jarak
+    n := len(entries)
+    asc := strings.ToLower(order) != "desc"
+    for i := 0; i < n-1; i++ {
+        idx := i
+        for j := i + 1; j < n; j++ {
+            if asc {
+                if entries[j].jarak < entries[idx].jarak {
+                    idx = j
+                }
+            } else {
+                if entries[j].jarak > entries[idx].jarak {
+                    idx = j
+                }
+            }
         }
-        // default to ascending
-        return entries[i].jarak < entries[j].jarak
-    })
+        if idx != i {
+            entries[i], entries[idx] = entries[idx], entries[i]
+        }
+    }
 
     // print header
     fmt.Println("========================================")

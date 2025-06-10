@@ -22,7 +22,7 @@ func register() {
 	username := utils.GetString("Masukkan username: ", "Username tidak boleh kosong.")
 
 	if user := utils.FindUserByUsername(username); user.Username != "" {
-		fmt.Println("\n❌ Username sudah ada, silakan coba lagi.\n")
+		utils.ShowDelayedMessage("\n❌ Username sudah terdaftar. Silakan gunakan username lain.\n", 2, true)
 		return
 	}
 

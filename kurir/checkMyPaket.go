@@ -128,9 +128,9 @@ func printSortedPaketList(pakets []types.Paket, currentCity types.Cities) {
 		refCity := getReferenceCity(paket, status)
 		jarak := utils.GetJarak(currentCity, refCity)
 
-		fmt.Printf("%d. No Resi: %s | Tipe: %s | Dari %s ke %s | Status: %s (%s) | Jarak: %.2f km | Pengirim: %s\n",
+		fmt.Printf("%d. No Resi: %s | Tipe: %s | Dari %s ke %s | Status: %s (%s) | Jarak: %.2f km | Pengirim: %s | Nama Penerima: %s\n",
 			i+1, paket.NoResi, paket.Tipe, paket.SenderCity, paket.ReceiverCity,
-			status, statusKeterangan, jarak, paket.CreatedBy,
+			status, statusKeterangan, jarak, paket.CreatedBy, paket.ReceiverName,
 		)
 	}
 	fmt.Println("========================================")

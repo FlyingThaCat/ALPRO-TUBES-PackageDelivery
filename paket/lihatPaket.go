@@ -18,7 +18,7 @@ func LihatPaket(clear bool, hideAssigned bool) {
 	fmt.Println("========================================")
 
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-	fmt.Fprintln(w, "No Resi\tTipe\tBerat (kg)\tHarga (Rp)\tKota Pengirim\tKota Tujuan\tStatus Terakhir\tDibuat Pada\tDiperbarui Pada\tKurir\tDibuat Oleh")
+	fmt.Fprintln(w, "No Resi\tTipe\tBerat (kg)\tHarga (Rp)\tKota Pengirim\tKota Tujuan\tStatus Terakhir\tDibuat Pada\tDiperbarui Pada\tKurir\tDibuat Oleh\tNama Penerima")
 
 	for _, paket := range datas.PaketDB {
 		if hideAssigned && paket.Kurir != "" {
@@ -35,7 +35,7 @@ func LihatPaket(clear bool, hideAssigned bool) {
 			statusTerakhir = paket.Status[len(paket.Status)-1]
 		}
 
-		fmt.Fprintf(w, "%s\t%s\t%.1f\t%.0f\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+		fmt.Fprintf(w, "%s\t%s\t%.1f\t%.0f\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
 			paket.NoResi,
 			paket.Tipe,
 			paket.Berat,
@@ -47,6 +47,7 @@ func LihatPaket(clear bool, hideAssigned bool) {
 			paket.UpdatedAt.Format("2006-01-02 15:04:05"),
 			kurir,
 			paket.CreatedBy,
+			paket.ReceiverName,
 		)
 	}
 

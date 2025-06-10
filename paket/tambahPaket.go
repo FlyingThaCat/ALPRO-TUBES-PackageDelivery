@@ -83,8 +83,16 @@ func TambahPaket() {
 		berat, tipe,
 	)
 
+	name := utils.GetString("Masukkan nama penerima: ", "Nama penerima tidak boleh kosong.")
+	if len(name) < 3 {
+		fmt.Println("Nama penerima harus terdiri dari minimal 3 karakter.")
+		utils.EnterToContinue()
+		return
+	}
+
 	fmt.Printf("\nJarak antar kota: %.2f km\n", distance)
 	fmt.Printf("Harga paket: Rp %.0f\n", price)
+	fmt.Printf("Nama penerima: %s\n", name)
 
 	if !utils.GetConfirmation("Apakah Anda yakin ingin menambahkan paket ini?", "Silakan masukkan 'y' untuk ya atau 'n' untuk tidak.") {
 		fmt.Println("Paket tidak ditambahkan.")
@@ -105,6 +113,7 @@ func TambahPaket() {
 	input.UpdatedAt = time.Now()
 	input.Status = []string{"Paket Dibuat"}
 	input.CreatedBy = username
+	input.ReceiverName = name
 
 	datas.PaketDB = append(datas.PaketDB, input)
 

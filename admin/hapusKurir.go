@@ -13,10 +13,26 @@ func HapusKurir() {
 
 	username := utils.GetString("Masukkan username kurir yang ingin dihapus: ", "Silakan masukkan username kurir yang valid.")
 
+	found := utils.FindUserByUsername(username)
+	if found.Username == "" {
+		fmt.Println("\n⚠️  Kurir tidak ditemukan.")
+		utils.EnterToContinue()
+		return
+	}
+
+	pakets := utils.FindPaketByUsername(username)
+
+	if len(pakets) > 0 {
+		fmt.Println("\n⚠️  Kurir tidak dapat dihapus. Masih ada paket yang ditugaskan ke kurir ini.")
+		utils.EnterToContinue()
+		return
+	}
+
 	ok := utils.DeleteUser(username)
 
 	if !ok {
-		fmt.Println("\n⚠️  Kurir tidak dapat dihapus. Username tidak ditemukan.")
+		fmt.Println("\n⚠️  Kurir tidak dapat dihapus. Mungkin ada kesalahan pada sistem.")
+		fmt.Println("⚠️  Pastikan tidak ada paket yang ditugaskan ke kurir ini.")
 		utils.EnterToContinue()
 		return
 	}

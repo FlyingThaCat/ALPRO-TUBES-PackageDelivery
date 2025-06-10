@@ -1,0 +1,68 @@
+name: CLI Screenshot CI
+
+on:
+  push:
+    branches:
+      - main
+      - testing-autogen-manual
+  workflow_dispatch:
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    # tell every step to use the virtual display
+    env:
+      DISPLAY: :99
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+            sudo apt-get update
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              expect \
+              xdotool \
+              golang \
+              scrot \
+              imagemagick \
+              fonts-noto-color-emoji \
+              xvfb \
+              wget \
+              libpango1.0-dev \
+              libgl1
+
+            # Install kitty (AppImage is easiest for CI)
+            wget -O kitty.appimage https://github.com/kovidgoyal/kitty/releases/download/v0.32.0/kitty-0.32.0-x86_64.AppImage
+            chmod +x kitty.appimage
+            mkdir -p ~/bin
+            ./kitty.appimage --appimage-extract
+            ln -s $PWD/squashfs-root/kitty ~/bin/kitty
+
+      - name: Start headless X server
+        run: |
+          Xvfb :99 -screen 0 800x600x24 &
+          sleep 2  # give it time to boot
+
+      - name: Build the application
+        run: |
+          go build .
+
+      - name: Run CLI test script using Kitty
+        run: |
+          chmod +x test_snapshot.sh
+          mkdir -p logs
+          ~/bin/kitty \
+            --display $DISPLAY \
+            --config /dev/null \
+            --single-instance \
+            --class emoji-terminal \
+            bash -lc "./test_snapshot.sh" &
+          wait
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: cli-screenshots
+          path: logs/

@@ -2,6 +2,9 @@ name: Compile D2 Diagrams
 
 on:
   push:
+    branches:
+      - main
+      - add-flowchart
   workflow_dispatch:
 
 jobs:

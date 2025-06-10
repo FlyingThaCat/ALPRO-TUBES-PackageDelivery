@@ -19,10 +19,23 @@ proc ensure_dir {dir} {
 
 proc screenshot {name subfolder} {
     set folder "logs/$subfolder"
-    ensure_dir $folder
+    if {![file exists $folder]} { file mkdir $folder }
     set filename "$folder/$name.png"
-    exec sh -c "import -window \$(xdotool getactivewindow) '$filename'"
+
+    # Option A: use scrot to grab the whole screen
+    exec sh -c "scrot '$filename'"
+
+    # — OR —
+    # Option B: use ImageMagick import on the root window of DISPLAY
+    # exec sh -c "import -display $env(DISPLAY) -window root '$filename'"
 }
+
+# proc screenshot {name subfolder} {
+#     set folder "logs/$subfolder"
+#     ensure_dir $folder
+#     set filename "$folder/$name.png"
+#     exec sh -c "import -window \$(xdotool getactivewindow) '$filename'"
+# }
 
 proc type_input_no_enter {input} {
     # foreach ch [split $input ""] {

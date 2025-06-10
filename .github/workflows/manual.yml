@@ -33,7 +33,7 @@ jobs:
             asciinema
 
       - name: Install svg-term CLI
-        run: npm install --global @svg-term/cli
+        run: npm install --global svg-term-cli
 
       - name: Build the Go CLI
         run: go build .

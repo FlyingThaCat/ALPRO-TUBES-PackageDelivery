@@ -1,0 +1,35 @@
+getStatusOptions: {
+  label: "getStatusOptions(lastStatus string)"
+  shape: rectangle
+}
+
+InitOptions: {
+  label: "options := []string{}"
+  shape: rectangle
+}
+
+LoopStatuses: {
+  label: "Loop validStatuses"
+  shape: diamond
+}
+
+CekSyarat: {
+  label: "s == 'Pengiriman Gagal'\nOR\nstatusPriority[s] > statusPriority[lastStatus]?"
+  shape: diamond
+}
+
+TambahkanS: {
+  label: "append s ke options"
+  shape: rectangle
+}
+
+ReturnOptions: {
+  label: "return options"
+  shape: rectangle
+}
+
+getStatusOptions -> InitOptions -> LoopStatuses -> CekSyarat
+CekSyarat -> TambahkanS: yes
+TambahkanS -> LoopStatuses
+CekSyarat -> LoopStatuses: no
+LoopStatuses -> ReturnOptions

@@ -1,0 +1,75 @@
+style: {
+  stroke-width: 2
+}
+
+Start: {
+  label: "CekPaket()"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+Header: {
+  label: "Tampilkan Header\n📦 CEK PAKET"
+  shape: rectangle
+}
+
+GetNoResi: {
+  label: "utils.GetString(...)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+FindPaket: {
+  label: "utils.FindPaketByNoResi(noResi)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckResult: {
+  label: "Apakah paket ditemukan?"
+  shape: diamond
+}
+
+NotFoundMsg: {
+  label: "Tampilkan pesan\n'tidak ditemukan'"
+  shape: rectangle
+}
+
+ShowDetail: {
+  label: "DetailPaket(*found)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+EnterContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+End: {
+  label: "Selesai"
+  shape: rectangle
+}
+
+Start -> ClearScreen -> Header -> GetNoResi -> FindPaket -> CheckResult
+CheckResult -> NotFoundMsg: "Tidak"
+CheckResult -> ShowDetail: "Ya"
+NotFoundMsg -> EnterContinue
+ShowDetail -> EnterContinue
+EnterContinue -> End

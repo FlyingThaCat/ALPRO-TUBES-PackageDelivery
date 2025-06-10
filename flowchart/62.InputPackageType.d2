@@ -1,0 +1,43 @@
+InputPackageType: {
+  label: "InputPackageType()"
+  shape: rectangle
+}
+
+CetakHeader: {
+  label: "Tampilkan Header & List Paket"
+  shape: rectangle
+}
+
+GetInt: {
+  label: "utils.GetInt"
+  style: {
+    stroke-dash: 3
+  }
+  shape: rectangle
+}
+
+ValidasiPilihan: {
+  label: "Apakah pilihan valid?"
+  shape: diamond
+}
+
+ReturnError: {
+  label: "Return error"
+  shape: rectangle
+}
+
+ReturnTipe: {
+  label: "Return tipe paket"
+  shape: rectangle
+}
+
+Selesai: {
+  label: "Selesai"
+  shape: circle
+}
+
+InputPackageType -> CetakHeader -> GetInt -> ValidasiPilihan
+ValidasiPilihan -> ReturnTipe: "Ya"
+ValidasiPilihan -> ReturnError: "Tidak"
+ReturnTipe -> Selesai
+ReturnError -> Selesai

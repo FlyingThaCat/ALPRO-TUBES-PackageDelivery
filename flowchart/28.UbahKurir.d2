@@ -1,0 +1,74 @@
+UbahKurir: {
+  label: "UbahKurir(kurir)"
+  shape: rectangle
+}
+
+ClearScreen1: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+PrintTitle: {
+  label: "Print '=== Ubah Kurir ==='"
+  shape: rectangle
+}
+
+InputNama: {
+  label: "inputWithDefault('Nama', kurir.Nama)"
+  shape: rectangle
+}
+
+InputUsername: {
+  label: "inputWithDefault('Username', kurir.Username)"
+  shape: rectangle
+}
+
+InputPassword: {
+  label: "inputWithDefault('Password', kurir.Password)"
+  shape: rectangle
+}
+
+InputRole: {
+  label: "inputWithDefault('Role', kurir.Role)"
+  shape: rectangle
+}
+
+LoopUsersDB: {
+  label: "Loop datas.UsersDB\njika p.Username == oldUsername"
+  shape: diamond
+}
+
+UpdateKurir: {
+  label: "datas.UsersDB[i] = kurir"
+  shape: rectangle
+}
+
+ClearScreen2: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+PrintHasil: {
+  label: "Print detail kurir baru"
+  shape: rectangle
+}
+
+EnterToContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+UbahKurir -> ClearScreen1 -> PrintTitle
+PrintTitle -> InputNama -> InputUsername -> InputPassword -> InputRole
+InputRole -> LoopUsersDB
+LoopUsersDB -> UpdateKurir: Yes
+UpdateKurir -> ClearScreen2 -> PrintHasil -> EnterToContinue

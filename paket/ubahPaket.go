@@ -19,6 +19,14 @@ func UbahPaket(paket types.Paket) {
 	fmt.Println("✏️  UBAH DATA PAKET")
 	fmt.Println("========================================")
 
+
+	inputWithDefault := func(prompt string, current string) string {
+		fmt.Printf("%s [%s]: ", prompt, current)
+		text, _ := reader.ReadString('\n')
+		text = strings.TrimSpace(text)
+		if text == "" {
+			return current
+      
 	// Input Tipe Paket (1. Reguler, 2. Express, 3. Sameday)
 	fmt.Println("Tipe Paket:")
 	fmt.Println("1. Reguler")
@@ -82,6 +90,17 @@ func UbahPaket(paket types.Paket) {
 		senderInput = fmt.Sprintf("%d", currentSenderIndex)
 	}
 
+	paket.Tipe = inputWithDefault("Tipe Paket", string(paket.Tipe))
+
+	beratStr := inputWithDefault("Berat (kg)", fmt.Sprintf("%.2f", paket.Berat))
+	fmt.Sscanf(beratStr, "%f", &paket.Berat)
+
+	// Ambil kota pengirim dan validasi
+	senderCityStr := inputWithDefault("Kota Pengirim", string(paket.SenderCity))
+	senderCity, err := utils.ParseCity(senderCityStr)
+	if err != nil {
+		fmt.Printf("\n⚠️  Kota pengirim tidak valid: %s\n", err)
+    
 	senderIndex := 0
 	_, err := fmt.Sscanf(senderInput, "%d", &senderIndex)
 	if err != nil || senderIndex < 1 || senderIndex > len(types.AllCities()) {
@@ -128,6 +147,42 @@ func UbahPaket(paket types.Paket) {
 		return
 	}
 
+
+	// Ambil kota tujuan dan validasi
+	receiverCityStr := inputWithDefault("Kota Tujuan", string(paket.ReceiverCity))
+	receiverCity, err := utils.ParseCity(receiverCityStr)
+	if err != nil {
+		fmt.Printf("\n⚠️  Kota tujuan tidak valid: %s\n", err)
+		utils.EnterToContinue()
+		return
+	}
+	paket.ReceiverCity = receiverCity
+
+	// Ambil status
+	statusStr := inputWithDefault("Status Paket (pisahkan dengan koma)", strings.Join(paket.Status, ","))
+	paket.Status = strings.Split(statusStr, ",")
+
+	// Hitung ulang harga berdasarkan koordinat dan data paket
+	senderLat, senderLon, err := utils.GetCoordinates(paket.SenderCity)
+	if err != nil {
+		fmt.Printf("\n⚠️ Error koordinat kota pengirim: %s\n", err)
+		utils.EnterToContinue()
+		return
+	}
+
+	receiverLat, receiverLon, err := utils.GetCoordinates(paket.ReceiverCity)
+	if err != nil {
+		fmt.Printf("\n⚠️ Error koordinat kota tujuan: %s\n", err)
+		utils.EnterToContinue()
+		return
+	}
+
+	_, newPrice := utils.CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon, paket.Berat, strings.ToLower(paket.Tipe))
+	paket.Harga = newPrice
+
+	paket.UpdatedAt = time.Now()
+
+	// Update paket di database
 	receiverLat, receiverLon, err := utils.GetCoordinates(paket.ReceiverCity)
 	if err != nil {
 		fmt.Printf("\n⚠️ Error koordinat kota tujuan: %s\n", err)

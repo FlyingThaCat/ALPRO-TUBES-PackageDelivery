@@ -1,0 +1,32 @@
+style: {
+  stroke-dash: 3
+}
+
+UpdatePaket: {
+  label: "UpdatePaket(paket)"
+  shape: rectangle
+}
+
+LoopPaketDB: {
+  label: "Loop: datas.PaketDB"
+}
+
+CheckNoResi: {
+  label: "p.NoResi == paket.NoResi?"
+  shape: diamond
+}
+
+AssignNewPaket: {
+  label: "datas.PaketDB[i] = paket"
+}
+
+Return: {
+  label: "return"
+  shape: rectangle
+}
+
+UpdatePaket -> LoopPaketDB
+LoopPaketDB -> CheckNoResi
+CheckNoResi -> AssignNewPaket: yes
+AssignNewPaket -> Return
+CheckNoResi -> LoopPaketDB: no

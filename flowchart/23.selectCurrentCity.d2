@@ -1,0 +1,46 @@
+selectCurrentCity: {
+  label: "selectCurrentCity()"
+  shape: rectangle
+}
+
+tampilkanPilihan: {
+  label: "Tampilkan daftar kota\ndan minta input user"
+  shape: rectangle
+}
+
+inputUser: {
+  label: "Input nomor kota"
+  shape: rectangle
+}
+
+cekValid: {
+  label: "Apakah input valid?"
+  shape: diamond
+}
+
+invalid: {
+  label: "Cetak 'Pilihan tidak valid'\nGunakan default Jakarta"
+  shape: rectangle
+}
+
+pilihKota: {
+  label: "Ambil nama kota dari daftar"
+  shape: rectangle
+}
+
+parseCity: {
+  label: "Parse kota\ndengan types.ParseCity()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+return: {
+  label: "Return hasil ParseCity"
+  shape: rectangle
+}
+
+selectCurrentCity -> tampilkanPilihan -> inputUser -> cekValid
+cekValid -> invalid: tidak
+invalid -> pilihKota
+cekValid -> pilihKota: ya
+pilihKota -> parseCity -> return

@@ -1,0 +1,89 @@
+start: {
+  shape: circle
+  label: "Mulai GetInput()"
+}
+
+init_reader: {
+  shape: rectangle
+  label: "Inisialisasi reader\n(bufio.NewReader)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+print_prompt: {
+  shape: rectangle
+  label: "Tampilkan prompt\n(fmt.Print)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+read_input: {
+  shape: rectangle
+  label: "Baca input\n(reader.ReadString)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+trim_input: {
+  shape: rectangle
+  label: "Trim whitespace\n(strings.TrimSpace)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+decide_empty: {
+  shape: diamond
+  label: "!allowEmpty dan input kosong?"
+}
+
+decide_msg_empty: {
+  shape: diamond
+  label: "messageEmpty ≠ \"\"?"
+}
+
+print_msg_custom: {
+  shape: rectangle
+  label: "Tampilkan messageEmpty\n(fmt.Println)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+print_msg_default: {
+  shape: rectangle
+  label: "Tampilkan pesan default\n\"Input tidak boleh kosong.\""
+  style: {
+    stroke-dash: 3
+  }
+}
+
+return_input: {
+  shape: rectangle
+  label: "Kembalikan input"
+}
+
+end: {
+  shape: circle
+  label: "Selesai GetInput()"
+}
+
+start -> init_reader
+init_reader -> print_prompt
+print_prompt -> read_input
+read_input -> trim_input
+trim_input -> decide_empty
+
+decide_empty -> decide_msg_empty: "Ya"
+decide_empty -> return_input: "Tidak"
+
+decide_msg_empty -> print_msg_custom: "Ya"
+decide_msg_empty -> print_msg_default: "Tidak"
+
+print_msg_custom -> print_prompt
+print_msg_default -> print_prompt
+
+return_input -> end

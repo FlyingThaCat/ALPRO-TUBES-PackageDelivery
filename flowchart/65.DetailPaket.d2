@@ -1,0 +1,80 @@
+style: {
+  stroke-width: 2
+}
+
+DetailPaket: {
+  label: "DetailPaket(paket)"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+PrintHeader: {
+  label: "Tampilkan Header"
+  shape: rectangle
+}
+
+PrintData: {
+  label: "Tampilkan:\nNo Resi, Tipe, Berat, Harga,\nKota Pengirim, Kota Tujuan"
+  shape: rectangle
+}
+
+CheckStatus: {
+  label: "Apakah ada status?"
+  shape: diamond
+}
+
+PrintStatus: {
+  label: "Tampilkan status\n(strings.Join)"
+  shape: rectangle
+}
+
+PrintDash: {
+  label: "Status: -"
+  shape: rectangle
+}
+
+PrintCreated: {
+  label: "Tampilkan waktu dibuat & diperbarui"
+  shape: rectangle
+}
+
+CheckKurir: {
+  label: "Apakah ada kurir?"
+  shape: diamond
+}
+
+PrintKurir: {
+  label: "Tampilkan nama kurir"
+  shape: rectangle
+}
+
+PrintBelumKurir: {
+  label: "Kurir: Belum Ditugaskan"
+  shape: rectangle
+}
+
+EnterContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+DetailPaket -> ClearScreen -> PrintHeader -> PrintData -> CheckStatus
+CheckStatus -> PrintStatus: "✅ Ya"
+CheckStatus -> PrintDash: "❌ Tidak"
+PrintStatus -> PrintCreated
+PrintDash -> PrintCreated
+PrintCreated -> CheckKurir
+CheckKurir -> PrintKurir: "✅ Ya"
+CheckKurir -> PrintBelumKurir: "❌ Tidak"
+PrintKurir -> EnterContinue
+PrintBelumKurir -> EnterContinue

@@ -1,0 +1,47 @@
+getStatusKeterangan: {
+  label: "getStatusKeterangan(status string)"
+  shape: rectangle
+}
+
+checkStatus: {
+  label: "status value?"
+  shape: diamond
+}
+
+returnDibuat: {
+  label: "\"Paket Dibuat\"\n📦 Perlu Diambil oleh Anda"
+  shape: rectangle
+}
+
+returnDiambil: {
+  label: "\"Diambil\"\n✅ Telah Diambil"
+  shape: rectangle
+}
+
+returnDalamPengiriman: {
+  label: "\"Dalam Pengiriman\"\n🚚 Dalam Pengiriman"
+  shape: rectangle
+}
+
+returnTerkirim: {
+  label: "\"Terkirim\"\n✔️ Telah Terkirim"
+  shape: rectangle
+}
+
+returnGagal: {
+  label: "\"Pengiriman Gagal\"\n❌ Pengiriman Gagal"
+  shape: rectangle
+}
+
+returnDefault: {
+  label: "default\nreturn status"
+  shape: rectangle
+}
+
+getStatusKeterangan -> checkStatus
+checkStatus -> returnDibuat: Paket Dibuat
+checkStatus -> returnDiambil: Diambil
+checkStatus -> returnDalamPengiriman: Dalam Pengiriman
+checkStatus -> returnTerkirim: Terkirim
+checkStatus -> returnGagal: Pengiriman Gagal
+checkStatus -> returnDefault: lainnya

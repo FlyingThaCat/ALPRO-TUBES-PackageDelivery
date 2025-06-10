@@ -1,0 +1,47 @@
+pilihStatus: {
+  label: "pilihStatus(statusOptions []string)"
+  shape: rectangle
+}
+
+TampilkanStatus: {
+  label: "Tampilkan daftar status"
+  shape: rectangle
+}
+
+InputStatus: {
+  label: "Input statusChoice"
+  shape: rectangle
+}
+
+CekValid: {
+  label: "Apakah statusChoice valid?"
+  shape: diamond
+}
+
+TampilkanError: {
+  label: "Tampilkan error\n'Pilihan status tidak valid.'"
+  shape: rectangle
+}
+
+EnterToContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+ReturnKosong: {
+  label: "return \"\""
+  shape: rectangle
+}
+
+ReturnStatus: {
+  label: "return statusOptions[statusChoice-1]"
+  shape: rectangle
+}
+
+pilihStatus -> TampilkanStatus -> InputStatus -> CekValid
+CekValid -> ReturnStatus: yes
+CekValid -> TampilkanError: no
+TampilkanError -> EnterToContinue -> ReturnKosong

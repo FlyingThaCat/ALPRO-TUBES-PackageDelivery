@@ -1,0 +1,123 @@
+start: {
+  shape: circle
+  label: "Mulai"
+}
+
+end: {
+  shape: circle
+  label: "Selesai"
+}
+
+clear_screen: {
+  shape: rectangle
+  label: "Bersihkan layar"
+}
+
+show_menu: {
+  shape: rectangle
+  label: "Tampilkan menu utama\n– tunggu input"
+}
+
+show_invalid: {
+  shape: rectangle
+  label: "Tampilkan pesan\npilihan tidak valid"
+}
+
+decide_main: {
+  shape: diamond
+  label: "Pilihan utama?"
+}
+
+fn_register: {
+  shape: rectangle
+  label: "register()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+fn_login: {
+  shape: rectangle
+  label: "login()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+decide_loggedin: {
+  shape: diamond
+  label: "Berhasil login?"
+}
+
+decide_role: {
+  shape: diamond
+  label: "Peran pengguna?"
+}
+
+fn_logout: {
+  shape: rectangle
+  label: "Logout berhasil"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+fn_user_menu: {
+  shape: rectangle
+  label: "users.MenuUser()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+fn_courier_menu: {
+  shape: rectangle
+  label: "kurir.MenuKurir()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+fn_admin_menu: {
+  shape: rectangle
+  label: "admin.MenuAdmin()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+decide_option: {
+  shape: diamond
+  label: "Pilihan menu peran?"
+}
+
+start -> clear_screen
+clear_screen -> show_menu
+show_menu -> decide_main
+
+decide_main -> fn_register: "1"
+decide_main -> fn_login: "2"
+decide_main -> end: "0"
+decide_main -> show_invalid: "lainnya"
+
+show_invalid -> show_menu
+fn_register -> show_menu
+
+fn_login -> decide_loggedin
+decide_loggedin -> show_menu: "gagal"
+decide_loggedin -> decide_role: "berhasil"
+
+decide_role -> fn_user_menu: "user"
+decide_role -> fn_courier_menu: "kurir"
+decide_role -> fn_admin_menu: "admin"
+
+fn_user_menu -> decide_option
+fn_courier_menu -> decide_option
+fn_admin_menu -> decide_option
+
+decide_option -> fn_logout: "0"
+decide_option -> fn_user_menu: "user opsi≠0"
+decide_option -> fn_courier_menu: "kurir opsi≠0"
+decide_option -> fn_admin_menu: "admin opsi≠0"
+
+fn_logout -> show_menu

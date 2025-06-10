@@ -1,0 +1,65 @@
+LihatKurir: {
+  label: "LihatKurir(clear bool)"
+  shape: rectangle
+}
+
+ClearScreenCheck: {
+  label: "clear == true?"
+  shape: diamond
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+PrintHeader: {
+  label: "Print Header\n\"DAFTAR KURIR\""
+  shape: rectangle
+}
+
+FilterKurir: {
+  label: "Filter user.Role == \"kurir\""
+  shape: rectangle
+}
+
+SortKurir: {
+  label: "Insertion Sort by\nlen(kurir.Pakets) ascending"
+  shape: rectangle
+}
+
+PrintTable: {
+  label: "Tampilkan tabel\nNama | Username | Password | Jumlah Paket"
+  shape: rectangle
+}
+
+EnterToContinueCheck: {
+  label: "clear == true?"
+  shape: diamond
+}
+
+EnterToContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+LihatKurir1: {
+  label: "LihatKurir(clear bool)"
+  shape: rectangle
+}
+
+LihatKurir -> ClearScreenCheck
+ClearScreenCheck -> ClearScreen: Yes
+ClearScreenCheck -> PrintHeader: No
+ClearScreen -> PrintHeader
+
+PrintHeader -> FilterKurir -> SortKurir -> PrintTable -> EnterToContinueCheck
+EnterToContinueCheck -> EnterToContinue: Yes
+EnterToContinueCheck -> LihatKurir1: No
+EnterToContinue -> LihatKurir1

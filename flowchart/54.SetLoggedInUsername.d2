@@ -1,0 +1,17 @@
+start: {
+  shape: circle
+  label: "Mulai SetLoggedInUsername()"
+}
+
+assign_username: {
+  shape: rectangle
+  label: "Set loggedInUsername = username"
+}
+
+end: {
+  shape: circle
+  label: "Selesai SetLoggedInUsername()"
+}
+
+start -> assign_username
+assign_username -> end

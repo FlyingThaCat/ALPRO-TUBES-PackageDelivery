@@ -1,0 +1,26 @@
+konfirmasiUpdate: {
+  label: "konfirmasiUpdate(noResi, statusBaru string)"
+  shape: rectangle
+}
+
+TampilkanPrompt: {
+  label: "Tampilkan prompt:\n\"Anda akan mengubah status paket... (y/n):\""
+  shape: rectangle
+}
+
+InputConfirm: {
+  label: "Input confirm"
+  shape: rectangle
+}
+
+NormalizeInput: {
+  label: "confirm = strings.TrimSpace(strings.ToLower(confirm))"
+  shape: rectangle
+}
+
+Return: {
+  label: "return confirm == \"y\""
+  shape: rectangle
+}
+
+konfirmasiUpdate -> TampilkanPrompt -> InputConfirm -> NormalizeInput -> Return

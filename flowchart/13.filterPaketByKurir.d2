@@ -1,0 +1,36 @@
+filterPaketByKurir: {
+  label: "filterPaketByKurir(username string)"
+  shape: rectangle
+}
+
+InitResult: {
+  label: "result := []types.Paket{}"
+  shape: rectangle
+}
+
+LoopPaket: {
+  label: "for each p in datas.PaketDB"
+  shape: diamond
+}
+
+CheckKurir: {
+  label: "p.Kurir == username?"
+  shape: diamond
+}
+
+AppendPaket: {
+  label: "append p to result"
+  shape: rectangle
+}
+
+ReturnResult: {
+  label: "return result"
+  shape: rectangle
+}
+
+filterPaketByKurir -> InitResult -> LoopPaket
+LoopPaket -> CheckKurir
+CheckKurir -> AppendPaket: yes
+AppendPaket -> LoopPaket
+CheckKurir -> LoopPaket: no
+LoopPaket -> ReturnResult: end

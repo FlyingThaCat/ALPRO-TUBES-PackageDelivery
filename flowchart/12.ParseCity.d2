@@ -1,0 +1,52 @@
+ParseCity: {
+  label: "ParseCity(name string)"
+  shape: rectangle
+}
+
+Lowercase: {
+  label: "name = strings.ToLower(name)"
+  shape: rectangle
+}
+
+Switch: {
+  label: "switch name"
+  shape: diamond
+}
+
+Jakarta: {
+  label: `"jakarta" → return Jakarta`
+  shape: rectangle
+}
+
+Bogor: {
+  label: `"bogor" → return Bogor`
+  shape: rectangle
+}
+
+Depok: {
+  label: `"depok" → return Depok`
+  shape: rectangle
+}
+
+Tangerang: {
+  label: `"tangerang" → return Tangerang`
+  shape: rectangle
+}
+
+Bekasi: {
+  label: `"bekasi" → return Bekasi`
+  shape: rectangle
+}
+
+Default: {
+  label: `default → return error("kota tidak dikenali")`
+  shape: rectangle
+}
+
+ParseCity -> Lowercase -> Switch
+Switch -> Jakarta
+Switch -> Bogor
+Switch -> Depok
+Switch -> Tangerang
+Switch -> Bekasi
+Switch -> Default

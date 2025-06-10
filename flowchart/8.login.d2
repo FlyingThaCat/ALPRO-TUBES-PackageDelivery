@@ -1,0 +1,115 @@
+start: {
+  shape: circle
+  label: "Mulai login()"
+}
+
+clear_screen: {
+  shape: rectangle
+  label: "Bersihkan layar"
+}
+
+print_header: {
+  shape: rectangle
+  label: "Tampilkan header\n🔐 LOGIN"
+}
+
+get_username: {
+  shape: rectangle
+  label: "Input username\n(utils.GetString)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+get_password: {
+  shape: rectangle
+  label: "Input password\n(utils.GetString)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+find_user: {
+  shape: rectangle
+  label: "Cari user\n(utils.FindUserByUsername)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+decide_user_found: {
+  shape: diamond
+  label: "User ditemukan?"
+}
+
+show_not_found: {
+  shape: rectangle
+  label: "Tampilkan pesan\n❌ Username tidak ditemukan"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+decide_password_correct: {
+  shape: diamond
+  label: "Password benar?"
+}
+
+show_wrong_password: {
+  shape: rectangle
+  label: "Tampilkan pesan\n❌ Password salah"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+decide_role_admin: {
+  shape: diamond
+  label: "Role ≠ “user”?"
+}
+
+print_welcome_role: {
+  shape: rectangle
+  label: "Tampilkan pesan\n✅ Login berhasil, role: {role}"
+}
+
+print_welcome_user: {
+  shape: rectangle
+  label: "Tampilkan pesan\n✅ Login berhasil"
+}
+
+set_session: {
+  shape: rectangle
+  label: "Set session\n(utils.SetLoggedInUsername)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+end: {
+  shape: circle
+  label: "Selesai login()"
+}
+
+start -> clear_screen
+clear_screen -> print_header
+print_header -> get_username
+get_username -> get_password
+get_password -> find_user
+
+find_user -> decide_user_found
+decide_user_found -> show_not_found: "Tidak"
+show_not_found -> end
+decide_user_found -> decide_password_correct: "Ya"
+
+decide_password_correct -> show_wrong_password: "Tidak"
+show_wrong_password -> end
+decide_password_correct -> decide_role_admin: "Ya"
+
+decide_role_admin -> print_welcome_role: "Ya"
+decide_role_admin -> print_welcome_user: "Tidak"
+
+print_welcome_role -> set_session
+print_welcome_user -> set_session
+
+set_session -> end

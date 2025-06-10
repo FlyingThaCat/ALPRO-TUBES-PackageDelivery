@@ -1,0 +1,48 @@
+name: CLI Screenshot CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    # tell every step to use the virtual display
+    env:
+      DISPLAY: :99
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            expect \
+            xdotool \
+            golang \
+            imagemagick \
+            xvfb
+
+      - name: Start headless X server
+        run: |
+          # launch Xvfb on display :99 in the background
+          Xvfb :99 -screen 0 1920x1080x24 &
+
+      - name: Build the application
+        run: |
+          go build .
+
+      - name: Run CLI test script
+        run: |
+          chmod +x test_snapshot.sh
+          mkdir -p logs
+          # your expect script will now be able to grab screenshots
+          ./test_snapshot.sh
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: cli-screenshots
+          path: logs/

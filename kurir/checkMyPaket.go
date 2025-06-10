@@ -6,7 +6,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
 	"strconv"
 	"strings"
 )
@@ -41,8 +40,6 @@ func CheckMyPaketSorted() {
 
 	currentCity := selectCurrentCity()
 
-	sortPaketByStatusAndDistance(pakets, currentCity)
-
 	reader := bufio.NewReader(os.Stdin)
     fmt.Println("Pilih urutan tampilan paket berdasarkan jarak:")
     fmt.Println("1. Terdekat (ascending)")
@@ -59,7 +56,13 @@ func CheckMyPaketSorted() {
         order = "asc"
     }
 
-	printSortedPaketList(pakets, currentCity, order)
+	if order == "asc" {
+		sortPaketByStatusAndDistance(pakets, currentCity, "status", order)
+	} else {
+		sortPaketByStatusAndDistance(pakets, currentCity, "jarak", order)
+	}
+
+	printSortedPaketList(pakets, currentCity)
 	utils.EnterToContinue()
 }
 
@@ -88,7 +91,7 @@ func selectCurrentCity() types.Cities {
 	return types.ParseCity(types.Kota[choice-1])
 }
 
-func sortPaketByStatusAndDistance(pakets []types.Paket, currentCity types.Cities) {
+func sortPaketByStatusAndDistance(pakets []types.Paket, currentCity types.Cities, by, order string) {
 	statusPriority := map[string]int{
 		"Paket Dibuat":     1,
 		"Diambil":          2,
@@ -96,30 +99,55 @@ func sortPaketByStatusAndDistance(pakets []types.Paket, currentCity types.Cities
 		"Terkirim":         4,
 		"Pengiriman Gagal": 5,
 	}
-
 	getLastStatus := func(p types.Paket) string {
 		if len(p.Status) == 0 {
 			return ""
 		}
 		return p.Status[len(p.Status)-1]
 	}
+	getDist := func(p types.Paket, status string) float64 {
+		city := getReferenceCity(p, status)
+		return utils.GetJarak(currentCity, city)
+	}
 
-	sort.SliceStable(pakets, func(i, j int) bool {
-		statusI := getLastStatus(pakets[i])
-		statusJ := getLastStatus(pakets[j])
+	n := len(pakets)
+	asc := strings.ToLower(order) != "desc"
 
-		if statusPriority[statusI] != statusPriority[statusJ] {
-			return statusPriority[statusI] < statusPriority[statusJ]
+	for i := 0; i < n-1; i++ {
+		idx := i
+		for j := i + 1; j < n; j++ {
+			var less bool
+
+			if by == "status" {
+				statusI, statusJ := getLastStatus(pakets[idx]), getLastStatus(pakets[j])
+				priI, priJ := statusPriority[statusI], statusPriority[statusJ]
+				distI, distJ := getDist(pakets[idx], statusI), getDist(pakets[j], statusJ)
+				if priJ < priI || (priJ == priI && ((asc && distJ < distI) || (!asc && distJ > distI))) {
+					less = true
+				}
+			} else if by == "jarak" {
+				statusIdx := getLastStatus(pakets[idx])
+				statusJ := getLastStatus(pakets[j])
+				distI := getDist(pakets[idx], statusIdx)
+				distJ := getDist(pakets[j], statusJ)
+				if asc {
+					if distJ < distI {
+						less = true
+					}
+				} else {
+					if distJ > distI {
+						less = true
+					}
+				}
+			}
+			if less {
+				idx = j
+			}
 		}
-
-		cityI := getReferenceCity(pakets[i], statusI)
-		cityJ := getReferenceCity(pakets[j], statusJ)
-
-		distI := utils.GetJarak(currentCity, cityI)
-		distJ := utils.GetJarak(currentCity, cityJ)
-
-		return distI < distJ
-	})
+		if idx != i {
+			pakets[i], pakets[idx] = pakets[idx], pakets[i]
+		}
+	}
 }
 
 func getReferenceCity(paket types.Paket, status string) types.Cities {
@@ -133,7 +161,7 @@ func getReferenceCity(paket types.Paket, status string) types.Cities {
 	}
 }
 
-func printSortedPaketList(pakets []types.Paket, currentCity types.Cities, order string) {
+func printSortedPaketList(pakets []types.Paket, currentCity types.Cities) {
     // compute distances and store in a slice of pairs
     type entry struct {
         paket types.Paket
@@ -145,27 +173,6 @@ func printSortedPaketList(pakets []types.Paket, currentCity types.Cities, order 
         refCity := getReferenceCity(p, status)
         dist := utils.GetJarak(currentCity, refCity)
         entries = append(entries, entry{paket: p, jarak: dist})
-    }
-
-    // custom selection sort by jarak
-    n := len(entries)
-    asc := strings.ToLower(order) != "desc"
-    for i := 0; i < n-1; i++ {
-        idx := i
-        for j := i + 1; j < n; j++ {
-            if asc {
-                if entries[j].jarak < entries[idx].jarak {
-                    idx = j
-                }
-            } else {
-                if entries[j].jarak > entries[idx].jarak {
-                    idx = j
-                }
-            }
-        }
-        if idx != i {
-            entries[i], entries[idx] = entries[idx], entries[i]
-        }
     }
 
     // print header

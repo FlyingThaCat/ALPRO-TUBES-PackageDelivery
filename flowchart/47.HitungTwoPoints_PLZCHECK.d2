@@ -1,0 +1,89 @@
+style: {
+  stroke-width: 2
+}
+
+HitungTwoPoints: {
+  label: "HitungTwoPoints(lat1, lon1, lat2, lon2)"
+  shape: rectangle
+}
+
+step1: {
+  label: "Langkah 1: Konversi Delta Latitude (dLat) ke radian\n(dLat = (lat2 - lat1) * π / 180)"
+  shape: rectangle
+}
+
+step2: {
+  label: "Langkah 2: Konversi Delta Longitude (dLon) ke radian\n(dLon = (lon2 - lon1) * π / 180)"
+  shape: rectangle
+}
+
+step3: {
+  label: "Langkah 3: Hitung nilai 'a'\nMenggunakan rumus Haversine"
+  shape: rectangle
+}
+
+mathSin1: {
+  label: "math.Sin(dLat / 2)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+mathSin2: {
+  label: "math.Sin(dLon / 2)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+mathCos1: {
+  label: "math.Cos(lat1 * π / 180)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+mathCos2: {
+  label: "math.Cos(lat2 * π / 180)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+step4: {
+  label: "Langkah 4: Hitung nilai 'c'\nc = 2 * math.Atan2(sqrt(a), sqrt(1-a))"
+  shape: rectangle
+}
+
+mathSqrt: {
+  label: "math.Sqrt(a), math.Sqrt(1-a)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+mathAtan2: {
+  label: "math.Atan2(...)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+step5: {
+  label: "Langkah 5: Kalikan dengan radius bumi (6371 km)\nreturn R * c"
+  shape: rectangle
+}
+
+HitungTwoPoints -> step1
+step1 -> step2
+step2 -> step3
+
+step3 -> mathSin1
+step3 -> mathSin2
+step3 -> mathCos1
+step3 -> mathCos2
+step3 -> step4
+
+step4 -> mathSqrt
+mathSqrt -> mathAtan2
+mathAtan2 -> step5

@@ -1,0 +1,33 @@
+GetCoordinates: {
+  label: "GetCoordinates(city)"
+  shape: rectangle
+}
+
+loopTempat: {
+  label: "Loop: setiap tempat di types.DaftarTempat"
+  shape: diamond
+}
+
+checkCityMatch: {
+  label: "tempat.City == city?"
+  shape: diamond
+}
+
+returnCoordinates: {
+  label: "return Latitude, Longitude, nil"
+  shape: rectangle
+}
+
+returnError: {
+  label: "return 0, 0, fmt.Errorf(...)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+GetCoordinates -> loopTempat
+loopTempat -> checkCityMatch
+checkCityMatch -> returnCoordinates: ya
+checkCityMatch -> loopTempat: tidak (lanjut loop)
+loopTempat -> returnError: selesai loop (tidak ditemukan)

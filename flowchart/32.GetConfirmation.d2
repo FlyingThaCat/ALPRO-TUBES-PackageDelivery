@@ -1,0 +1,74 @@
+GetConfirmation: {
+  label: "GetConfirmation(prompt, message)"
+  shape: rectangle
+}
+
+checkEmpty: {
+  label: "Apakah message kosong?"
+  shape: diamond
+}
+
+setDefaultMsg: {
+  label: "message = 'Silakan masukkan y atau n.'"
+  shape: rectangle
+}
+
+loop: {
+  label: "Loop: Ambil input"
+  shape: diamond
+}
+
+getInput: {
+  label: "GetInput(prompt + ' (y/n): ', false, message)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+toLower: {
+  label: "strings.ToLower(input)"
+  shape: rectangle
+}
+
+checkYes: {
+  label: "Input: y / yes?"
+  shape: diamond
+}
+
+returnTrue: {
+  label: "return true"
+  shape: rectangle
+}
+
+checkNo: {
+  label: "Input: n / no?"
+  shape: diamond
+}
+
+returnFalse: {
+  label: "return false"
+  shape: rectangle
+}
+
+invalid: {
+  label: "Input tidak valid. Cetak message."
+  shape: rectangle
+}
+
+GetConfirmation -> checkEmpty
+checkEmpty -> setDefaultMsg: ya
+checkEmpty -> loop: tidak
+setDefaultMsg -> loop
+
+loop -> getInput
+getInput -> toLower
+toLower -> checkYes
+
+checkYes -> returnTrue: ya
+checkYes -> checkNo: tidak
+
+checkNo -> returnFalse: ya
+checkNo -> invalid: tidak
+
+invalid -> loop

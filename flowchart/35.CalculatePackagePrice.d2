@@ -1,0 +1,63 @@
+CalculatePackagePrice: {
+  label: "CalculatePackagePrice"
+  shape: rectangle
+}
+
+callHitungTwoPoints: {
+  label: "HitungTwoPoints(senderLat, senderLon, receiverLat, receiverLon)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+calculateBasePrice: {
+  label: "basePrice = distance * PricePerKm"
+  shape: rectangle
+}
+
+checkWeight: {
+  label: "berat > 5?"
+  shape: diamond
+}
+
+addWeightCost: {
+  label: "basePrice += (berat - 5) * 1000"
+  shape: rectangle
+}
+
+checkType: {
+  label: "tipe valid?"
+  shape: diamond
+}
+
+getMultiplier: {
+  label: "multiplier = PaketTypeMultiplier[tipe]"
+  shape: rectangle
+}
+
+defaultMultiplier: {
+  label: "multiplier = 1.0"
+  shape: rectangle
+}
+
+calculateTotal: {
+  label: "totalPrice = basePrice * multiplier"
+  shape: rectangle
+}
+
+returnResult: {
+  label: "return distance, totalPrice"
+  shape: rectangle
+}
+
+CalculatePackagePrice -> callHitungTwoPoints -> calculateBasePrice
+calculateBasePrice -> checkWeight
+checkWeight -> addWeightCost: ya
+checkWeight -> checkType: tidak
+addWeightCost -> checkType
+checkType -> getMultiplier: ya
+checkType -> defaultMultiplier: tidak
+getMultiplier -> calculateTotal
+defaultMultiplier -> calculateTotal
+calculateTotal -> returnResult

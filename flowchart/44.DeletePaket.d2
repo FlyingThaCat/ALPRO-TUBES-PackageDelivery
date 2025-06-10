@@ -1,0 +1,33 @@
+DeletePaket: {
+  label: "DeletePaket(noResi)"
+  shape: rectangle
+}
+
+LoopPaketDB: {
+  label: "Loop: datas.PaketDB"
+}
+
+CheckNoResi: {
+  label: "p.NoResi == noResi?"
+  shape: diamond
+}
+
+DeleteFromSlice: {
+  label: "Hapus dari datas.PaketDB"
+}
+
+ReturnTrue: {
+  label: "return true"
+  shape: rectangle
+}
+
+ReturnFalse: {
+  label: "return false"
+  shape: rectangle
+}
+
+DeletePaket -> LoopPaketDB
+LoopPaketDB -> CheckNoResi
+CheckNoResi -> DeleteFromSlice: yes
+DeleteFromSlice -> ReturnTrue
+CheckNoResi -> ReturnFalse: no

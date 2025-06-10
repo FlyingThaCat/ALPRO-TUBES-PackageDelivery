@@ -1,0 +1,87 @@
+AssignPaketToKurir: {
+  label: "AssignPaketToKurir(username, noResi)"
+  shape: rectangle
+}
+
+FindUserByUsername: {
+  label: "FindUserByUsername(username)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckUserEmpty: {
+  label: "kurir.Username == \"\"?"
+  shape: diamond
+}
+
+CheckUserRole: {
+  label: "kurir.Role != \"kurir\"?"
+  shape: diamond
+}
+
+PrintNotKurir: {
+  label: "Print: Bukan kurir"
+  shape: rectangle
+}
+
+FindPaketByNoResi: {
+  label: "FindPaketByNoResi(noResi)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckResiEmpty: {
+  label: "paket.NoResi == \"\"?"
+  shape: diamond
+}
+
+AssignKurir: {
+  label: "paket.Kurir = username"
+  shape: rectangle
+}
+
+LoopUsersDB: {
+  label: "Loop: datas.UsersDB"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+AppendPaketToUser: {
+  label: "Append paket ke user"
+  shape: rectangle
+}
+
+UpdatePaket: {
+  label: "UpdatePaket(paket)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+ReturnTrue: {
+  label: "return true"
+  shape: rectangle
+}
+
+ReturnFalse: {
+  label: "return false"
+  shape: rectangle
+}
+
+AssignPaketToKurir -> FindUserByUsername
+FindUserByUsername -> CheckUserEmpty
+CheckUserEmpty -> ReturnFalse: yes
+CheckUserEmpty -> CheckUserRole: no
+CheckUserRole -> PrintNotKurir: yes
+PrintNotKurir -> ReturnFalse
+CheckUserRole -> FindPaketByNoResi: no
+FindPaketByNoResi -> CheckResiEmpty
+CheckResiEmpty -> ReturnFalse: yes
+CheckResiEmpty -> AssignKurir: no
+AssignKurir -> LoopUsersDB
+LoopUsersDB -> AppendPaketToUser
+AppendPaketToUser -> UpdatePaket
+UpdatePaket -> ReturnTrue

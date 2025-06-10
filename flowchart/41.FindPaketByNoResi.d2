@@ -1,0 +1,29 @@
+FindPaketByNoResi: {
+  label: "FindPaketByNoResi(noResi)"
+  shape: rectangle
+}
+
+loop: {
+  label: "for i in range datas.PaketDB"
+  shape: rectangle
+}
+
+condition: {
+  label: "datas.PaketDB[i].NoResi == noResi?"
+  shape: diamond
+}
+
+returnFound: {
+  label: "return &datas.PaketDB[i]"
+  shape: rectangle
+}
+
+returnNil: {
+  label: "return nil"
+  shape: rectangle
+}
+
+FindPaketByNoResi -> loop
+loop -> condition
+condition -> returnFound: yes
+condition -> returnNil: no

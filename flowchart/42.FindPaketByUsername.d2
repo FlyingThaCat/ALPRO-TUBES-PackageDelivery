@@ -1,0 +1,39 @@
+FindPaketByUsername: {
+  label: "FindPaketByUsername(username)"
+  shape: rectangle
+}
+
+loop: {
+  label: "for _, paket in datas.PaketDB"
+  shape: rectangle
+}
+
+datasPaketDB: {
+  label: "datas.PaketDB"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+condition: {
+  label: "paket.Kurir == username?"
+  shape: diamond
+}
+
+appendResult: {
+  label: "append result, paket"
+  shape: rectangle
+}
+
+returnResult: {
+  label: "return result"
+  shape: rectangle
+}
+
+FindPaketByUsername -> datasPaketDB
+FindPaketByUsername -> loop
+loop -> condition
+condition -> appendResult: yes
+condition -> loop: no
+appendResult -> loop
+loop -> returnResult

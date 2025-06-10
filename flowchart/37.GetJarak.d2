@@ -1,0 +1,52 @@
+GetJarak: {
+  label: "GetJarak(from, to)"
+  shape: rectangle
+}
+
+loopTempat: {
+  label: "Loop tempat in DaftarTempat"
+  shape: rectangle
+}
+
+checkFrom: {
+  label: "tempat.City == from?"
+  shape: diamond
+}
+
+setFromCoords: {
+  label: "lat1, lon1 = tempat.Lat, tempat.Lon"
+  shape: rectangle
+}
+
+checkTo: {
+  label: "tempat.City == to?"
+  shape: diamond
+}
+
+setToCoords: {
+  label: "lat2, lon2 = tempat.Lat, tempat.Lon"
+  shape: rectangle
+}
+
+callHaversine: {
+  label: "Haversine(lat1, lon1, lat2, lon2)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+returnResult: {
+  label: "return distance"
+  shape: rectangle
+}
+
+GetJarak -> loopTempat
+loopTempat -> checkFrom
+checkFrom -> setFromCoords: ya
+checkFrom -> checkTo: tidak
+setFromCoords -> checkTo
+checkTo -> setToCoords: ya
+checkTo -> callHaversine: tidak
+setToCoords -> callHaversine
+callHaversine -> returnResult

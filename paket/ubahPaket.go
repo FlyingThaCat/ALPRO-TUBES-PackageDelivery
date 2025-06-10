@@ -16,7 +16,7 @@ func UbahPaket(paket types.Paket) {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("========================================")
-	fmt.Println("✏️  UBAH DATA PAKET")
+	fmt.Println("✏  UBAH DATA PAKET")
 	fmt.Println("========================================")
 
 	// Input Tipe Paket (1. Reguler, 2. Express, 3. Sameday)
@@ -51,7 +51,7 @@ func UbahPaket(paket types.Paket) {
 	case "3":
 		paket.Tipe = "sameday"
 	default:
-		fmt.Println("\n⚠️  Input tidak valid. Menggunakan nilai sebelumnya.")
+		fmt.Println("\n⚠  Input tidak valid. Menggunakan nilai sebelumnya.")
 	}
 
 	// Input Berat
@@ -62,11 +62,30 @@ func UbahPaket(paket types.Paket) {
 		fmt.Sscanf(beratStr, "%f", &paket.Berat)
 	}
 
+	// Pilih Kota Pengirim
+	fmt.Println("\nDaftar Kota:")
+	for i, city := range types.AllCities() {
+		fmt.Printf("%d. %s\n", i+1, city)
+	}
+
+	currentSenderIndex := 1
+	for i, city := range types.AllCities() {
+		if string(paket.SenderCity) == city {
+			currentSenderIndex = i + 1
+			break
+		}
+	}
+	fmt.Printf("Pilih Kota Pengirim [default %d]: ", currentSenderIndex)
+	senderInput, _ := reader.ReadString('\n')
+	senderInput = strings.TrimSpace(senderInput)
+	if senderInput == "" {
+		senderInput = fmt.Sprintf("%d", currentSenderIndex)
+	}
+
 	senderIndex := 0
-	senderInput := ""
 	_, err := fmt.Sscanf(senderInput, "%d", &senderIndex)
 	if err != nil || senderIndex < 1 || senderIndex > len(types.AllCities()) {
-		fmt.Println("\n⚠️  Input tidak valid.")
+		fmt.Println("\n⚠  Input tidak valid.")
 		utils.EnterToContinue()
 		return
 	}
@@ -95,7 +114,7 @@ func UbahPaket(paket types.Paket) {
 	receiverIndex := 0
 	_, err = fmt.Sscanf(receiverInput, "%d", &receiverIndex)
 	if err != nil || receiverIndex < 1 || receiverIndex > len(types.AllCities()) {
-		fmt.Println("\n⚠️  Input tidak valid.")
+		fmt.Println("\n⚠  Input tidak valid.")
 		utils.EnterToContinue()
 		return
 	}
@@ -104,14 +123,14 @@ func UbahPaket(paket types.Paket) {
 	// Recalculate Price
 	senderLat, senderLon, err := utils.GetCoordinates(paket.SenderCity)
 	if err != nil {
-		fmt.Printf("\n⚠️ Error koordinat kota pengirim: %s\n", err)
+		fmt.Printf("\n⚠ Error koordinat kota pengirim: %s\n", err)
 		utils.EnterToContinue()
 		return
 	}
 
 	receiverLat, receiverLon, err := utils.GetCoordinates(paket.ReceiverCity)
 	if err != nil {
-		fmt.Printf("\n⚠️ Error koordinat kota tujuan: %s\n", err)
+		fmt.Printf("\n⚠ Error koordinat kota tujuan: %s\n", err)
 		utils.EnterToContinue()
 		return
 	}

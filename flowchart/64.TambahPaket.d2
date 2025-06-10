@@ -1,0 +1,142 @@
+style: {
+  stroke-width: 2
+}
+
+TambahPaket: {
+  label: "TambahPaket()"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+InputType: {
+  label: "InputPackageType()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckTypeErr: {
+  label: "Apakah error?\n(err != nil)"
+  shape: diamond
+}
+
+ReturnTypeErr: {
+  label: "❌ return error"
+  shape: rectangle
+}
+
+InputBerat: {
+  label: "utils.GetFloat(...)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+InputSender: {
+  label: "InputCity('Kota Pengirim')"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckSenderErr: {
+  label: "Apakah error?"
+  shape: diamond
+}
+
+ReturnSenderErr: {
+  label: "❌ return error"
+  shape: rectangle
+}
+
+InputReceiver: {
+  label: "InputCity('Kota Tujuan')"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckReceiverErr: {
+  label: "Apakah error?"
+  shape: diamond
+}
+
+ReturnReceiverErr: {
+  label: "❌ return error"
+  shape: rectangle
+}
+
+CalcPrice: {
+  label: "utils.CalculatePackagePrice(...)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+PrintDistancePrice: {
+  label: "Tampilkan jarak & harga"
+  shape: rectangle
+}
+
+Confirm: {
+  label: "utils.GetConfirmation(...)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckConfirmation: {
+  label: "Apakah user setuju?"
+  shape: diamond
+}
+
+CancelAdd: {
+  label: "❌ Paket tidak ditambahkan"
+  shape: rectangle
+}
+
+GenerateData: {
+  label: "Generate data paket:\nNoResi, Tipe, Berat, Kota, Harga, Waktu"
+  shape: rectangle
+}
+
+AppendDB: {
+  label: "datas.PaketDB = append(...)"
+  shape: rectangle
+}
+
+ShowDetail: {
+  label: "✅ Paket berhasil ditambahkan\nDetailPaket(...)"
+  shape: rectangle
+}
+
+TambahPaket -> ClearScreen -> InputType -> CheckTypeErr
+CheckTypeErr -> ReturnTypeErr: "❌ Ya"
+CheckTypeErr -> InputBerat: "✅ Tidak"
+
+InputBerat -> InputSender -> CheckSenderErr
+CheckSenderErr -> ReturnSenderErr: "❌ Ya"
+CheckSenderErr -> InputReceiver: "✅ Tidak"
+
+InputReceiver -> CheckReceiverErr
+CheckReceiverErr -> ReturnReceiverErr: "❌ Ya"
+CheckReceiverErr -> CalcPrice: "✅ Tidak"
+
+CalcPrice -> PrintDistancePrice -> Confirm -> CheckConfirmation
+CheckConfirmation -> CancelAdd: "❌ Tidak"
+CheckConfirmation -> GenerateData: "✅ Ya"
+
+GenerateData -> AppendDB -> ShowDetail

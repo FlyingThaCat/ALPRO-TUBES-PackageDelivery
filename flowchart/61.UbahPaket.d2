@@ -1,0 +1,129 @@
+style: {
+  stroke-width: 2
+}
+
+UbahPaket: {
+  label: "UbahPaket(paket)"
+  shape: rectangle
+}
+
+Clear1: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+InputFields: {
+  label: "inputWithDefault()\nTipe, Berat, Kota Pengirim,\nKota Tujuan, Status"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+ParseSender: {
+  label: "utils.ParseCity(Sender)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckSender: {
+  label: "Validasi Kota Pengirim"
+  shape: diamond
+}
+
+ParseReceiver: {
+  label: "utils.ParseCity(Receiver)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckReceiver: {
+  label: "Validasi Kota Tujuan"
+  shape: diamond
+}
+
+GetCoordSender: {
+  label: "utils.GetCoordinates(Sender)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckCoordSender: {
+  label: "Cek Koordinat Pengirim"
+  shape: diamond
+}
+
+GetCoordReceiver: {
+  label: "utils.GetCoordinates(Receiver)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckCoordReceiver: {
+  label: "Cek Koordinat Tujuan"
+  shape: diamond
+}
+
+CalculatePrice: {
+  label: "utils.CalculatePackagePrice()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+UpdateData: {
+  label: "Update data & waktu"
+  shape: rectangle
+}
+
+UpdateDB: {
+  label: "Update Paket di datas.PaketDB"
+  shape: rectangle
+}
+
+Clear2: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+ShowSummary: {
+  label: "✅ Tampilkan Ringkasan Paket"
+  shape: rectangle
+}
+
+EnterContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+UbahPaket -> Clear1 -> InputFields -> ParseSender -> CheckSender
+CheckSender -> EnterContinue: "❌ Tidak Valid"
+CheckSender -> ParseReceiver: "✅ Valid"
+ParseReceiver -> CheckReceiver
+CheckReceiver -> EnterContinue: "❌ Tidak Valid"
+CheckReceiver -> GetCoordSender: "✅ Valid"
+GetCoordSender -> CheckCoordSender
+CheckCoordSender -> EnterContinue: "❌ Error"
+CheckCoordSender -> GetCoordReceiver: "✅ Lanjut"
+GetCoordReceiver -> CheckCoordReceiver
+CheckCoordReceiver -> EnterContinue: "❌ Error"
+CheckCoordReceiver -> CalculatePrice: "✅ Lanjut"
+CalculatePrice -> UpdateData -> UpdateDB -> Clear2 -> ShowSummary -> EnterContinue

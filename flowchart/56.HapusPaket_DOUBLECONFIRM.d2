@@ -3,7 +3,7 @@ style: {
 }
 
 Start: {
-  label: "CekPaket()"
+  label: "HapusPaket()"
   shape: rectangle
 }
 
@@ -16,7 +16,7 @@ ClearScreen: {
 }
 
 Header: {
-  label: "Tampilkan Header\n📦 CEK PAKET"
+  label: "Tampilkan Header\n🗑️  HAPUS PAKET"
   shape: rectangle
 }
 
@@ -28,33 +28,41 @@ GetNoResi: {
   }
 }
 
-FindPaket: {
-  label: "utils.FindPaketByNoResi(noResi)"
+DeletePaket: {
+  label: "utils.DeletePaket(noResi)"
   shape: rectangle
   style: {
     stroke-dash: 3
   }
 }
 
-CheckResult: {
-  label: "Apakah paket ditemukan?"
+CheckDelete: {
+  label: "Paket ditemukan?"
   shape: diamond
+  style: {
+    stroke-dash: 3
+  }
 }
 
-NotFoundMsg: {
-  label: "Tampilkan pesan\n'tidak ditemukan'"
+NotFound: {
+  label: "Tampilkan pesan gagal"
   shape: rectangle
 }
 
-ShowDetail: {
-  label: "DetailPaket(*found)"
+EnterFail: {
+  label: "utils.EnterToContinue()"
   shape: rectangle
   style: {
     stroke-dash: 3
   }
 }
 
-EnterContinue: {
+Success: {
+  label: "Tampilkan pesan sukses"
+  shape: rectangle
+}
+
+EnterSuccess: {
   label: "utils.EnterToContinue()"
   shape: rectangle
   style: {
@@ -67,9 +75,8 @@ End: {
   shape: rectangle
 }
 
-Start -> ClearScreen -> Header -> GetNoResi -> FindPaket -> CheckResult
-CheckResult -> NotFoundMsg: "Tidak"
-CheckResult -> ShowDetail: "Ya"
-NotFoundMsg -> EnterContinue
-ShowDetail -> EnterContinue
-EnterContinue -> End
+Start -> ClearScreen -> Header -> GetNoResi -> DeletePaket -> CheckDelete
+CheckDelete -> NotFound: "Tidak"
+CheckDelete -> Success: "Ya"
+NotFound -> EnterFail -> End
+Success -> EnterSuccess -> End

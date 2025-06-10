@@ -23,6 +23,7 @@ jobs:
             xdotool \
             golang \
             scrot \
+            xterm \
             imagemagick \
             xvfb
 
@@ -40,7 +41,8 @@ jobs:
           chmod +x test_snapshot.sh
           mkdir -p logs
           # your expect script will now be able to grab screenshots
-          ./test_snapshot.sh
+          xterm -geometry 120x40+0+0 -e ./test_snapshot.sh &
+          wait
 
       - name: Upload screenshots
         uses: actions/upload-artifact@v4

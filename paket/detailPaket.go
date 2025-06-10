@@ -38,5 +38,5 @@ func DetailPaket(paket types.Paket) {
 	}
 
 	fmt.Println("========================================")
-	utils.EnterToContinue()
+
 }

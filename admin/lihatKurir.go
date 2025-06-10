@@ -13,7 +13,10 @@ func LihatKurir(clear bool) {
 	if clear {
 		utils.ClearScreen()
 	}
-	fmt.Println("\n=== Daftar Kurir ===")	
+
+	fmt.Println("========================================")
+	fmt.Println("🚚  DAFTAR KURIR")
+	fmt.Println("========================================")
 
 	var kurirs []types.User
 	for _, user := range datas.UsersDB {
@@ -22,44 +25,25 @@ func LihatKurir(clear bool) {
 		}
 	}
 
-	var paketCounts = make([]int, len(kurirs))
-	for i, k := range kurirs {
-		paketCounts[i] = len(k.Pakets)
-	}
-
-	
-	var pairs = make([]types.RowPair, len(paketCounts))
-	for i := range paketCounts {
-		pairs[i] = types.RowPair{Index: i, Count: paketCounts[i]}
-	}
-
-	var indexes = make([]int, len(pairs))
-	for i := range pairs {
-		indexes[i] = pairs[i].Count
-	}
-	utils.SortArray(indexes, "asc")
-
-	var sortedKurirs []types.User
-	for _, sortedCount := range indexes {
-		for i, p := range pairs {
-			if p.Count == sortedCount && p.Index != -1 {
-				sortedKurirs = append(sortedKurirs, kurirs[p.Index])
-				pairs[i].Index = -1
-				break
-			}
+	// Sorting kurir berdasarkan jumlah paket yang diassign, ascending
+	for i := 1; i < len(kurirs); i++ {
+		temp := kurirs[i]
+		j := i - 1
+		for j >= 0 && len(kurirs[j].Pakets) > len(temp.Pakets) {
+			kurirs[j+1] = kurirs[j]
+			j--
 		}
+		kurirs[j+1] = temp
 	}
 
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	fmt.Fprintln(w, "Nama\tUsername\tPassword\tPaket yang Diassign")
-	for _, kurir := range sortedKurirs {
-		if kurir.Role != "kurir" {
-			continue
-		}
-		fmt.Fprintf(w, "%s\t%s\t%s\t%v\n", kurir.Nama, kurir.Username, kurir.Password, len(kurir.Pakets))
+	for _, kurir := range kurirs {
+		fmt.Fprintf(w, "%s\t%s\t%s\t%d\n", kurir.Nama, kurir.Username, kurir.Password, len(kurir.Pakets))
 	}
 	w.Flush()
-	fmt.Print("====================\n\n")
+
+	fmt.Println("========================================")
 	if clear {
 		utils.EnterToContinue()
 	}

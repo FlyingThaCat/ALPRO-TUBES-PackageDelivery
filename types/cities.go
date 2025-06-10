@@ -34,3 +34,26 @@ var DaftarTempat = []Tempat{
 	{City: "Tangerang", Longitude: 106.6406, Latitude: -6.1702},
 	{City: "Bekasi", Longitude: 106.9896, Latitude: -6.2416},
 }
+
+// AllCities mengembalikan list nama kota sebagai []string
+func AllCities() []string {
+	return Kota
+}
+
+// ParseCity mengkonversi string nama kota ke tipe Cities
+func ParseCity(cityName string) Cities {
+	switch cityName {
+	case "Jakarta":
+		return Jakarta
+	case "Bogor":
+		return Bogor
+	case "Depok":
+		return Depok
+	case "Tangerang":
+		return Tangerang
+	case "Bekasi":
+		return Bekasi
+	default:
+		return Cities(cityName)
+	}
+}

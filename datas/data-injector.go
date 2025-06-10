@@ -62,7 +62,6 @@ func Init() {
 		},
 	})
 	UsersDB = append(UsersDB, types.User{Username: "user", Password: "1", Role: "user", Pakets: []types.Paket{}})
-
 	PaketDB = append(PaketDB,
 		types.Paket{
 			NoResi:       "1",

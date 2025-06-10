@@ -12,21 +12,24 @@ func LihatPaket(clear bool, hideAssigned bool) {
 	if clear {
 		utils.ClearScreen()
 	}
-	fmt.Println("\n=== Daftar Paket ===")
+
+	fmt.Println("========================================")
+	fmt.Println("📦  DAFTAR PAKET")
+	fmt.Println("========================================")
+
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-	fmt.Fprintln(w, "No Resi\tTipe\tBerat\tHarga\tKota Pengirim\tKota Tujuan\tStatus Terakhir\tDibuat Pada\tDiperbarui Pada\tKurir")
+	fmt.Fprintln(w, "No Resi\tTipe\tBerat (kg)\tHarga (Rp)\tKota Pengirim\tKota Tujuan\tStatus Terakhir\tDibuat Pada\tDiperbarui Pada\tKurir")
 
 	for _, paket := range datas.PaketDB {
 		if hideAssigned && paket.Kurir != "" {
 			continue
 		}
-		
+
 		kurir := paket.Kurir
 		if kurir == "" {
 			kurir = "Belum Ditugaskan"
 		}
 
-		// Cek status terakhir agar tidak panic jika kosong
 		statusTerakhir := "-"
 		if len(paket.Status) > 0 {
 			statusTerakhir = paket.Status[len(paket.Status)-1]
@@ -47,7 +50,6 @@ func LihatPaket(clear bool, hideAssigned bool) {
 	}
 
 	w.Flush()
-	fmt.Print("====================\n\n")
 
 	if clear {
 		utils.EnterToContinue()

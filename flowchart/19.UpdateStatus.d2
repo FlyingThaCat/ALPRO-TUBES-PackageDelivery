@@ -1,0 +1,137 @@
+UpdateStatus: {
+  label: "UpdateStatus()"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+GetUsername: {
+  label: "username = utils.GetLoggedInUsername()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+FilterPaket: {
+  label: "paketList = filterPaketByKurir(username)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+CheckEmptyPaket: {
+  label: "paketList kosong?"
+  shape: diamond
+}
+
+PrintNoPaket: {
+  label: "Tampilkan pesan:\nTidak ada paket"
+  shape: rectangle
+}
+
+pilihPaketCall: {
+  label: "selectedPaket = pilihPaket(paketList)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+CheckNilPaket: {
+  label: "selectedPaket == nil?"
+  shape: diamond
+}
+
+GetLastStatus: {
+  label: "lastStatus = status terakhir dari selectedPaket"
+  shape: rectangle
+}
+
+GetStatusOptions: {
+  label: "statusOptions = getStatusOptions(lastStatus)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+CheckNoStatusOption: {
+  label: "statusOptions kosong?"
+  shape: diamond
+}
+
+PrintNoStatus: {
+  label: "Tampilkan pesan:\nTidak ada status baru"
+  shape: rectangle
+}
+
+pilihStatusCall: {
+  label: "statusBaru = pilihStatus(statusOptions)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+CheckEmptyStatusBaru: {
+  label: "statusBaru kosong?"
+  shape: diamond
+}
+
+ConfirmUpdate: {
+  label: "konfirmasiUpdate(NoResi, statusBaru)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+CheckConfirmed: {
+  label: "Konfirmasi == false?"
+  shape: diamond
+}
+
+PrintBatal: {
+  label: "Tampilkan:\nUpdate dibatalkan"
+  shape: rectangle
+}
+
+UpdatePaket: {
+  label: "updateStatusPaket(NoResi, statusBaru)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+PrintSuccess: {
+  label: "Tampilkan:\nStatus berhasil diupdate"
+  shape: rectangle
+}
+
+PrintFail: {
+  label: "Tampilkan:\nGagal update status"
+  shape: rectangle
+}
+
+EnterContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+UpdateStatus -> ClearScreen -> GetUsername -> FilterPaket -> CheckEmptyPaket
+CheckEmptyPaket -> PrintNoPaket -> EnterContinue
+CheckEmptyPaket -> pilihPaketCall
+pilihPaketCall -> CheckNilPaket
+CheckNilPaket -> GetLastStatus
+CheckNilPaket -> EnterContinue
+
+GetLastStatus -> GetStatusOptions -> CheckNoStatusOption
+CheckNoStatusOption -> PrintNoStatus -> EnterContinue
+CheckNoStatusOption -> pilihStatusCall
+
+pilihStatusCall -> CheckEmptyStatusBaru
+CheckEmptyStatusBaru -> EnterContinue
+CheckEmptyStatusBaru -> ConfirmUpdate
+
+ConfirmUpdate -> CheckConfirmed
+CheckConfirmed -> PrintBatal -> EnterContinue
+CheckConfirmed -> UpdatePaket
+
+UpdatePaket -> PrintSuccess
+UpdatePaket -> PrintFail
+PrintSuccess -> EnterContinue
+PrintFail -> EnterContinue

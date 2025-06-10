@@ -1,0 +1,50 @@
+pilihPaket: {
+  label: "pilihPaket(paketList []Paket)"
+  shape: rectangle
+}
+
+TampilkanDaftar: {
+  label: "Loop paketList dan tampilkan:\nNoResi + Status terakhir"
+  shape: diamond
+}
+
+PromptInput: {
+  shape: rectangle
+  label: "Masukkan nomor urut paket\n(utils.GetString)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CekValid: {
+  label: "pilih < 1 || pilih > len(paketList)?"
+  shape: diamond
+}
+
+TampilkanError: {
+  label: "Tampilkan 'Pilihan tidak valid'"
+  shape: rectangle
+}
+
+EnterToContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+ReturnNil: {
+  label: "return nil"
+  shape: rectangle
+}
+
+ReturnPaket: {
+  label: "return &paketList[pilih-1]"
+  shape: rectangle
+}
+
+pilihPaket -> TampilkanDaftar -> PromptInput -> CekValid
+CekValid -> TampilkanError: yes
+TampilkanError -> EnterToContinue -> ReturnNil
+CekValid -> ReturnPaket: no

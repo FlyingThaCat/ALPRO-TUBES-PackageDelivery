@@ -1,0 +1,52 @@
+style: {
+  stroke-width: 2
+}
+
+ParseCity: {
+  label: "ParseCity(cityName string)"
+  shape: rectangle
+}
+
+decision: {
+  label: "cityName adalah?"
+  shape: diamond
+}
+
+jakarta: {
+  label: "Return Jakarta"
+  shape: rectangle
+}
+
+bogor: {
+  label: "Return Bogor"
+  shape: rectangle
+}
+
+depok: {
+  label: "Return Depok"
+  shape: rectangle
+}
+
+tangerang: {
+  label: "Return Tangerang"
+  shape: rectangle
+}
+
+bekasi: {
+  label: "Return Bekasi"
+  shape: rectangle
+}
+
+fallback: {
+  label: "Return Cities(cityName)"
+  shape: rectangle
+}
+
+ParseCity -> decision
+
+decision -> jakarta: "Jakarta"
+decision -> bogor: "Bogor"
+decision -> depok: "Depok"
+decision -> tangerang: "Tangerang"
+decision -> bekasi: "Bekasi"
+decision -> fallback: "default"

@@ -1,0 +1,70 @@
+CheckMyPaketSorted: {
+  label: "CheckMyPaketSorted()"
+  shape: rectangle
+}
+
+clearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+getUsername: {
+  label: "username = utils.GetLoggedInUsername()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+findPakets: {
+  label: "pakets = utils.FindPaketByUsername(username)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+cekKosong: {
+  label: "pakets kosong?"
+  shape: diamond
+}
+
+printNoPackage: {
+  label: "printNoPackage()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+enterToContinue1: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+selectCity: {
+  label: "currentCity = selectCurrentCity()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+sortPakets: {
+  label: "sortPaketByStatusAndDistance(pakets, currentCity)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+printSorted: {
+  label: "printSortedPaketList(pakets, currentCity)"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+enterToContinue2: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style.stroke-dash: 5
+}
+
+CheckMyPaketSorted -> clearScreen -> getUsername -> findPakets -> cekKosong
+cekKosong -> printNoPackage: Ya
+printNoPackage -> enterToContinue1
+
+cekKosong -> selectCity: Tidak
+selectCity -> sortPakets -> printSorted -> enterToContinue2

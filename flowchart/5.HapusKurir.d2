@@ -1,0 +1,62 @@
+HapusKurir: {
+  label: "HapusKurir()"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+PrintJudul: {
+  label: "Print Judul Hapus Kurir"
+  shape: rectangle
+}
+
+InputUsername: {
+  label: "utils.GetString(prompt, message)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+DeleteUser: {
+  label: "utils.DeleteUser(username)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckSuccess: {
+  label: "Berhasil dihapus?"
+  shape: diamond
+}
+
+PrintGagal: {
+  label: "Print gagal hapus kurir"
+  shape: rectangle
+}
+
+PrintBerhasil: {
+  label: "Print sukses hapus kurir"
+  shape: rectangle
+}
+
+EnterToContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+HapusKurir -> ClearScreen -> PrintJudul -> InputUsername -> DeleteUser -> CheckSuccess
+CheckSuccess -> PrintBerhasil: Yes
+CheckSuccess -> PrintGagal: No
+PrintBerhasil -> EnterToContinue
+PrintGagal -> EnterToContinue

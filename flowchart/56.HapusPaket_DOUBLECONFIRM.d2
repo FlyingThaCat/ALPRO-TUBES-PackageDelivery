@@ -1,0 +1,82 @@
+style: {
+  stroke-width: 2
+}
+
+Start: {
+  label: "HapusPaket()"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+Header: {
+  label: "Tampilkan Header\n🗑️  HAPUS PAKET"
+  shape: rectangle
+}
+
+GetNoResi: {
+  label: "utils.GetString(...)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+DeletePaket: {
+  label: "utils.DeletePaket(noResi)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckDelete: {
+  label: "Paket ditemukan?"
+  shape: diamond
+  style: {
+    stroke-dash: 3
+  }
+}
+
+NotFound: {
+  label: "Tampilkan pesan gagal"
+  shape: rectangle
+}
+
+EnterFail: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+Success: {
+  label: "Tampilkan pesan sukses"
+  shape: rectangle
+}
+
+EnterSuccess: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+End: {
+  label: "Selesai"
+  shape: rectangle
+}
+
+Start -> ClearScreen -> Header -> GetNoResi -> DeletePaket -> CheckDelete
+CheckDelete -> NotFound: "Tidak"
+CheckDelete -> Success: "Ya"
+NotFound -> EnterFail -> End
+Success -> EnterSuccess -> End

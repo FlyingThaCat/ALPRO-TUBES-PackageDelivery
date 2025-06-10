@@ -1,0 +1,36 @@
+IsValidPackageType: {
+  label: "IsValidPackageType(packageType string)"
+  shape: rectangle
+}
+
+LoopStart: {
+  label: "For each validType in PackageTypes"
+  shape: diamond
+}
+
+CheckEqual: {
+  label: "validType == packageType?"
+  shape: diamond
+}
+
+ReturnTrue: {
+  label: "return true"
+  shape: rectangle
+}
+
+LoopContinue: {
+  label: "Lanjut ke validType berikutnya"
+  shape: rectangle
+}
+
+ReturnFalse: {
+  label: "return false"
+  shape: rectangle
+}
+
+IsValidPackageType -> LoopStart
+LoopStart -> CheckEqual: Yes
+CheckEqual -> ReturnTrue: Yes
+CheckEqual -> LoopContinue: No
+LoopContinue -> LoopStart
+LoopStart -> ReturnFalse: No

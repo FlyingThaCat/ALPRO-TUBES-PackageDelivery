@@ -1,0 +1,63 @@
+printSortedPaketList: {
+  label: "printSortedPaketList(pakets, currentCity)"
+  shape: rectangle
+}
+
+loopStart: {
+  label: "Loop melalui paket[]"
+  shape: diamond
+}
+
+getLastStatus: {
+  label: "status = paket.Status[-1]"
+  shape: rectangle
+}
+
+getKeterangan: {
+  label: "getStatusKeterangan(status)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+getRefCity: {
+  label: "getReferenceCity(paket, status)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+getJarak: {
+  label: "utils.GetJarak(currentCity, refCity)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+printInfo: {
+  label: "fmt.Printf informasi paket"
+  shape: rectangle
+}
+
+loopEnd: {
+  label: "Selesai semua paket?"
+  shape: diamond
+}
+
+printFooter: {
+  label: "Cetak garis akhir daftar"
+  shape: rectangle
+}
+
+printSortedPaketList -> loopStart
+loopStart -> getLastStatus: ya
+getLastStatus -> getKeterangan
+getKeterangan -> getRefCity
+getRefCity -> getJarak
+getJarak -> printInfo
+printInfo -> loopEnd
+loopEnd -> loopStart: belum
+loopEnd -> printFooter: selesai

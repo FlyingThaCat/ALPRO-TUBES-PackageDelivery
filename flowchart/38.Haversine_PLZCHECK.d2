@@ -1,0 +1,71 @@
+Haversine: {
+  label: "Haversine(lat1, lon1, lat2, lon2)"
+  shape: rectangle
+}
+
+dLat: {
+  label: "dLat = toRadians(lat2 - lat1)"
+  shape: rectangle
+}
+
+dLon: {
+  label: "dLon = toRadians(lon2 - lon1)"
+  shape: rectangle
+}
+
+math.Cos: {
+  label: "math.Cos(lat1), math.Cos(lat2)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+math.Sin: {
+  label: "math.Sin(dLat/2), math.Sin(dLon/2)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+computeA: {
+  label: "a = sin²(dLat/2) + cos(lat1)*cos(lat2)*sin²(dLon/2)"
+  shape: rectangle
+}
+
+math.Sqrt: {
+  label: "math.Sqrt(a), math.Sqrt(1-a)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+math.Atan2: {
+  label: "math.Atan2(√a, √(1-a))"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+computeC: {
+  label: "c = 2 * math.Atan2(...)"
+  shape: rectangle
+}
+
+computeResult: {
+  label: "return R * c"
+  shape: rectangle
+}
+
+Haversine -> dLat
+dLat -> dLon
+dLon -> math.Cos
+math.Cos -> math.Sin
+math.Sin -> computeA
+computeA -> math.Sqrt
+math.Sqrt -> math.Atan2
+math.Atan2 -> computeC
+computeC -> computeResult

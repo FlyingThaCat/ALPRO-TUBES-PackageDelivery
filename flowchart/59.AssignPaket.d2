@@ -1,0 +1,163 @@
+style: {
+  stroke-width: 2
+}
+
+AssignPaket: {
+  label: "AssignPaket()"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+LihatPaket: {
+  label: "LihatPaket(false, true)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+LihatKurir: {
+  label: "admin.LihatKurir(false)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+InputNoResi: {
+  label: "Input No Resi"
+  shape: rectangle
+}
+
+InputUsername: {
+  label: "Input Username Kurir"
+  shape: rectangle
+}
+
+FindPaket: {
+  label: "utils.FindPaketByNoResi()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckAlreadyAssigned: {
+  label: "Apakah paket sudah punya kurir?"
+  shape: diamond
+}
+
+ExitAssigned: {
+  label: "❌ Sudah ditugaskan\nutils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckNotFoundPaket: {
+  label: "Paket tidak ditemukan?"
+  shape: diamond
+}
+
+ExitNoPaket: {
+  label: "❌ Paket tidak ditemukan\nutils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+FindKurir: {
+  label: "utils.FindUserByUsername()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckKurirExist: {
+  label: "Kurir tidak ditemukan?"
+  shape: diamond
+}
+
+ExitNoKurir: {
+  label: "❌ Kurir tidak ditemukan\nutils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckIsKurir: {
+  label: "Apakah Role == 'kurir'?"
+  shape: diamond
+}
+
+ExitNotKurir: {
+  label: "❌ Bukan kurir\nutils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+AssignToKurir: {
+  label: "utils.AssignPaketToKurir()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+SuccessAssign: {
+  label: "✅ Paket berhasil ditugaskan"
+  shape: rectangle
+}
+
+FailAssign: {
+  label: "❌ Gagal menugaskan paket"
+  shape: rectangle
+}
+
+EnterDone: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+AssignPaket -> ClearScreen -> LihatPaket -> LihatKurir
+LihatKurir -> InputNoResi -> InputUsername -> FindPaket
+FindPaket -> CheckAlreadyAssigned
+CheckAlreadyAssigned -> ExitAssigned: "Ya"
+CheckAlreadyAssigned -> CheckNotFoundPaket: "Tidak"
+CheckNotFoundPaket -> ExitNoPaket: "Ya"
+CheckNotFoundPaket -> FindKurir: "Tidak"
+FindKurir -> CheckKurirExist
+CheckKurirExist -> ExitNoKurir: "Ya"
+CheckKurirExist -> CheckIsKurir: "Tidak"
+CheckIsKurir -> ExitNotKurir: "Tidak"
+CheckIsKurir -> AssignToKurir: "Ya"
+AssignToKurir -> SuccessAssign
+AssignToKurir -> FailAssign
+SuccessAssign -> EnterDone
+FailAssign -> EnterDone
+ExitAssigned -> End
+ExitNoPaket -> End
+ExitNoKurir -> End
+ExitNotKurir -> End
+EnterDone -> End
+
+End: {
+  label: "Selesai"
+  shape: rectangle
+}

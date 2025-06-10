@@ -1,3 +1,8 @@
 logs/*
 PackageDelivery
 PackageDelivery-NoInject
+flowchart/node_modules
+flowchart/package.json
+flowchart/package-lock.json
+flowchart/.DS_Store
+.DS_Store

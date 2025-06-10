@@ -1,0 +1,34 @@
+DeleteUser: {
+  label: "utils.DeleteUser(username)"
+  shape: rectangle
+}
+
+LoopUsers: {
+  label: "Loop datas.UsersDB"
+  shape: rectangle
+}
+
+CheckUsername: {
+  label: "p.Username == username?"
+  shape: diamond
+}
+
+DeleteFromSlice: {
+  label: "Hapus dari UsersDB\nappend(slice[:i], slice[i+1:]...)"
+  shape: rectangle
+}
+
+ReturnTrue: {
+  label: "return true"
+  shape: oval
+}
+
+ReturnFalse: {
+  label: "return false"
+  shape: oval
+}
+
+DeleteUser -> LoopUsers -> CheckUsername
+CheckUsername -> DeleteFromSlice: Yes
+DeleteFromSlice -> ReturnTrue
+CheckUsername -> ReturnFalse: No (setelah loop habis)

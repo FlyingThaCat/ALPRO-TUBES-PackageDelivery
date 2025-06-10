@@ -1,0 +1,63 @@
+GetInt: {
+  label: "GetInt(prompt, message)"
+  shape: rectangle
+}
+
+CekMessage: {
+  label: "message kosong?"
+  shape: diamond
+}
+
+SetDefaultMessage: {
+  label: "Set default message"
+  shape: rectangle
+}
+
+Loop: {
+  label: "LOOP"
+  shape: circle
+}
+
+GetInput: {
+  label: "utils.GetInput"
+  style: {
+    stroke-dash: 3
+  }
+  shape: rectangle
+}
+
+ConvertToInt: {
+  label: "strconv.Atoi(input)"
+  shape: rectangle
+}
+
+ValidInt: {
+  label: "Apakah input valid?"
+  shape: diamond
+}
+
+PrintMessage: {
+  label: "Tampilkan message"
+  shape: rectangle
+}
+
+ReturnInt: {
+  label: "Return value (int)"
+  shape: rectangle
+}
+
+Selesai: {
+  label: "Selesai"
+  shape: circle
+}
+
+GetInt -> CekMessage
+CekMessage -> SetDefaultMessage: "Ya"
+CekMessage -> Loop: "Tidak"
+SetDefaultMessage -> Loop
+
+Loop -> GetInput -> ConvertToInt -> ValidInt
+ValidInt -> ReturnInt: "Ya"
+ValidInt -> PrintMessage: "Tidak"
+PrintMessage -> Loop
+ReturnInt -> Selesai

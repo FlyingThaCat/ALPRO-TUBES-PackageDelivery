@@ -1,0 +1,54 @@
+style: {
+  stroke-width: 2
+}
+
+EditPaket: {
+  label: "EditPaket()"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+InputNoResi: {
+  label: "Input No Resi\n(utils.GetString)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+FindPaket: {
+  label: "utils.FindPaketByNoResi()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckFound: {
+  label: "Apakah paket ditemukan?"
+  shape: diamond
+}
+
+ShowNotFound: {
+  label: "⚠️ Paket tidak ditemukan"
+  shape: rectangle
+}
+
+CallUbahPaket: {
+  label: "UbahPaket(*found)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+EditPaket -> ClearScreen -> InputNoResi -> FindPaket -> CheckFound
+CheckFound -> ShowNotFound: "Tidak"
+CheckFound -> CallUbahPaket: "Ya"

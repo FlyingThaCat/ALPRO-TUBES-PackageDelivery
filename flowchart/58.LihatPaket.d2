@@ -1,0 +1,105 @@
+style: {
+  stroke-width: 2
+}
+
+Start: {
+  label: "LihatPaket(clear, hideAssigned)"
+  shape: rectangle
+}
+
+CheckClear: {
+  label: "Apakah clear == true?"
+  shape: diamond
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+Header: {
+  label: "Tampilkan Header 📦"
+  shape: rectangle
+}
+
+InitWriter: {
+  label: "Inisialisasi tabwriter"
+  shape: rectangle
+}
+
+WriteHeader: {
+  label: "Tulis Header Tabel"
+  shape: rectangle
+}
+
+LoopPaket: {
+  label: "Looping datas.PaketDB"
+  shape: rectangle
+}
+
+CheckAssigned: {
+  label: "hideAssigned && Kurir != '' ?"
+  shape: diamond
+}
+
+Continue: {
+  label: "Lanjut ke paket berikutnya"
+  shape: rectangle
+}
+
+SetKurir: {
+  label: "kurir = (jika kosong) 'Belum Ditugaskan'"
+  shape: rectangle
+}
+
+GetStatus: {
+  label: "Ambil Status Terakhir"
+  shape: rectangle
+}
+
+WriteRow: {
+  label: "Tulis Baris Tabel"
+  shape: rectangle
+}
+
+FlushWriter: {
+  label: "Flush Writer ke stdout"
+  shape: rectangle
+}
+
+CheckEnter: {
+  label: "Apakah clear == true?"
+  shape: diamond
+}
+
+EnterToContinue: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+End: {
+  label: "Selesai"
+  shape: rectangle
+}
+
+Start -> CheckClear
+CheckClear -> ClearScreen: "Ya"
+CheckClear -> Header: "Tidak"
+ClearScreen -> Header
+Header -> InitWriter -> WriteHeader -> LoopPaket
+LoopPaket -> CheckAssigned
+CheckAssigned -> Continue: "Ya"
+CheckAssigned -> SetKurir: "Tidak"
+Continue -> LoopPaket
+SetKurir -> GetStatus -> WriteRow -> LoopPaket
+LoopPaket -> FlushWriter
+FlushWriter -> CheckEnter
+CheckEnter -> EnterToContinue: "Ya"
+CheckEnter -> End: "Tidak"
+EnterToContinue -> End

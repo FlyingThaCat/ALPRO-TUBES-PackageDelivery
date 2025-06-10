@@ -1,0 +1,45 @@
+style: {
+  stroke-dash: 3
+}
+
+AddPaket: {
+  label: "AddPaket(paket)"
+  shape: rectangle
+}
+
+LoopCheckNoResi: {
+  label: "Loop: datas.PaketDB"
+}
+
+CekDuplikat: {
+  label: "p.NoResi == paket.NoResi?"
+  shape: diamond
+}
+
+TolakDuplikat: {
+  label: "Print: Paket sudah ada\nreturn"
+}
+
+SetWaktu: {
+  label: "paket.CreatedAt = now\npaket.UpdatedAt = now"
+}
+
+TambahStatus: {
+  label: "paket.Status += 'Paket dibuat'"
+}
+
+SimpanPaket: {
+  label: "datas.PaketDB += paket"
+}
+
+PrintSukses: {
+  label: "Print: Paket berhasil ditambahkan"
+}
+
+AddPaket -> LoopCheckNoResi
+LoopCheckNoResi -> CekDuplikat
+CekDuplikat -> TolakDuplikat: yes
+CekDuplikat -> SetWaktu: no
+SetWaktu -> TambahStatus
+TambahStatus -> SimpanPaket
+SimpanPaket -> PrintSukses

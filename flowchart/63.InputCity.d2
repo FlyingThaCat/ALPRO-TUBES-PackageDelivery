@@ -1,0 +1,63 @@
+style: {
+  stroke-width: 2
+}
+
+InputCity: {
+  label: "InputCity(prompt)"
+  shape: rectangle
+}
+
+PrintHeader: {
+  label: "Tampilkan Header\n& Daftar Kota"
+  shape: rectangle
+}
+
+GetUserChoice: {
+  label: "utils.GetInt(...)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckValidChoice: {
+  label: "Apakah pilihan valid? (1-N)"
+  shape: diamond
+}
+
+ReturnInvalid: {
+  label: "❌ return error:\n'pilihan kota tidak valid'"
+  shape: rectangle
+}
+
+GetCityName: {
+  label: "Ambil nama kota dari list"
+  shape: rectangle
+}
+
+LoopTempat: {
+  label: "Cocokkan kota dengan DaftarTempat"
+  shape: rectangle
+}
+
+FoundMatch: {
+  label: "Apakah ditemukan?"
+  shape: diamond
+}
+
+ReturnTempat: {
+  label: "✅ return tempat\n(types.Tempat)"
+  shape: rectangle
+}
+
+ReturnNotFound: {
+  label: "❌ return error:\n'koordinat tidak ditemukan'"
+  shape: rectangle
+}
+
+InputCity -> PrintHeader -> GetUserChoice -> CheckValidChoice
+CheckValidChoice -> ReturnInvalid: "❌ Tidak"
+CheckValidChoice -> GetCityName: "✅ Ya"
+GetCityName -> LoopTempat -> FoundMatch
+FoundMatch -> ReturnTempat: "✅ Ya"
+FoundMatch -> ReturnNotFound: "❌ Tidak"

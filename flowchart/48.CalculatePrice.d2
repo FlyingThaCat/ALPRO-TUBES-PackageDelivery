@@ -1,0 +1,29 @@
+style: {
+  stroke-width: 2
+}
+
+CalculatePrice: {
+  label: "CalculatePrice(lat1, lon1, lat2, lon2, pricePerKm)"
+  shape: rectangle
+}
+
+callHitung: {
+  label: "HitungTwoPoints(lat1, lon1, lat2, lon2)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+multiply: {
+  label: "Kalikan distance dengan pricePerKm\nprice = distance * pricePerKm"
+  shape: rectangle
+}
+
+returnPrice: {
+  label: "Return price"
+  shape: rectangle
+}
+
+CalculatePrice -> callHitung
+callHitung -> multiply
+multiply -> returnPrice

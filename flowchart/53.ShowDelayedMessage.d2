@@ -1,0 +1,75 @@
+style: {
+  stroke-width: 2
+}
+
+Start: {
+  label: "ShowDelayedMessage"
+  shape: rectangle
+}
+
+CheckClear: {
+  label: "clearScreen == true?"
+  shape: diamond
+}
+
+Clear1: {
+  label: "ClearScreen()"
+  shape: rectangle
+}
+
+Loop: {
+  label: "Loop i = 0 to delay-1"
+  shape: diamond
+}
+
+ClearInLoop: {
+  label: "ClearScreen()"
+  shape: rectangle
+}
+
+PrintMsg: {
+  label: "Print message"
+  shape: rectangle
+}
+
+Sleep1s: {
+  label: "Sleep 1 second"
+  shape: rectangle
+}
+
+EndLoop: {
+  label: "Next i"
+  shape: circle
+  width: 20
+}
+
+CheckClearEnd: {
+  label: "clearScreen == true?"
+  shape: diamond
+}
+
+Clear2: {
+  label: "ClearScreen()"
+  shape: rectangle
+}
+
+End: {
+  label: "Selesai"
+  shape: rectangle
+}
+
+Start -> CheckClear
+CheckClear -> Clear1: "yes"
+CheckClear -> Loop: "no"
+Clear1 -> Loop
+
+Loop -> ClearInLoop: "i < delay"
+ClearInLoop -> PrintMsg
+PrintMsg -> Sleep1s
+Sleep1s -> EndLoop
+EndLoop -> Loop
+
+Loop -> CheckClearEnd: "i >= delay"
+CheckClearEnd -> Clear2: "yes"
+CheckClearEnd -> End: "no"
+Clear2 -> End

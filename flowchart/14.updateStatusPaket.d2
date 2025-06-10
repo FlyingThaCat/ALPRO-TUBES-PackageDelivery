@@ -1,0 +1,41 @@
+updateStatusPaket: {
+  label: "updateStatusPaket(noResi, statusBaru string)"
+  shape: rectangle
+}
+
+LoopPaket: {
+  label: "for i in range datas.PaketDB"
+  shape: diamond
+}
+
+CheckNoResi: {
+  label: "datas.PaketDB[i].NoResi == noResi?"
+  shape: diamond
+}
+
+AppendStatus: {
+  label: "append statusBaru to datas.PaketDB[i].Status"
+  shape: rectangle
+}
+
+UpdateTime: {
+  label: "datas.PaketDB[i].UpdatedAt = time.Now()"
+  shape: rectangle
+}
+
+ReturnTrue: {
+  label: "return true"
+  shape: rectangle
+}
+
+ReturnFalse: {
+  label: "return false"
+  shape: rectangle
+}
+
+updateStatusPaket -> LoopPaket
+LoopPaket -> CheckNoResi
+CheckNoResi -> AppendStatus: yes
+AppendStatus -> UpdateTime -> ReturnTrue
+CheckNoResi -> LoopPaket: no
+LoopPaket -> ReturnFalse: end

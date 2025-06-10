@@ -1,0 +1,80 @@
+start: {
+  shape: circle
+  label: "Mulai register()"
+}
+
+clear_screen: {
+  shape: rectangle
+  label: "Bersihkan layar"
+}
+
+print_header: {
+  shape: rectangle
+  label: "Tampilkan judul\nREGISTER USER"
+}
+
+call_get_username: {
+  shape: rectangle
+  label: "Panggil utils.GetString\n(ambil username)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+call_find_user: {
+  shape: rectangle
+  label: "Panggil utils.FindUserByUsername"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+decide_user_exists: {
+  shape: diamond
+  label: "Username sudah ada?"
+}
+
+print_error: {
+  shape: rectangle
+  label: "Tampilkan pesan\n❌ Username sudah ada"
+}
+
+call_get_password: {
+  shape: rectangle
+  label: "Panggil utils.GetString\n(ambil password)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+call_add_user: {
+  shape: rectangle
+  label: "Panggil utils.AddUser"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+print_success: {
+  shape: rectangle
+  label: "Tampilkan pesan\n✅ Registrasi berhasil"
+}
+
+end: {
+  shape: circle
+  label: "Selesai register()"
+}
+
+start -> clear_screen
+clear_screen -> print_header
+print_header -> call_get_username
+call_get_username -> call_find_user
+call_find_user -> decide_user_exists
+
+decide_user_exists -> print_error: "Ya"
+print_error -> end
+
+decide_user_exists -> call_get_password: "Tidak"
+call_get_password -> call_add_user
+call_add_user -> print_success
+print_success -> end

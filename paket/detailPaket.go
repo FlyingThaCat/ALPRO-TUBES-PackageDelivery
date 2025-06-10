@@ -38,5 +38,4 @@ func DetailPaket(paket types.Paket) {
 	}
 
 	fmt.Println("========================================")
-
 }

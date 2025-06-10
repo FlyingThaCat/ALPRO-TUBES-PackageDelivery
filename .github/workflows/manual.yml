@@ -30,6 +30,7 @@ jobs:
               fonts-noto-color-emoji \
               xvfb \
               wget \
+              libpango1.0-dev \
               libgl1
 
             # Install kitty (AppImage is easiest for CI)

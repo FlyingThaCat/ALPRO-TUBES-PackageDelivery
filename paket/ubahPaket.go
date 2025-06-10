@@ -62,26 +62,6 @@ func UbahPaket(paket types.Paket) {
 		fmt.Sscanf(beratStr, "%f", &paket.Berat)
 	}
 
-	// Pilih Kota Pengirim
-	fmt.Println("\nDaftar Kota:")
-	for i, city := range types.AllCities() {
-		fmt.Printf("%d. %s\n", i+1, city)
-	}
-
-	currentSenderIndex := 1
-	for i, city := range types.AllCities() {
-		if string(paket.SenderCity) == city {
-			currentSenderIndex = i + 1
-			break
-		}
-	}
-	fmt.Printf("Pilih Kota Pengirim [default %d]: ", currentSenderIndex)
-	senderInput, _ := reader.ReadString('\n')
-	senderInput = strings.TrimSpace(senderInput)
-	if senderInput == "" {
-		senderInput = fmt.Sprintf("%d", currentSenderIndex)
-	}
-
 	senderIndex := 0
 	_, err := fmt.Sscanf(senderInput, "%d", &senderIndex)
 	if err != nil || senderIndex < 1 || senderIndex > len(types.AllCities()) {

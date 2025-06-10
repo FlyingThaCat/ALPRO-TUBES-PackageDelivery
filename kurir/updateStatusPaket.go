@@ -43,6 +43,7 @@ func updateStatusPaket(noResi, statusBaru string) bool {
 
 			datas.PaketDB[i].Status = append(datas.PaketDB[i].Status, statusBaru)
 			datas.PaketDB[i].UpdatedAt = time.Now()
+			fmt.Printf("[DEBUG] lastStatus: %q, statusBaru: %q\n", lastStatus, statusBaru)
 			return true
 		}
 	}
@@ -74,6 +75,11 @@ func pilihPaket(paketList []types.Paket) *types.Paket {
 func getStatusOptions(lastStatus string) []string {
 	options := []string{}
 	validStatuses := []string{"Diambil", "Dalam Pengiriman", "Terkirim", "Pengiriman Gagal"}
+
+	if lastStatus == "" {
+		// Jika belum ada status, hanya izinkan "Diambil" atau "Pengiriman Gagal"
+		return []string{"Diambil", "Pengiriman Gagal"}
+	}
 
 	for _, s := range validStatuses {
 		if s == "Pengiriman Gagal" || statusPriority[s] > statusPriority[lastStatus] {

@@ -1,0 +1,53 @@
+start: {
+  shape: circle
+  label: "Mulai GetString()"
+}
+
+check_default_msg: {
+  shape: diamond
+  label: "Pesan kosong?"
+}
+
+set_default_msg: {
+  shape: rectangle
+  label: "Setel pesan default\nto “Silakan masukkan string yang valid.”"
+}
+
+call_get_input: {
+  shape: rectangle
+  label: "Panggil GetInput(prompt, false, message)"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+decide_input_empty: {
+  shape: diamond
+  label: "Input kosong?"
+}
+
+print_msg: {
+  shape: rectangle
+  label: "Tampilkan pesan\n(message)"
+}
+
+return_input: {
+  shape: rectangle
+  label: "Kembalikan input"
+}
+
+end: {
+  shape: circle
+  label: "Selesai GetString()"
+}
+
+start -> check_default_msg
+check_default_msg -> set_default_msg: "Ya"
+set_default_msg -> call_get_input
+check_default_msg -> call_get_input: "Tidak"
+
+call_get_input -> decide_input_empty
+decide_input_empty -> print_msg: "Ya"
+print_msg -> call_get_input
+decide_input_empty -> return_input: "Tidak"
+return_input -> end

@@ -1,0 +1,53 @@
+start: {
+  shape: circle
+  label: "Mulai MenuAdmin()"
+}
+
+clear_screen: {
+  shape: rectangle
+  label: "utils.ClearScreen()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+get_username: {
+  shape: rectangle
+  label: "utils.GetLoggedInUsername()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+print_header: {
+  shape: rectangle
+  label: "Tampilkan header\n🛠️ MENU ADMIN, Hello {USERNAME}"
+}
+
+print_paket_section: {
+  shape: rectangle
+  label: "Tampilkan bagian Paket:\n1 Tambah Paket Baru\n2 Lihat Semua Paket\n3 Edit Paket\n4 Hapus Paket"
+}
+
+print_kurir_section: {
+  shape: rectangle
+  label: "Tampilkan bagian Kurir:\n5 Tambah Kurir Baru\n6 Lihat Semua Kurir\n7 Edit Kurir\n8 Hapus Kurir\n9 Assign Paket ke Kurir"
+}
+
+print_logout: {
+  shape: rectangle
+  label: "Tampilkan opsi:\n0 Logout"
+}
+
+end: {
+  shape: circle
+  label: "Selesai MenuAdmin()"
+}
+
+start -> clear_screen
+clear_screen -> get_username
+get_username -> print_header
+print_header -> print_paket_section
+print_paket_section -> print_kurir_section
+print_kurir_section -> print_logout
+print_logout -> end

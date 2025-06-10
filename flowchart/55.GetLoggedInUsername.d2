@@ -1,0 +1,17 @@
+start: {
+  shape: circle
+  label: "Mulai GetLoggedInUsername()"
+}
+
+return_username: {
+  shape: rectangle
+  label: "Kembalikan nilai loggedInUsername"
+}
+
+end: {
+  shape: circle
+  label: "Selesai GetLoggedInUsername()"
+}
+
+start -> return_username
+return_username -> end

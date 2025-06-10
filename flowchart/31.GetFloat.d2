@@ -1,0 +1,58 @@
+start: {
+  shape: circle
+  label: "Mulai GetFloat()"
+}
+
+check_empty_message: {
+  shape: diamond
+  label: "message kosong?"
+}
+
+assign_default_message: {
+  shape: rectangle
+  label: "message = 'Silakan masukkan angka desimal yang valid.'"
+}
+
+input_prompt: {
+  shape: rectangle
+  label: "utils.GetInput"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+parse_float: {
+  shape: rectangle
+  label: "strconv.ParseFloat"
+}
+
+check_parse_error: {
+  shape: diamond
+  label: "error parsing?"
+}
+
+print_error_message: {
+  shape: rectangle
+  label: "Tampilkan message"
+}
+
+return_value: {
+  shape: rectangle
+  label: "return value"
+}
+
+end: {
+  shape: circle
+  label: "Selesai GetFloat()"
+}
+
+start -> check_empty_message
+check_empty_message -> assign_default_message: "Ya"
+check_empty_message -> input_prompt: "Tidak"
+assign_default_message -> input_prompt
+input_prompt -> parse_float
+parse_float -> check_parse_error
+check_parse_error -> print_error_message: "Ya"
+check_parse_error -> return_value: "Tidak"
+print_error_message -> input_prompt
+return_value -> end

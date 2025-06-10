@@ -1,0 +1,46 @@
+start: {
+  shape: circle
+  label: "Mulai FindUserByUsername()"
+}
+
+loop_init: {
+  shape: rectangle
+  label: "Iterasi tiap user\ndi datas.UsersDB"
+}
+
+check_username: {
+  shape: diamond
+  label: "user.Username == username?"
+}
+
+return_user: {
+  shape: rectangle
+  label: "Kembalikan user"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+return_empty: {
+  shape: rectangle
+  label: "Kembalikan User{}"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+end: {
+  shape: circle
+  label: "Selesai FindUserByUsername()"
+}
+
+start -> loop_init
+loop_init -> check_username
+
+check_username -> return_user: "Ya"
+return_user -> end
+
+check_username -> loop_init: "Tidak"
+
+loop_init -> return_empty: "Jika tidak ada match"
+return_empty -> end

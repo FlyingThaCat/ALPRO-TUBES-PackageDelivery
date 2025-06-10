@@ -1,0 +1,41 @@
+start: {
+  shape: circle
+  label: "Mulai MenuKurir()"
+}
+
+clear_screen: {
+  shape: rectangle
+  label: "utils.ClearScreen()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+get_username: {
+  shape: rectangle
+  label: "utils.GetLoggedInUsername()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+print_header: {
+  shape: rectangle
+  label: "Tampilkan header\n🚚  MENU KURIR, Hello {USERNAME}"
+}
+
+print_menu: {
+  shape: rectangle
+  label: "Tampilkan opsi:\n1 Lihat Assigned Paket\n2 Update Status Paket\n0 Logout"
+}
+
+end: {
+  shape: circle
+  label: "Selesai MenuKurir()"
+}
+
+start -> clear_screen
+clear_screen -> get_username
+get_username -> print_header
+print_header -> print_menu
+print_menu -> end

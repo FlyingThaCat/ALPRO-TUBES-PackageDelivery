@@ -1,0 +1,17 @@
+start: {
+  shape: circle
+  label: "Mulai AddUser()"
+}
+
+append_user: {
+  shape: rectangle
+  label: "Tambahkan user ke UsersDB\n(datas.UsersDB = append(...))"
+}
+
+end: {
+  shape: circle
+  label: "Selesai AddUser()"
+}
+
+start -> append_user
+append_user -> end

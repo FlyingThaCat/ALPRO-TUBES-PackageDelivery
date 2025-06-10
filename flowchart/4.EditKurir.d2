@@ -1,0 +1,55 @@
+EditKurir: {
+  label: "EditKurir()"
+  shape: rectangle
+}
+
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+PrintJudul: {
+  label: "Print '=== Edit Kurir ==='"
+  shape: rectangle
+}
+
+GetUsername: {
+  label: "utils.GetString(...)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+FindKurir: {
+  label: "utils.FindUserByUsername(username)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CheckFound: {
+  label: "found.Username == \"\" ?"
+  shape: diamond
+}
+
+PrintNotFound: {
+  label: "Print 'Kurir tidak ditemukan.'"
+  shape: rectangle
+}
+
+CallUbahKurir: {
+  label: "kurir.UbahKurir(found)"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+EditKurir -> ClearScreen -> PrintJudul -> GetUsername -> FindKurir -> CheckFound
+CheckFound -> PrintNotFound: Yes
+CheckFound -> CallUbahKurir: No

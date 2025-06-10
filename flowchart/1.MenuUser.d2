@@ -1,0 +1,41 @@
+start: {
+  shape: circle
+  label: "Mulai MenuUser()"
+}
+
+clear_screen: {
+  shape: rectangle
+  label: "utils.ClearScreen()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+get_username: {
+  shape: rectangle
+  label: "utils.GetLoggedInUsername()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+print_header: {
+  shape: rectangle
+  label: "Tampilkan header\nSELAMAT DATANG, {USERNAME}"
+}
+
+print_menu: {
+  shape: rectangle
+  label: "Tampilkan opsi:\n1 Tambah Paket\n2 Cek Paket\n0 Logout"
+}
+
+end: {
+  shape: circle
+  label: "Selesai MenuUser()"
+}
+
+start -> clear_screen
+clear_screen -> get_username
+get_username -> print_header
+print_header -> print_menu
+print_menu -> end

@@ -1,78 +1,123 @@
-direction: down
-
-start: "Mulai TambahKurir()" {
-  shape: oval
-}
-
-clear: "Clear Screen" {
+TambahKurir: {
+  label: "TambahKurir()"
   shape: rectangle
 }
 
-title: "Tampilkan 'Tambah Kurir'" {
+ClearScreen: {
+  label: "utils.ClearScreen()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+TampilkanJudul: {
+  label: "Tampilkan Header Tambah Kurir"
   shape: rectangle
 }
 
-inputNama: "Input Nama" {
-  shape: parallelogram
+InputNama: {
+  label: "kurir.Nama = utils.GetString()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
 }
 
-inputUsername: "Input Username" {
-  shape: parallelogram
+InputUsername: {
+  label: "kurir.Username = utils.GetString()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
 }
 
-inputPassword: "Input Password" {
-  shape: parallelogram
+InputPassword: {
+  label: "kurir.Password = utils.GetString()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
 }
 
-setRole: "Set kurir.Role = 'kurir'" {
+SetRoleKurir: {
+  label: "kurir.Role = 'kurir'"
   shape: rectangle
 }
 
-checkEmpty: "Apakah Username atau Password kosong?" {
+CekKosong: {
+  label: "Username atau Password kosong?"
   shape: diamond
 }
 
-printErrorEmpty: "Tampilkan pesan: 'Username dan password tidak boleh kosong.'" {
+TampilkanKosong: {
+  label: "⚠️  Tidak boleh kosong"
   shape: rectangle
 }
 
-returnEmpty: "Keluar fungsi (return)" {
-  shape: oval
+EnterToContinueKosong: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
 }
 
-checkUsername: "Apakah Username sudah terdaftar?" {
+FindUser: {
+  label: "utils.FindUserByUsername()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
+}
+
+CekUsernameAda: {
+  label: "Username sudah terdaftar?"
   shape: diamond
 }
 
-printErrorExists: "Tampilkan pesan: 'Username sudah terdaftar.'" {
+TampilkanDuplikat: {
+  label: "⚠️  Username sudah terdaftar"
   shape: rectangle
 }
 
-returnExists: "Keluar fungsi (return)" {
-  shape: oval
+EnterToContinueDuplikat: {
+  label: "utils.EnterToContinue()"
+  shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
 }
 
-saveUser: "Simpan kurir ke database" {
+SimpanKurir: {
+  label: "datas.UsersDB = append(...)"
   shape: rectangle
 }
 
-printSuccess: "Tampilkan pesan: 'Kurir berhasil ditambahkan.'" {
+TampilkanSukses: {
+  label: "✅  Kurir berhasil ditambahkan"
   shape: rectangle
 }
 
-waitContinue: "Tunggu Enter untuk lanjut" {
+EnterToContinueAkhir: {
+  label: "utils.EnterToContinue()"
   shape: rectangle
+  style: {
+    stroke-dash: 3
+  }
 }
 
-end: "Selesai" {
-  shape: oval
+Selesai: {
+  label: "Selesai"
+  shape: circle
 }
 
-start -> clear -> title -> inputNama -> inputUsername -> inputPassword -> setRole -> checkEmpty
-checkEmpty -> printErrorEmpty: Ya
-printErrorEmpty -> returnEmpty
-checkEmpty -> checkUsername: Tidak
-checkUsername -> printErrorExists: Ya
-printErrorExists -> returnExists
-checkUsername -> saveUser: Tidak
-saveUser -> printSuccess -> waitContinue -> end
+TambahKurir -> ClearScreen -> TampilkanJudul -> InputNama -> InputUsername -> InputPassword -> SetRoleKurir -> CekKosong
+CekKosong -> TampilkanKosong: "Ya"
+TampilkanKosong -> EnterToContinueKosong -> Selesai
+CekKosong -> FindUser: "Tidak"
+FindUser -> CekUsernameAda
+CekUsernameAda -> TampilkanDuplikat: "Ya"
+TampilkanDuplikat -> EnterToContinueDuplikat -> Selesai
+CekUsernameAda -> SimpanKurir: "Tidak"
+SimpanKurir -> TampilkanSukses -> EnterToContinueAkhir -> Selesai

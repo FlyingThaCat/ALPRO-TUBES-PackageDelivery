@@ -22,7 +22,7 @@ find . -type f -name "*.go" ! -path "*/.git/*" | while read -r file; do
       name=$(echo "$line" | sed -E 's/^[[:space:]]*func[[:space:]]+(\([^)]+\)[[:space:]]*)?([A-Za-z_][A-Za-z0-9_]*).*/\2/')
       
       # Write to MD with index and checkbox
-      echo "$index # $filename:$lineno  # $name # [ ]" >> "$output"
+      echo "$index # $file:$lineno  # $name # [ ]" >> "$output"
       
       # Create corresponding empty D2 file
       touch "flowchart/${index}.${name}.d2"

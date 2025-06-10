@@ -1,0 +1,60 @@
+start: {
+  shape: circle
+  label: "Mulai ClearScreen()"
+}
+
+get_os: {
+  shape: rectangle
+  label: "Ambil OSType\n(runtime.GOOS)"
+}
+
+check_windows: {
+  shape: diamond
+  label: "OSType == \"windows\"?"
+}
+
+exec_windows: {
+  shape: rectangle
+  label: "exec.Command(\"cmd\",\"/c\",\"cls\")\ncmd.Run()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+check_unix: {
+  shape: diamond
+  label: "OSType == \"linux\" atau \"darwin\"?"
+}
+
+exec_clear1: {
+  shape: rectangle
+  label: "exec.Command(\"clear\")\ncmd.Run()"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+exec_clear2: {
+  shape: rectangle
+  label: "exec.Command(\"clear\")\ncmd.Run()  // default"
+  style: {
+    stroke-dash: 3
+  }
+}
+
+end: {
+  shape: circle
+  label: "Selesai ClearScreen()"
+}
+
+start -> get_os
+get_os -> check_windows
+check_windows -> exec_windows: "Ya"
+exec_windows -> end
+
+check_windows -> check_unix: "Tidak"
+check_unix -> exec_clear1: "Ya"
+exec_clear1 -> end
+
+check_unix -> exec_clear2: "Tidak"
+exec_clear2 -> end

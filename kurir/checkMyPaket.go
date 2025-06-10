@@ -43,7 +43,23 @@ func CheckMyPaketSorted() {
 
 	sortPaketByStatusAndDistance(pakets, currentCity)
 
-	printSortedPaketList(pakets, currentCity)
+	reader := bufio.NewReader(os.Stdin)
+    fmt.Println("Pilih urutan tampilan paket berdasarkan jarak:")
+    fmt.Println("1. Terdekat (ascending)")
+    fmt.Println("2. Terjauh (descending)")
+    fmt.Print("Masukkan pilihan (1/2): ")
+    input, _ := reader.ReadString('\n')
+    input = strings.TrimSpace(input)
+
+    var order string
+    switch input {
+    case "2":
+        order = "desc"
+    default:
+        order = "asc"
+    }
+
+	printSortedPaketList(pakets, currentCity, order)
 	utils.EnterToContinue()
 }
 
@@ -117,21 +133,45 @@ func getReferenceCity(paket types.Paket, status string) types.Cities {
 	}
 }
 
-func printSortedPaketList(pakets []types.Paket, currentCity types.Cities) {
-	fmt.Println("========================================")
-	fmt.Println("📦  DAFTAR PAKET ANDA")
-	fmt.Println("========================================")
+func printSortedPaketList(pakets []types.Paket, currentCity types.Cities, order string) {
+    // compute distances and store in a slice of pairs
+    type entry struct {
+        paket types.Paket
+        jarak float64
+    }
+    entries := make([]entry, 0, len(pakets))
+    for _, p := range pakets {
+        status := p.Status[len(p.Status)-1]
+        refCity := getReferenceCity(p, status)
+        dist := utils.GetJarak(currentCity, refCity)
+        entries = append(entries, entry{paket: p, jarak: dist})
+    }
 
-	for i, paket := range pakets {
-		status := paket.Status[len(paket.Status)-1]
-		statusKeterangan := getStatusKeterangan(status)
-		refCity := getReferenceCity(paket, status)
-		jarak := utils.GetJarak(currentCity, refCity)
+    // sort by jarak
+    sort.Slice(entries, func(i, j int) bool {
+        if strings.ToLower(order) == "desc" {
+            return entries[i].jarak > entries[j].jarak
+        }
+        // default to ascending
+        return entries[i].jarak < entries[j].jarak
+    })
 
-		fmt.Printf("%d. No Resi: %s | Tipe: %s | Dari %s ke %s | Status: %s (%s) | Jarak: %.2f km | Pengirim: %s | Nama Penerima: %s\n",
-			i+1, paket.NoResi, paket.Tipe, paket.SenderCity, paket.ReceiverCity,
-			status, statusKeterangan, jarak, paket.CreatedBy, paket.ReceiverName,
-		)
-	}
-	fmt.Println("========================================")
+    // print header
+    fmt.Println("========================================")
+    fmt.Println("📦  DAFTAR PAKET ANDA")
+    fmt.Println("========================================")
+
+    // print entries in order
+    for i, e := range entries {
+        p := e.paket
+        status := p.Status[len(p.Status)-1]
+        statusKeterangan := getStatusKeterangan(status)
+        fmt.Printf(
+            "%d. No Resi: %s | Tipe: %s | Dari %s ke %s | Status: %s (%s) | Jarak: %.2f km | Pengirim: %s | Nama Penerima: %s\n",
+            i+1, p.NoResi, p.Tipe, p.SenderCity, p.ReceiverCity,
+            status, statusKeterangan, e.jarak, p.CreatedBy, p.ReceiverName,
+        )
+    }
+
+    fmt.Println("========================================")
 }

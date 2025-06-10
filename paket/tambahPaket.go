@@ -57,6 +57,7 @@ func TambahPaket() {
 	tipe, err := InputPackageType()
 	if err != nil {
 		fmt.Println(err.Error())
+		utils.EnterToContinue()
 		return
 	}
 
@@ -65,12 +66,14 @@ func TambahPaket() {
 	senderCity, err := InputCity("Kota Pengirim")
 	if err != nil {
 		fmt.Println(err.Error())
+		utils.EnterToContinue()
 		return
 	}
 
 	receiverCity, err := InputCity("Kota Tujuan")
 	if err != nil {
 		fmt.Println(err.Error())
+		utils.EnterToContinue()
 		return
 	}
 
@@ -85,6 +88,7 @@ func TambahPaket() {
 
 	if !utils.GetConfirmation("Apakah Anda yakin ingin menambahkan paket ini?", "Silakan masukkan 'y' untuk ya atau 'n' untuk tidak.") {
 		fmt.Println("Paket tidak ditambahkan.")
+		utils.EnterToContinue()
 		return
 	}
 

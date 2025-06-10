@@ -92,10 +92,8 @@ func pilihStatus(statusOptions []string) string {
 		fmt.Printf("%d. %s\n", i+1, s)
 	}
 
-	fmt.Print("Masukkan nomor status baru: ")
-	var statusChoice int
-	_, err := fmt.Scanln(&statusChoice)
-	if err != nil || statusChoice < 1 || statusChoice > len(statusOptions) {
+	statusChoice := utils.GetInt("Masukkan nomor status baru: ", "Silakan masukkan nomor status yang valid.")
+	if statusChoice < 1 || statusChoice > len(statusOptions) {
 		fmt.Println("Pilihan status tidak valid.")
 		utils.EnterToContinue()
 		return ""

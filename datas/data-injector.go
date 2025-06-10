@@ -45,7 +45,6 @@ func Init() {
 			{NoResi: "23", Tipe: "Express", Berat: 3.0, Harga: 40000, SenderCity: types.Bogor, ReceiverCity: types.Tangerang, Status: []string{"Paket Dibuat", "Diambil Kurir"}, CreatedAt: now.Add(-23 * time.Hour), UpdatedAt: now.Add(-14 * time.Hour), Kurir: "siti"},
 		},
 	})
-
 	UsersDB = append(UsersDB, types.User{
 		Nama:     "Anton Wijaya",
 		Username: "anton",

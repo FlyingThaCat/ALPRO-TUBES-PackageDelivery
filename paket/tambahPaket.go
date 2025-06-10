@@ -103,4 +103,5 @@ func TambahPaket() {
 
 	fmt.Println("Paket berhasil ditambahkan.")
 	DetailPaket(input)
+	utils.EnterToContinue()
 }

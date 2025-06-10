@@ -2,7 +2,10 @@ name: CLI Screenshot CI
 
 on:
   push:
-  pull_request:
+    branches:
+      - main
+      - testing-autogen-manual
+  workflow_dispatch:
 
 jobs:
   screenshot:
@@ -41,12 +44,13 @@ jobs:
         run: |
           chmod +x test_snapshot.sh
           mkdir -p logs
-          # your expect script will now be able to grab screenshots
+          # Launch an xterm on DISPLAY, tell it to run bash -lc "./test_snapshot.sh", then exit
           xterm \
-            -fa "Noto Mono" \             # use Noto Mono as primary font
-            -fs 14 \                       # size 14 (tweak to taste)
-            -geometry 80x24+0+0 \          # 80 cols × 24 rows, top-left
-            -e ./test_snapshot.sh &
+            -display $DISPLAY \
+            -fa "Noto Mono" \
+            -fs 14 \
+            -geometry 80x24+0+0 \
+            -e bash -lc "./test_snapshot.sh" &
           wait
 
       - name: Upload screenshots

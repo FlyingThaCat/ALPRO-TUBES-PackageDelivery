@@ -63,6 +63,7 @@ func UbahPaket(paket types.Paket) {
 	}
 
 	senderIndex := 0
+	senderInput := ""
 	_, err := fmt.Sscanf(senderInput, "%d", &senderIndex)
 	if err != nil || senderIndex < 1 || senderIndex > len(types.AllCities()) {
 		fmt.Println("\n⚠️  Input tidak valid.")

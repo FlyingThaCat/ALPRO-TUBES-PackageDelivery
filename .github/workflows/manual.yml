@@ -1,4 +1,4 @@
-name: CLI Recording CI
+name: CLI Screenshot CI
 
 on:
   push:
@@ -8,89 +8,60 @@ on:
   workflow_dispatch:
 
 jobs:
-  record:
+  screenshot:
     runs-on: ubuntu-latest
+    # tell every step to use the virtual display
+    env:
+      DISPLAY: :99
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: "1.21"
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Install apt dependencies
+      - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            expect \
-            xdotool \
-            golang \
-            scrot \
-            xterm \
-            imagemagick \
-            fonts-noto-color-emoji \
-            fontconfig \
-            fonts-noto \
-            fonts-noto-color-emoji \
-            fonts-symbola \
-            xvfb
-    
-      - name: Rebuild font cache
-        run: fc-cache -f -v
+            sudo apt-get update
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              expect \
+              xdotool \
+              golang \
+              scrot \
+              imagemagick \
+              fonts-noto-color-emoji \
+              xvfb \
+              wget \
+              libgl1
 
+            # Install kitty (AppImage is easiest for CI)
+            wget -O kitty.appimage https://github.com/kovidgoyal/kitty/releases/download/v0.32.0/kitty-0.32.0-x86_64.AppImage
+            chmod +x kitty.appimage
+            mkdir -p ~/bin
+            ./kitty.appimage --appimage-extract
+            ln -s $PWD/squashfs-root/kitty ~/bin/kitty
 
-      - name: Install svg-term-cli & update PATH
+      - name: Start headless X server
         run: |
-          npm install --global svg-term-cli
-          echo "PATH=$(npm bin -g):$PATH" >> $GITHUB_ENV
+          Xvfb :99 -screen 0 800x600x24 &
+          sleep 2  # give it time to boot
 
-      - name: Build the Go CLI
-        run: go build .
-
-      - name: Record CLI session with Asciinema
+      - name: Build the application
         run: |
+          go build .
+
+      - name: Run CLI test script using Kitty
+        run: |
+          chmod +x test_snapshot.sh
           mkdir -p logs
-          # Launch an xterm on DISPLAY, tell it to run bash -lc "./test_snapshot.sh", then exit
-          xterm \
-            -display $DISPLAY \
-            -xrm 'XTerm*faceName: Noto Mono' \
-            -xrm 'XTerm*faceSize: 14' \
-            -xrm 'XTerm*renderFont: true' \
-            -xrm 'XTerm*enableMultiByte: true' \
-            -fa "Noto Mono" \
-            -fs 14 \
-            -geometry 80x24+0+0 \
-            -e bash -lc "./test_snapshot.sh" &
+          ~/bin/kitty \
+            --display $DISPLAY \
+            --config /dev/null \
+            --single-instance \
+            --class emoji-terminal \
+            bash -lc "./test_snapshot.sh" &
           wait
 
-      - name: Render session to SVG
-        run: |
-          svg-term \
-            --in logs/session.json \
-            --out logs/session.svg \
-            --window \
-            --padding 10 \
-            --width 80 \
-            --height 24 \
-            --term terminal \
-            --profile nord
-
-      - name: Convert SVG to PNG
-        run: |
-          convert -background white logs/session.svg logs/session.png
-
-      - name: Upload recording artifacts
+      - name: Upload screenshots
         uses: actions/upload-artifact@v4
         with:
-          name: cli-recording
-          path: |
-            logs/session.json
-            logs/session.svg
-            logs/session.png
+          name: cli-screenshots
+          path: logs/

@@ -43,7 +43,6 @@ func updateStatusPaket(noResi, statusBaru string) bool {
 
 			datas.PaketDB[i].Status = append(datas.PaketDB[i].Status, statusBaru)
 			datas.PaketDB[i].UpdatedAt = time.Now()
-			fmt.Printf("[DEBUG] lastStatus: %q, statusBaru: %q\n", lastStatus, statusBaru)
 			return true
 		}
 	}
@@ -60,10 +59,8 @@ func pilihPaket(paketList []types.Paket) *types.Paket {
 		fmt.Printf("%d. NoResi: %s, Status terakhir: %s\n", i+1, paket.NoResi, lastStatus)
 	}
 
-	fmt.Print("\nMasukkan nomor urut paket yang ingin diupdate statusnya: ")
-	var pilih int
-	_, err := fmt.Scanln(&pilih)
-	if err != nil || pilih < 1 || pilih > len(paketList) {
+	pilih := utils.GetInt("Masukkan nomor urut paket yang ingin diupdate statusnya: ", "Silakan masukkan nomor paket yang valid.")
+	if pilih < 1 || pilih > len(paketList) {
 		fmt.Println("Pilihan tidak valid.")
 		utils.EnterToContinue()
 		return nil

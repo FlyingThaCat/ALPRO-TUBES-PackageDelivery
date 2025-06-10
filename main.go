@@ -65,6 +65,10 @@ func login() (*types.User, bool) {
 	return &user, true
 }
 
+func invalidChoice() {
+	utils.ShowDelayedMessage("Pilihan tidak valid. Silakan masukkan menu yang sesuai.", 2, true)
+}
+
 func main() {
 	utils.ClearScreen()
 	datas.Init() // Inisialisasi data awal
@@ -108,6 +112,8 @@ func main() {
 								paket.TambahPaket()
 							} else if option == 2 {
 								paket.CekPaket()
+							} else if option < 0  {
+								invalidChoice()
 							} else {
 								users.MenuUser()
 							}
@@ -130,6 +136,8 @@ func main() {
 								admin.HapusKurir()
 							} else if option == 9 {
 								paket.AssignPaket()
+							} else if option < 0  {
+								invalidChoice()
 							} else {
 								admin.MenuAdmin()
 							}
@@ -138,11 +146,13 @@ func main() {
 								kurir.CheckMyPaketSorted()
 							} else if option == 2 {
 								kurir.UpdateStatus()
+							} else if option < 0  {
+								invalidChoice()
 							} else {
 								kurir.MenuKurir()
 							}
 						default:
-							utils.ShowDelayedMessage("Pilihan tidak valid. Silakan masukkan menu yang sesuai.", 2, true)
+							invalidChoice()
 						}
 					}
 				}
@@ -151,7 +161,7 @@ func main() {
 			fmt.Println("Terima kasih, sampai jumpa!")
 			return
 		default:
-			utils.ShowDelayedMessage("Pilihan tidak valid.\n\nSilakan masukkan 1, 2, atau 0 untuk keluar.", 2, true)
+			
 		}
 	}
 }

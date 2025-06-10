@@ -1,4 +1,4 @@
-name: CLI Screenshot CI
+name: CLI Recording CI
 
 on:
   push:
@@ -8,90 +8,68 @@ on:
   workflow_dispatch:
 
 jobs:
-  screenshot:
+  record:
     runs-on: ubuntu-latest
-    # tell every step to use the virtual display
-    env:
-      DISPLAY: :99
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.21"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install apt dependencies
         run: |
           sudo apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
             expect \
-            xdotool \
-            golang \
-            scrot \
-            xterm \
-            imagemagick \
-            fonts-noto-color-emoji \
-            fontconfig \
-            fonts-noto \
-            fonts-noto-color-emoji \
-            fonts-symbola \
-            xvfb
-    
-      - name: Rebuild font cache
-        run: fc-cache -f -v
+            asciinema
 
+      - name: Install svg-term CLI
+        run: npm install --global @svg-term/cli
 
-      - name: Write emoji‐first fontconfig
+      - name: Build the Go CLI
+        run: go build .
+
+      - name: Record CLI session with Asciinema
         run: |
-          mkdir -p ~/.config/fontconfig
-          cat << 'EOF' > ~/.config/fontconfig/fonts.conf
-          <?xml version="1.0"?>
-          <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-          <fontconfig>
-            <!-- prefer Noto Color Emoji for any sans-serif/serif/fallback -->
-            <alias>
-              <family>sans-serif</family>
-              <prefer>
-                <family>Noto Color Emoji</family>
-              </prefer>
-            </alias>
-            <alias>
-              <family>serif</family>
-              <prefer>
-                <family>Noto Color Emoji</family>
-              </prefer>
-            </alias>
-          </fontconfig>
-          EOF
-          fc-cache -f -v
-
-
-      - name: Start headless X server
-        run: |
-          # launch Xvfb on display :99 in the background
-          Xvfb :99 -screen 0 800x600x24 &
-
-      - name: Build the application
-        run: |
-          go build .
-
-      - name: Run CLI test script
-        run: |
-          chmod +x test_snapshot.sh
           mkdir -p logs
-          # Launch an xterm on DISPLAY, tell it to run bash -lc "./test_snapshot.sh", then exit
-          xterm \
-            -display $DISPLAY \
-            -xrm 'XTerm*faceName: Noto Mono' \
-            -xrm 'XTerm*faceSize: 14' \
-            -xrm 'XTerm*renderFont: true' \
-            -xrm 'XTerm*enableMultiByte: true' \
-            -fa "Noto Mono" \
-            -fs 14 \
-            -geometry 80x24+0+0 \
-            -e bash -lc "./test_snapshot.sh" &
-          wait
+          # -q = quiet, -c = command
+          asciinema rec -q -c "./test_snapshot.sh" logs/session.json
 
-      - name: Upload screenshots
+      - name: Render session to SVG
+        run: |
+          svg-term \
+            --in logs/session.json \
+            --out logs/session.svg \
+            --window \
+            --padding 10 \
+            --profile nord \
+            --size 80x24
+
+      - name: Render session to PNG
+        run: |
+          svg-term \
+            --in logs/session.json \
+            --out logs/session.png \
+            --window \
+            --padding 10 \
+            --profile nord \
+            --size 80x24 \
+            --format png
+
+      - name: Upload recording artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: cli-screenshots
-          path: logs/
+          name: cli-recording
+          path: |
+            logs/session.json
+            logs/session.svg
+            logs/session.png

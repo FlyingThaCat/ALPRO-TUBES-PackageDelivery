@@ -30,8 +30,21 @@ jobs:
           sudo apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
             expect \
-            asciinema \
-            imagemagick
+            xdotool \
+            golang \
+            scrot \
+            xterm \
+            imagemagick \
+            fonts-noto-color-emoji \
+            fontconfig \
+            fonts-noto \
+            fonts-noto-color-emoji \
+            fonts-symbola \
+            xvfb
+    
+      - name: Rebuild font cache
+        run: fc-cache -f -v
+
 
       - name: Install svg-term-cli & update PATH
         run: |
@@ -47,6 +60,10 @@ jobs:
           # Launch an xterm on DISPLAY, tell it to run bash -lc "./test_snapshot.sh", then exit
           xterm \
             -display $DISPLAY \
+            -xrm 'XTerm*faceName: Noto Mono' \
+            -xrm 'XTerm*faceSize: 14' \
+            -xrm 'XTerm*renderFont: true' \
+            -xrm 'XTerm*enableMultiByte: true' \
             -fa "Noto Mono" \
             -fs 14 \
             -geometry 80x24+0+0 \

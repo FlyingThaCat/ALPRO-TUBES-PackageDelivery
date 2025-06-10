@@ -1,11 +1,5 @@
 #!/usr/bin/expect -f
 
-# install expect, xdotool, and imagemagick if not already installed
-# sudo apt-get install expect xdotool imagemagick
-# run it on new terminal with:
-# ./test.sh
-# DONT INTERACT WITH ANYTHING ELSE WHILE THIS IS RUNNING
-
 # ------------------------------------------------------------------------------
 # Setup
 # ------------------------------------------------------------------------------
@@ -20,76 +14,69 @@ proc ensure_dir {dir} {
 proc screenshot {name subfolder} {
     set folder "logs/$subfolder"
     if {![file exists $folder]} { file mkdir $folder }
-    set filename "$folder/$name.png"
+    set filename "$folder/$name.dirty"
 
-    # Option A: use scrot to grab the whole screen
-    exec sh -c "scrot '$filename'"
-
-    # — OR —
-    # Option B: use ImageMagick import on the root window of DISPLAY
-    # exec sh -c "import -display $env(DISPLAY) -window root '$filename'"
+    log_file -noappend "$filename"
 }
 
-# proc screenshot {name subfolder} {
-#     set folder "logs/$subfolder"
-#     ensure_dir $folder
-#     set filename "$folder/$name.png"
-#     exec sh -c "import -window \$(xdotool getactivewindow) '$filename'"
-# }
 
 proc type_input_no_enter {input} {
-    # foreach ch [split $input ""] {
-        send -- $input
-    # }
+    send -- $input
     expect -timeout 1 eof
 }
 
 # ------------------------------------------------------------------------------
-# Main flow
+# Call program
 # ------------------------------------------------------------------------------
 spawn ./PackageDelivery
 
+#REGISTRATION
 
-# ------------------------------------------------------------------------------
-# 1. Select “register”
-expect -re "Masukkan pilihan \\(1/2/0\\):"
+# USER
+screenshot "1.PilihMenu" "register/user"
+expect -re "Silakan pilih menu:"
 type_input_no_enter "1"
-screenshot "1.select_menu" "registerAsUser"
+log_file
 send -- "\r"
 
-# 2. Type username
 expect -re "Masukkan username:"
 type_input_no_enter "testuser"
-screenshot "2.input_username" "registerAsUser"
 send -- "\r"
 
-# 3. Type password
 expect -re "Masukkan password:"
 type_input_no_enter "testpass"
-screenshot "3.input_password" "registerAsUser"
+screenshot "3.input_password" "register/user"
 send -- "\r"
+
+
+# LOGIN AS USER
+expect -re "Masukkan pilihan \\(1/2/0\\):"
+type_input_no_enter "2"
+screenshot "1.select_menu" "flow/user"
+send -- "\r"
+
+# 2. Type username as user role
+expect -re "Masukkan username:"
+type_input_no_enter "testuser"
+screenshot "2.type_user_username" "flow/user"
+send -- "\r"
+
+# 3. Type password as user role
+expect -re "Masukkan password:"
+type_input_no_enter "testpass"
+screenshot "3.type_user_password" "flow/user"
+send -- "\r"
+
+
+log_file
+
+
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 # role user flow
 # ------------------------------------------------------------------------------
-# 1. Select “login”
-# expect -re "Masukkan pilihan \\(1/2/0\\):"
-# type_input_no_enter "2"
-# screenshot "1.select_menu" "flow/user"
-# send -- "\r"
 
-# # 2. Type username as user role
-# expect -re "Masukkan username:"
-# type_input_no_enter "testuser"
-# screenshot "2.type_user_username" "flow/user"
-# send -- "\r"
-
-# # 3. Type password as user role
-# expect -re "Masukkan password:"
-# type_input_no_enter "testpass"
-# screenshot "3.type_user_password" "flow/user"
-# send -- "\r"
 
 
 

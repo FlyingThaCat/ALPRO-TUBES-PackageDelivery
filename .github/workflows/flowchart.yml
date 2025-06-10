@@ -2,9 +2,6 @@ name: Compile D2 Diagrams
 
 on:
   push:
-    paths:
-      - '**.d2'
-      - 'compiled2.sh'
   workflow_dispatch:
 
 jobs:

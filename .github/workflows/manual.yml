@@ -25,12 +25,13 @@ jobs:
             scrot \
             xterm \
             imagemagick \
+            fonts-noto-color-emoji \
             xvfb
 
       - name: Start headless X server
         run: |
           # launch Xvfb on display :99 in the background
-          Xvfb :99 -screen 0 1920x1080x24 &
+          Xvfb :99 -screen 0 800x600x24 &
 
       - name: Build the application
         run: |
@@ -41,7 +42,11 @@ jobs:
           chmod +x test_snapshot.sh
           mkdir -p logs
           # your expect script will now be able to grab screenshots
-          xterm -geometry 120x40+0+0 -e ./test_snapshot.sh &
+          xterm \
+            -fa "Noto Mono" \             # use Noto Mono as primary font
+            -fs 14 \                       # size 14 (tweak to taste)
+            -geometry 80x24+0+0 \          # 80 cols × 24 rows, top-left
+            -e ./test_snapshot.sh &
           wait
 
       - name: Upload screenshots

@@ -19,46 +19,108 @@ func UbahPaket(paket types.Paket) {
 	fmt.Println("✏️  UBAH DATA PAKET")
 	fmt.Println("========================================")
 
-	inputWithDefault := func(prompt string, current string) string {
-		fmt.Printf("%s [%s]: ", prompt, current)
-		text, _ := reader.ReadString('\n')
-		text = strings.TrimSpace(text)
-		if text == "" {
-			return current
+	// Input Tipe Paket (1. Reguler, 2. Express, 3. Sameday)
+	fmt.Println("Tipe Paket:")
+	fmt.Println("1. Reguler")
+	fmt.Println("2. Express")
+	fmt.Println("3. Sameday")
+
+	currentType := strings.ToLower(string(paket.Tipe))
+	currentOption := "1"
+	switch currentType {
+	case "reguler":
+		currentOption = "1"
+	case "express":
+		currentOption = "2"
+	case "sameday":
+		currentOption = "3"
+	}
+
+	fmt.Printf("Pilih Tipe Paket [default %s]: ", currentOption)
+	typeInput, _ := reader.ReadString('\n')
+	typeInput = strings.TrimSpace(typeInput)
+	if typeInput == "" {
+		typeInput = currentOption
+	}
+
+	switch typeInput {
+	case "1":
+		paket.Tipe = "reguler"
+	case "2":
+		paket.Tipe = "express"
+	case "3":
+		paket.Tipe = "sameday"
+	default:
+		fmt.Println("\n⚠️  Input tidak valid. Menggunakan nilai sebelumnya.")
+	}
+
+	// Input Berat
+	fmt.Printf("Berat (kg) [%.2f]: ", paket.Berat)
+	beratStr, _ := reader.ReadString('\n')
+	beratStr = strings.TrimSpace(beratStr)
+	if beratStr != "" {
+		fmt.Sscanf(beratStr, "%f", &paket.Berat)
+	}
+
+	// Pilih Kota Pengirim
+	fmt.Println("\nDaftar Kota:")
+	for i, city := range types.AllCities() {
+		fmt.Printf("%d. %s\n", i+1, city)
+	}
+
+	currentSenderIndex := 1
+	for i, city := range types.AllCities() {
+		if string(paket.SenderCity) == city {
+			currentSenderIndex = i + 1
+			break
 		}
-		return text
+	}
+	fmt.Printf("Pilih Kota Pengirim [default %d]: ", currentSenderIndex)
+	senderInput, _ := reader.ReadString('\n')
+	senderInput = strings.TrimSpace(senderInput)
+	if senderInput == "" {
+		senderInput = fmt.Sprintf("%d", currentSenderIndex)
 	}
 
-	paket.Tipe = inputWithDefault("Tipe Paket", string(paket.Tipe))
-
-	beratStr := inputWithDefault("Berat (kg)", fmt.Sprintf("%.2f", paket.Berat))
-	fmt.Sscanf(beratStr, "%f", &paket.Berat)
-
-	// Ambil kota pengirim dan validasi
-	senderCityStr := inputWithDefault("Kota Pengirim", string(paket.SenderCity))
-	senderCity, err := utils.ParseCity(senderCityStr)
-	if err != nil {
-		fmt.Printf("\n⚠️  Kota pengirim tidak valid: %s\n", err)
+	senderIndex := 0
+	_, err := fmt.Sscanf(senderInput, "%d", &senderIndex)
+	if err != nil || senderIndex < 1 || senderIndex > len(types.AllCities()) {
+		fmt.Println("\n⚠️  Input tidak valid.")
 		utils.EnterToContinue()
 		return
 	}
-	paket.SenderCity = senderCity
+	paket.SenderCity = types.ParseCity(types.AllCities()[senderIndex-1])
 
-	// Ambil kota tujuan dan validasi
-	receiverCityStr := inputWithDefault("Kota Tujuan", string(paket.ReceiverCity))
-	receiverCity, err := utils.ParseCity(receiverCityStr)
-	if err != nil {
-		fmt.Printf("\n⚠️  Kota tujuan tidak valid: %s\n", err)
+	// Pilih Kota Tujuan
+	fmt.Println("\nDaftar Kota:")
+	for i, city := range types.AllCities() {
+		fmt.Printf("%d. %s\n", i+1, city)
+	}
+
+	currentReceiverIndex := 1
+	for i, city := range types.AllCities() {
+		if string(paket.ReceiverCity) == city {
+			currentReceiverIndex = i + 1
+			break
+		}
+	}
+	fmt.Printf("Pilih Kota Tujuan [default %d]: ", currentReceiverIndex)
+	receiverInput, _ := reader.ReadString('\n')
+	receiverInput = strings.TrimSpace(receiverInput)
+	if receiverInput == "" {
+		receiverInput = fmt.Sprintf("%d", currentReceiverIndex)
+	}
+
+	receiverIndex := 0
+	_, err = fmt.Sscanf(receiverInput, "%d", &receiverIndex)
+	if err != nil || receiverIndex < 1 || receiverIndex > len(types.AllCities()) {
+		fmt.Println("\n⚠️  Input tidak valid.")
 		utils.EnterToContinue()
 		return
 	}
-	paket.ReceiverCity = receiverCity
+	paket.ReceiverCity = types.ParseCity(types.AllCities()[receiverIndex-1])
 
-	// Ambil status
-	statusStr := inputWithDefault("Status Paket (pisahkan dengan koma)", strings.Join(paket.Status, ","))
-	paket.Status = strings.Split(statusStr, ",")
-
-	// Hitung ulang harga berdasarkan koordinat dan data paket
+	// Recalculate Price
 	senderLat, senderLon, err := utils.GetCoordinates(paket.SenderCity)
 	if err != nil {
 		fmt.Printf("\n⚠️ Error koordinat kota pengirim: %s\n", err)
@@ -75,10 +137,9 @@ func UbahPaket(paket types.Paket) {
 
 	_, newPrice := utils.CalculatePackagePrice(senderLat, senderLon, receiverLat, receiverLon, paket.Berat, strings.ToLower(paket.Tipe))
 	paket.Harga = newPrice
-
 	paket.UpdatedAt = time.Now()
 
-	// Update paket di database
+	// Update Paket di Database
 	for i, p := range datas.PaketDB {
 		if p.NoResi == paket.NoResi {
 			datas.PaketDB[i] = paket

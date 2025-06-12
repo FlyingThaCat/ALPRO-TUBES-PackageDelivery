@@ -54,3 +54,30 @@ jobs:
       with:
         name: PackageDelivery-windows-amd64
         path: PackageDelivery.exe
+
+  build-mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.24.3'
+
+    - name: Build Intel Variant
+      run: GOOS=darwin GOARCH=amd64 go build . -o PackageDeliveryIntel
+    
+    - name: Build ARM Variant
+      run: GOOS=darwin GOARCH=arm64 go build . -o PackageDeliveryARM
+    
+    - name: Test
+      run: go test -v ./...
+
+    - name: artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: PackageDelivery-mac
+        path: |
+          PackageDeliveryIntel
+          PackageDeliveryARM

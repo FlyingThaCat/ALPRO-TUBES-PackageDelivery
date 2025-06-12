@@ -34,7 +34,7 @@ func register() {
 		Role:     "user",
 	})
 
-	fmt.Printf("\n✅ User '%s' berhasil didaftarkan.\n\n", username)
+	utils.ShowDelayedMessage(fmt.Sprintf("✅ User '%s' berhasil didaftarkan.\n\n", username), 2, true)
 }
 
 func login() (*types.User, bool) {
@@ -53,12 +53,6 @@ func login() (*types.User, bool) {
 	} else if user.Password != password {
 		utils.ShowDelayedMessage("\n❌ Password salah.\n", 2, true)
 		return nil, false
-	}
-
-	if user.Role != "user" {
-		fmt.Printf("\n✅ Login berhasil, selamat datang %s! (role: %s)\n\n", user.Username, user.Role)
-	} else {
-		fmt.Printf("\n✅ Login berhasil, selamat datang %s!\n\n", user.Username)
 	}
 
 	utils.SetLoggedInUsername(user.Username)

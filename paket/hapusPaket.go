@@ -13,6 +13,12 @@ func HapusPaket() {
 
 	noResi := utils.GetString("Masukkan No Resi Paket yang ingin dihapus: ", "⚠️  Silakan masukkan No Resi yang valid.")
 
+	if !utils.GetConfirmation("Apakah Anda yakin ingin menghapus paket ini?", "Silakan masukkan 'y' untuk ya atau 'n' untuk tidak.") {
+		fmt.Println("Paket Tidak Jadi Dihapus.")
+		utils.EnterToContinue()
+		return
+	}
+
 	ok := utils.DeletePaket(noResi)
 
 	if !ok {

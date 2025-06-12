@@ -28,6 +28,12 @@ func HapusKurir() {
 		return
 	}
 
+	if !utils.GetConfirmation("Apakah Anda yakin ingin menghapus kurir ini?", "Silakan masukkan 'y' untuk ya atau 'n' untuk tidak.") {
+		fmt.Println("Kurir Tidak Jadi Dihapus.")
+		utils.EnterToContinue()
+		return
+	}
+
 	ok := utils.DeleteUser(username)
 
 	if !ok {

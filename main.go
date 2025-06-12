@@ -97,7 +97,7 @@ func main() {
 
 					option := utils.GetInt("Pilih menu: ", "Silakan masukkan menu yang valid (0 untuk logout).")
 					if option == 0 {
-						fmt.Print("Logout berhasil.\n\n")
+						utils.ShowDelayedMessage("✅ Logout berhasil.", 2, true)
 						break
 					} else {
 						switch user.Role {
